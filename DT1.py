@@ -6,9 +6,9 @@ Altitude = 35000 * 0.3048  # m
 Flight_Mach_number = 0.82
 dT_isa = 10  # K
 Net_thrust = 67.3 * 1e3  # N
-BPR = 11.8
-FPR = 1.55
-OPR = 47
+BPR = 11.8  # Bypass ratio
+FPR = 1.55  # Fan pressure ratio
+OPR = 47  # Overall pressure ratio
 HPC_pressure_ratio = 4.5
 Turbine_inlet_temperature = 1680  # K
 Intake_efficiency = 99.5  # %
@@ -34,9 +34,17 @@ p_a = np.interp(Altitude, sourceAlt, sourcePressure)  # Pa
 # Flight velocity
 C_a = Flight_Mach_number * Speed_of_sound  # m/s
 
+# IPC pressure ratio
+IPC_pressure_ratio = OPR / (FPR * HPC_pressure_ratio)
+
+# Follow thermodynamic quantities along flow path
+# Note that the measurements take place directly after the component
+# TODO Add losses from efficiencies
+
+
 # Intake mass flow TODO Complete calculations of prerequisites
 dmdt_hot = 1  # kg/s
-dmdt_cold = 1  # kg/s
+dmdt_cold = dmdt_hot * BPR  # kg/s
 C_hot = 1  # m/s
 C_cold = 1  # m/s
 A_hot = 1  # m2
