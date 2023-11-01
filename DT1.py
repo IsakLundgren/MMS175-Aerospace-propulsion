@@ -26,10 +26,13 @@ HPC_polytropic_efficiency = 91.5  # %
 
 # Thermodynamic ambient properties at design altitude
 sourceAlt = [10000, 11000]  # m https://www.engineeringtoolbox.com/elevation-speed-sound-air-d_1534.html
-sourceSOS = [295.2, 295.1]  # m/s https://www.engineeringtoolbox.com/elevation-speed-sound-air-d_1534.html
+sourceTemperature = [-49.9 + 273.15, -56.4 + 273.15]  # K
 sourcePressure = [26.48 * 1e3, 22.68 * 1e3]  # Pa
-Speed_of_sound = np.interp(Altitude, sourceAlt, sourceSOS)  # m/s
+sourceSOS = [299.5, 295.2]  # m/s
+T_a = np.interp(Altitude, sourceAlt, sourceTemperature)  # K
 p_a = np.interp(Altitude, sourceAlt, sourcePressure)  # Pa
+Speed_of_sound = np.interp(Altitude, sourceAlt, sourceSOS)  # m/s
+gamma = 1.4
 
 # Flight velocity
 C_a = Flight_Mach_number * Speed_of_sound  # m/s
@@ -39,8 +42,16 @@ IPC_pressure_ratio = OPR / (FPR * HPC_pressure_ratio)
 
 # Follow thermodynamic quantities along flow path
 # Note that the measurements take place directly after the component
+# Assume calorically perfect gas
 # TODO Add losses from efficiencies
+T0_a = T_a * (1 + (gamma - 1) / 2 * Flight_Mach_number ** 2)
+p0_a = p_a * (1 + (gamma - 1) / 2 * Flight_Mach_number ** 2) ** (gamma / (gamma - 1))
 
+p0_fan = p0_a * FPR
+
+p0_IPC = p0_fan * IPC_pressure_ratio
+
+p0_HPC = p0_IPC * HPC_pressure_ratio
 
 # Intake mass flow TODO Complete calculations of prerequisites
 dmdt_hot = 1  # kg/s
