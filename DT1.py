@@ -24,10 +24,28 @@ Shaft_mechanical_efficiency = 99.5  # %
 IPC_polytropic_efficiency = 91.0  # %
 HPC_polytropic_efficiency = 91.5  # %
 
-# Calculate speed of sound at design altitude
-sourceAlt = [10000, 11000]
-sourceSOS = [295.2, 295.1]
+# Thermodynamic ambient properties at design altitude
+sourceAlt = [10000, 11000]  # m https://www.engineeringtoolbox.com/elevation-speed-sound-air-d_1534.html
+sourceSOS = [295.2, 295.1]  # m/s https://www.engineeringtoolbox.com/elevation-speed-sound-air-d_1534.html
+sourcePressure = [26.48 * 1e3, 22.68 * 1e3]  # Pa
 Speed_of_sound = np.interp(Altitude, sourceAlt, sourceSOS)  # m/s
+p_a = np.interp(Altitude, sourceAlt, sourcePressure)  # Pa
 
-C_a = Flight_Mach_number * Speed_of_sound
-a = 10
+# Flight velocity
+C_a = Flight_Mach_number * Speed_of_sound  # m/s
+
+# Intake mass flow TODO Complete calculations of prerequisites
+dmdt_hot = 1  # kg/s
+dmdt_cold = 1  # kg/s
+C_hot = 1  # m/s
+C_cold = 1  # m/s
+A_hot = 1  # m2
+A_cold = 1  # m2
+p_hot = 1  # Pa
+p_cold = 1  # Pa
+
+dmdt_0 = 1 / C_a * (dmdt_hot * C_hot + (p_hot - p_a) * A_hot +
+                    dmdt_cold * C_cold + (p_cold - p_a) * A_cold -
+                    Net_thrust)
+
+print(f'Intake mass flow: {dmdt_0:.3g} kg/s.')
