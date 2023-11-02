@@ -29,13 +29,15 @@ sourceAlt = [10000, 11000]  # m https://www.engineeringtoolbox.com/elevation-spe
 sourceTemperature = [-49.9 + 273.15, -56.4 + 273.15]  # K
 sourcePressure = [26.48 * 1e3, 22.68 * 1e3]  # Pa
 sourceSOS = [299.5, 295.2]  # m/s
-T_a = np.interp(Altitude, sourceAlt, sourceTemperature)  # K
-p_a = np.interp(Altitude, sourceAlt, sourcePressure)  # Pa
-Speed_of_sound = np.interp(Altitude, sourceAlt, sourceSOS)  # m/s
-gamma = 1.4
+T_1 = np.interp(Altitude, sourceAlt, sourceTemperature) + dT_isa   # K
+p_1 = np.interp(Altitude, sourceAlt, sourcePressure)  # Pa
+gamma_a = 1.4
+R_a = 287     # unit
+Speed_of_sound_1 = np.sqrt(gamma * R * T_1)  # m/s
+
 
 # Flight velocity
-C_a = Flight_Mach_number * Speed_of_sound  # m/s
+C_a = Flight_Mach_number * Speed_of_sound_1  # m/s
 
 # IPC pressure ratio
 IPC_pressure_ratio = OPR / (FPR * HPC_pressure_ratio)
@@ -44,14 +46,18 @@ IPC_pressure_ratio = OPR / (FPR * HPC_pressure_ratio)
 # Note that the measurements take place directly after the component
 # Assume calorically perfect gas
 # TODO Add losses from efficiencies
-T0_a = T_a * (1 + (gamma - 1) / 2 * Flight_Mach_number ** 2)
-p0_a = p_a * (1 + (gamma - 1) / 2 * Flight_Mach_number ** 2) ** (gamma / (gamma - 1))
+T0_1 = T_1 * (1 + (gamma_a - 1) / 2 * Flight_Mach_number ** 2)
+p0_1 = p_1 * (1 + (gamma_a - 1) / 2 * Flight_Mach_number ** 2) ** (gamma_a / (gamma_a - 1))
 
-p0_fan = p0_a * FPR
+p0_2 = p0_1 * FPR   # pressure after fan
+T0_2 = T0_1 * FPR ** ((gamma_a - 1) / (Fan_polytropic_efficiency * gamma_a))
 
-p0_IPC = p0_fan * IPC_pressure_ratio
+p0_3 = p0_2 * IPC_pressure_ratio    # pressure after IPC
+T0_3 = T0_2 * IPC_pressure_ratio ** ((gamma_a - 1) / (IPC_polytropic_efficiency * gamma_a))
 
-p0_HPC = p0_IPC * HPC_pressure_ratio
+p0_4 = p0_3 * HPC_pressure_ratio    # pressure after HPC
+T0_4 = T0_3 * HPC_pressure_ratio ** ((gamma_a - 1) / (HPC_polytropic_efficiency * gamma_a))
+
 
 # Intake mass flow TODO Complete calculations of prerequisites
 dmdt_hot = 1  # kg/s
