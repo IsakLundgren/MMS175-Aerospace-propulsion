@@ -98,19 +98,21 @@ def massFlowToThrust(dmdt_0):
 
     hotIsChoked = (p0_8 / p_1) > CPR_hot
     coldIsChoked = (p0_2 / p_1) > CPR_cold
-    print(hotIsChoked)
-    print(coldIsChoked)
-    # TODO figure out why hotIsChoked is array and why coldIsChoked is scalar
+    # print(hotIsChoked)
+    # print(coldIsChoked)
+    if hotIsChoked and not coldIsChoked:
+        print(hotIsChoked)
+        print(coldIsChoked)
 
-    if hotIsChoked[-1]:  # p9=p9c critical pressure
+    if hotIsChoked:  # p9=p9c critical pressure
         p_9 = p0_8 / CPR_hot
         T_9 = 2*T0_8/(gamma_g+1)
         c_9 = np.sqrt(gamma_g*R_g*T_9)
         rho_9 = p_9/(R_g*T_9)
         A_9 = dmdt_g / (rho_9*c_9)
-        F_GH = dmdt_g * c_9 + A_9*(p_9-p_1) # Gross hot gases thrust
+        F_GH = dmdt_g * c_9 + A_9*(p_9-p_1)  # Gross hot gases thrust
     else:
-        p_9=p_1
+        p_9 = p_1
         T_9 = T0_8-Hot_jet_efficiency*T0_8*(1-(1/p0_8/p_9)**((gamma_g-1)/gamma_g))
         c_9 = np.sqrt((T0_8-T_9)*2*cp_g)
         F_GH = dmdt_g * c_9
@@ -136,27 +138,31 @@ def massFlowToThrust(dmdt_0):
     return F_net
 
 
-# plot as test
+# Assemble mass flow data
 massFlows = np.linspace(1, 1000, 100)
 testTrust = []
 for dmdt in massFlows:
     testTrust.append(massFlowToThrust(dmdt))
+testTrust = np.array(testTrust)
 
+# Calculate correct mass flow value
+i_closest = np.argmin(np.abs(testTrust - Net_thrust))
+final_dmdt = np.interp(Net_thrust, testTrust[i_closest:i_closest+2], massFlows[i_closest:i_closest+2])
+
+# Plot mass flow to thrust
 plt.figure()
-plt.plot(massFlows, massFlowToThrust(massFlows), label='Calculated thrust')
-plt.plot(massFlows, Net_thrust*np.ones(100), label='Thrust requirement')
-plt.xlabel('Mass flow')
-plt.ylabel('Net thrust')
+plt.hlines(Net_thrust * 1e-3, min(massFlows), max(massFlows)
+           , label='Thrust requirement', color='y', linestyles='--', zorder=0)
+plt.plot(massFlows, testTrust * 1e-3, label='Calculated thrust', color='b', zorder=1)
+plt.scatter(final_dmdt, Net_thrust * 1e-3, c='r', marker='o', label='Design point', zorder=2)
+plt.xlabel('Intake mass flow [kg/s]')
+plt.ylabel('Net thrust [kN]')
+plt.grid()
 plt.legend()
 plt.show()
 
-
-# Guess loop
-first_dmdt_0_guess = 10  # kg/s
-# TODO make loop
-# final_thrust, final_dmdt = massFlowToThrust(first_dmdt_0_guess)
-
-# print(f'Intake mass flow: {final_dmdt:.3g} kg/s.')
-# print(f'Thrust: {final_thrust:.3g} N.')
+# Print result from code
+print(f'Intake mass flow: {final_dmdt:.3g} kg/s.')
+print(f'Thrust: {Net_thrust * 1e-3:.3g} kN.')
 
 
