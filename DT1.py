@@ -11,18 +11,18 @@ FPR = 1.55  # Fan pressure ratio
 OPR = 47  # Overall pressure ratio
 HPC_pressure_ratio = 4.5
 Turbine_inlet_temperature = 1680  # K
-Intake_efficiency = 99.5  # %
-Fan_polytropic_efficiency = 92.0  # %
-Combustor_efficiency = 99.9  # %
-Combustor_pressure_loss = 3.5  # %
-HPT_polytropic_efficiency = 90.5  # %
-IPT_polytropic_efficiency = 91.0  # %
-LPT_polytropic_efficiency = 91.5  # %
-Cold_Jet_efficiency = 98.0  # %
-Hot_jet_efficiency = 99.0  # %
-Shaft_mechanical_efficiency = 99.5  # %
-IPC_polytropic_efficiency = 91.0  # %
-HPC_polytropic_efficiency = 91.5  # %
+Intake_efficiency = 0.995  # %
+Fan_polytropic_efficiency = 0.92  # %
+Combustor_efficiency = 0.99  # %
+Combustor_pressure_loss = 0.035  # %
+HPT_polytropic_efficiency = 0.905  # %
+IPT_polytropic_efficiency = 0.91  # %
+LPT_polytropic_efficiency = 0.915  # %
+Cold_Jet_efficiency = 0.98  # %
+Hot_jet_efficiency = 0.99  # %
+Shaft_mechanical_efficiency = 0.995  # %
+IPC_polytropic_efficiency = 0.91  # %
+HPC_polytropic_efficiency = 0.915  # %
 
 # Thermodynamic ambient properties at design altitude
 sourceAlt = [10000, 11000]  # m https://www.engineeringtoolbox.com/elevation-speed-sound-air-d_1534.html
@@ -48,6 +48,7 @@ IPC_pressure_ratio = OPR / (FPR * HPC_pressure_ratio)
 
 def massFlowToThrust(dmdt_0):
     dmdt_hot = dmdt_0 / (BPR + 1)
+    dmdt_cold = BPR * dmdt_hot
 
     # Follow thermodynamic quantities along flow path
     # Note that the measurements take place directly after the component
@@ -105,18 +106,24 @@ def massFlowToThrust(dmdt_0):
 
     if coldIsChoked:
         p_10 = p0_2 / CPR_cold
+        T_10 = 2 * T0_2 / (gamma_a + 1)
+        # velocity = speed of sound
+        C_10 = np.sqrt(gamma_a * R_a * T_10)
+        rho_10 = p_10 / R_a / T_10
+        A_10 = dmdt_cold / rho_10 / C_10
+        F_GC = dmdt_cold * C_10 + A_10 * (p_10 - p_1)
     else:
         p_10 = p_1
+        T_10 = T0_2 - Cold_Jet_efficiency * T0_2 *(1 - (1 / (p0_2 / p_10)) ** ((gamma_a - 1) / gamma_a))
+        C_10 = np.sqrt((T0_2 - T_10) * 2 * cp_a)
+        F_GC = dmdt_cold * C_10
 
     # Intake mass flow TODO Complete calculations of prerequisites
-    dmdt_hot = 1  # kg/s
     dmdt_cold = dmdt_hot * BPR  # kg/s
     C_hot = 1  # m/s
     C_cold = 1  # m/s
     A_hot = 1  # m2
     A_cold = 1  # m2
-    p_hot = 1  # Pa
-    p_cold = 1  # Pa
 
     return (dmdt_hot * C_hot + (p_hot - p0_1) * A_hot +
                     dmdt_cold * C_cold + (p_cold - p0_1) * A_cold -
