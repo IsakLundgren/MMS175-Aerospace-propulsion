@@ -1,5 +1,5 @@
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 
 # Given parameters
@@ -98,10 +98,11 @@ def massFlowToThrust(dmdt_0):
 
     hotIsChoked = (p0_8 / p_1) > CPR_hot
     coldIsChoked = (p0_2 / p_1) > CPR_cold
+    print(hotIsChoked)
+    print(coldIsChoked)
+    # TODO figure out why hotIsChoked is array and why coldIsChoked is scalar
 
-    # TODO if statement for choked and not-choked conditions
-
-    if hotIsChoked: # p9=p9c critical pressure
+    if hotIsChoked[-1]: # p9=p9c critical pressure
         p_9= p0_8 / CPR_hot
         T_9 = 2*T0_8/(gamma_g+1)
         c_9 = np.sqrt(gamma_g*R_g*T_9)
@@ -133,6 +134,17 @@ def massFlowToThrust(dmdt_0):
     F_net = F_GH + F_GC - F_D
 
     return F_net
+
+# plot as test
+massFlows = np.linspace(1, 1000, 100)
+plt.figure()
+plt.plot(massFlows, massFlowToThrust(massFlows), label='Calculated thrust')
+plt.plot(massFlows, Net_thrust*np.ones(100), label='Thrust requirement')
+plt.xlabel('Mass flow')
+plt.ylabel('Net thrust')
+plt.legend()
+plt.show()
+
 
 # Guess loop
 first_dmdt_0_guess = 10  # kg/s
