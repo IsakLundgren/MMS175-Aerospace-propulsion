@@ -102,8 +102,8 @@ def massFlowToThrust(dmdt_0):
     print(coldIsChoked)
     # TODO figure out why hotIsChoked is array and why coldIsChoked is scalar
 
-    if hotIsChoked[-1]: # p9=p9c critical pressure
-        p_9= p0_8 / CPR_hot
+    if hotIsChoked[-1]:  # p9=p9c critical pressure
+        p_9 = p0_8 / CPR_hot
         T_9 = 2*T0_8/(gamma_g+1)
         c_9 = np.sqrt(gamma_g*R_g*T_9)
         rho_9 = p_9/(R_g*T_9)
@@ -135,8 +135,13 @@ def massFlowToThrust(dmdt_0):
 
     return F_net
 
+
 # plot as test
 massFlows = np.linspace(1, 1000, 100)
+testTrust = []
+for dmdt in massFlows:
+    testTrust.append(massFlowToThrust(dmdt))
+
 plt.figure()
 plt.plot(massFlows, massFlowToThrust(massFlows), label='Calculated thrust')
 plt.plot(massFlows, Net_thrust*np.ones(100), label='Thrust requirement')
