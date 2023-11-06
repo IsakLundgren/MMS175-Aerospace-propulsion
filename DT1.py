@@ -1,6 +1,7 @@
 import numpy as np
 
 
+
 # Given parameters
 Altitude = 35000 * 0.3048  # m
 Flight_Mach_number = 0.82
@@ -95,8 +96,8 @@ def massFlowToThrust(dmdt_0):
     CPR_hot = (1 / (1 - 1 / Hot_jet_efficiency * (gamma_g - 1) / (gamma_g + 1)) ** (gamma_g/(gamma_g-1)))
     CPR_cold = (1 / (1 - 1 / Cold_Jet_efficiency * (gamma_a - 1) / (gamma_a + 1)) ** (gamma_a/(gamma_a-1)))
 
-    hotIsChoked = (p0_8 / p_1) > po9_pc
-    coldIsChoked = (p0_2 / p_1) > p02_p10c
+    hotIsChoked = (p0_8 / p_1) > CPR_hot
+    coldIsChoked = (p0_2 / p_1) > CPR_cold
 
     # TODO if statement for choked and not-choked conditions
 
@@ -127,23 +128,18 @@ def massFlowToThrust(dmdt_0):
         C_10 = np.sqrt((T0_2 - T_10) * 2 * cp_a)
         F_GC = dmdt_cold * C_10
 
-    # Intake mass flow TODO Complete calculations of prerequisites
-    dmdt_cold = dmdt_hot * BPR  # kg/s
-    C_hot = 1  # m/s
-    C_cold = 1  # m/s
-    A_hot = 1  # m2
-    A_cold = 1  # m2
+    F_D = dmdt_0 * C_a
 
-    return (dmdt_hot * C_hot + (p_hot - p0_1) * A_hot +
-                    dmdt_cold * C_cold + (p_cold - p0_1) * A_cold -
-                    dmdt_0 * C_a), dmdt_0
+    F_net = F_GH + F_GC - F_D
+
+    return F_net
 
 # Guess loop
 first_dmdt_0_guess = 10  # kg/s
 # TODO make loop
-final_thrust, final_dmdt = massFlowToThrust(first_dmdt_0_guess)
+# final_thrust, final_dmdt = massFlowToThrust(first_dmdt_0_guess)
 
-print(f'Intake mass flow: {final_dmdt:.3g} kg/s.')
-print(f'Thrust: {final_thrust:.3g} N.')
+# print(f'Intake mass flow: {final_dmdt:.3g} kg/s.')
+# print(f'Thrust: {final_thrust:.3g} N.')
 
 
