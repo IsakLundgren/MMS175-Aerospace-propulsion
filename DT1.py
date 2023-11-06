@@ -36,6 +36,7 @@ gamma_g = 1.333
 cp_a = 1005 # J/kgK
 cp_g = 1148 # # J/kgK
 R_a = 287     # unit
+R_g = cp_g * (gamma_g-1)/gamma_g
 Speed_of_sound_1 = np.sqrt(gamma_a * R_a * T_1)  # m/s
 
 
@@ -100,8 +101,16 @@ def massFlowToThrust(dmdt_0):
 
     if hotIsChoked: # p9=p9c critical pressure
         p_9= p0_8 / CPR_hot
+        T_9 = 2*T0_8/(gamma_g+1)
+        c_9 = np.sqrt(gamma_g*R_g*T_9)
+        rho_9 = p_9/(R_g*T_9)
+        A_9 = dmdt_g / (rho_9*c_9)
+        F_GH = dmdt_g * c_9 + A_9*(p_9-p_1) # Gross hot gases thrust
     else:
         p_9=p_1
+        T_9 = T0_8-Hot_jet_efficiency*T0_8*(1-(1/p0_8/p_9)**((gamma_g-1)/gamma_g))
+        c_9 = np.sqrt((T0_8-T_9)*2*cp_g)
+        F_GH = dmdt_g * c_9
 
     if coldIsChoked:
         p_10 = p0_2 / CPR_cold
