@@ -89,13 +89,24 @@ def massFlowToThrust(dmdt_0):
     T0_8 = T0_7 - dWdt_fan / (dmdt_g * cp_g * Shaft_mechanical_efficiency)
     p0_8 = p0_7 * (T0_8 / T0_7) ** (gamma_g / ((gamma_g - 1) * LPT_polytropic_efficiency))
 
-    hotIsChoked = (p0_8 / p_1) > (1 / (1 -
-                                1 / Hot_jet_efficiency * (gamma_g - 1) / (gamma_g + 1)) ** (gamma_g/(gamma_g-1)))
+    # pressure ratio critical
+    CPR_hot = (1 / (1 - 1 / Hot_jet_efficiency * (gamma_g - 1) / (gamma_g + 1)) ** (gamma_g/(gamma_g-1)))
+    CPR_cold = (1 / (1 - 1 / Cold_Jet_efficiency * (gamma_a - 1) / (gamma_a + 1)) ** (gamma_a/(gamma_a-1)))
 
-    coldIsChoked = (p0_2 / p_1) > (1 / (1 -
-                                1 / Cold_Jet_efficiency * (gamma_a - 1) / (gamma_a + 1)) ** (gamma_a/(gamma_a-1)))
+    hotIsChoked = (p0_8 / p_1) > po9_pc
+    coldIsChoked = (p0_2 / p_1) > p02_p10c
 
     # TODO if statement for choked and not-choked conditions
+
+    if hotIsChoked: # p9=p9c critical pressure
+        p_9= p0_8 / CPR_hot
+    else:
+        p_9=p_1
+
+    if coldIsChoked:
+        p_10 = p0_2 / CPR_cold
+    else:
+        p_10 = p_1
 
     # Intake mass flow TODO Complete calculations of prerequisites
     dmdt_hot = 1  # kg/s
