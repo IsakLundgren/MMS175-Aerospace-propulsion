@@ -215,16 +215,23 @@ massFlowToThrust(final_dmdt, False, True)
 massFlowToThrust(final_dmdt, True, True)
 
 # Plot mass flow to thrust
-plt.figure()
+fig = plt.figure()
 plt.hlines(Net_thrust * 1e-3, min(massFlows), max(massFlows),
            label='Thrust requirement', color='g', linestyles='--', zorder=0)
 plt.plot(massFlows, testTrust * 1e-3, label='Calculated thrust', color='b', zorder=1)
 plt.plot(massFlows, testTrustCool * 1e-3, label='Calculated thrust w. cooling', color='m', zorder=2)
 plt.scatter(final_dmdt, Net_thrust * 1e-3, c='r', marker='o', label='Design point', zorder=3)
 plt.scatter(final_dmdt_c, Net_thrust * 1e-3, c='k', marker='o', label='Design point w. cooling', zorder=4)
+plt.title('Mass flow versus thrust')
 plt.xlabel('Intake mass flow [kg/s]')
 plt.ylabel('Net thrust [kN]')
 plt.grid()
 plt.legend()
+
+
+# Save figure
+figureDPI = 200
+fig.set_size_inches(8, 6)
+fig.savefig('img/MassFlowToThrust.png', dpi=figureDPI)
 
 plt.show()
