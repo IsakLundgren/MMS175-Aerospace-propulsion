@@ -175,9 +175,25 @@ def massFlowToThrust(dmdt_0, hasCooling, hasPrinting):
 
     if hasPrinting:
         if hasCooling:
-            print('\n---Results with cooling flow---')
+            print('\n\n---Results with cooling flow---')
         else:
-            print('\n---Results without cooling flow---')
+            print('\n\n---Results without cooling flow---')
+
+        print('\n-Station thermodynamic properties-')
+        print(f'Station 1: P_01: {p0_1 * 1e-3:.3g} kPa, T_01: {T0_1:.3g} K, dmdt_01: {dmdt_0:.3g} kg/s.')
+        print(f'Station 2: P_02: {p0_2 * 1e-3:.3g} kPa, T_02: {T0_2:.3g} K, dmdt_02: {dmdt_hot:.3g} kg/s.')
+        print(f'Station 3: P_03: {p0_3 * 1e-3:.3g} kPa, T_03: {T0_3:.3g} K, dmdt_03: {dmdt_hot:.3g} kg/s.')
+        print(f'Station 4: P_04: {p0_4 * 1e-3:.3g} kPa, T_04: {T0_4:.3g} K, dmdt_04: {dmdt_hot:.3g} kg/s.')
+        if hasCooling:
+            print(f'Station 5: P_05: {p0_5 * 1e-3:.3g} kPa, T_05: {T0_5:.3g} K, dmdt_05: {dmdt_g_1:.3g} kg/s.')
+            print(f'Station 5.2: P_05.2: {p0_5 * 1e-3:.3g} kPa, T_05.2: {T0_5_2:.3g} K, dmdt_05: {dmdt_g_2:.3g} kg/s.')
+        else:
+            print(f'Station 5: P_05: {p0_5 * 1e-3:.3g} kPa, T_05: {T0_5:.3g} K, dmdt_05: {dmdt_g:.3g} kg/s.')
+        print(f'Station 6: P_06: {p0_6 * 1e-3:.3g} kPa, T_06: {T0_6:.3g} K, dmdt_06: {dmdt_g:.3g} kg/s.')
+        print(f'Station 7: P_07: {p0_7 * 1e-3:.3g} kPa, T_07: {T0_7:.3g} K, dmdt_07: {dmdt_g:.3g} kg/s.')
+        print(f'Station 8: P_08: {p0_8 * 1e-3:.3g} kPa, T_08: {T0_8:.3g} K, dmdt_08: {dmdt_g:.3g} kg/s.')
+
+        print('\n-Overall performance-')
         print(f'Intake mass flow: {final_dmdt:.3g} kg/s.')
         print(f'SFC: {SFC * 1e6:.3g} mg/Ns.')
         print(f'Hot channel is {"choked" if hotIsChoked else "not choked"}.')
@@ -210,7 +226,7 @@ i_closest_c = np.argmin(np.abs(testTrustCool - Net_thrust))
 final_dmdt_c = np.interp(Net_thrust, testTrust[i_closest_c:i_closest_c+2], massFlows[i_closest_c:i_closest_c+2])
 
 # Print result from code
-print(f'Thrust: {Net_thrust * 1e-3:.3g} kN.')
+print(f'\nThrust: {Net_thrust * 1e-3:.3g} kN.')
 massFlowToThrust(final_dmdt, False, True)
 massFlowToThrust(final_dmdt, True, True)
 
@@ -227,7 +243,6 @@ plt.xlabel('Intake mass flow [kg/s]')
 plt.ylabel('Net thrust [kN]')
 plt.grid()
 plt.legend()
-
 
 # Save figure
 figureDPI = 200
