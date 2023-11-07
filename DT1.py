@@ -77,14 +77,31 @@ def massFlowToThrust(dmdt_0, hasCooling):
     FAR_gamma = 8.889E-08 * (Turbine_inlet_temperature - 950)
     FAR = (FAR_alpha - np.sqrt(FAR_alpha ** 2 + FAR_beta) - FAR_gamma) / Combustor_efficiency
 
-    dmdt_f = FAR * dmdt_hot
-    dmdt_g = dmdt_f + dmdt_hot
+    if hasCooling:
+        dmdt_CC = 0.8*dmdt_hot
+        dmdt_cool_s = 0.6*0.2*dmdt_hot
+        dmdt_cool_r = 0.4*0.2*dmdt_hot
+        dmdt_f = FAR * dmdt_CC
+        dmdt_g_1 = dmdt_f + dmdt_CC
 
-    T0_5 = Turbine_inlet_temperature
-    p0_5 = p0_4 * Combustor_pressure_loss
+        T0_5 = Turbine_inlet_temperature
+        p0_5 = p0_4 * Combustor_pressure_loss
 
-    T0_6 = T0_5 - dWdt_HPC / (dmdt_g * cp_g * Shaft_mechanical_efficiency)
-    p0_6 = p0_5 * (T0_6 / T0_5) ** (gamma_g / ((gamma_g - 1) * HPT_polytropic_efficiency))
+        dmdt_g_2 = dmdt_g_1 + dmdt_cool_s
+        T0_5_2 =(dmdt_CC * cp_g * T0_5 + dmdt_cool_s*cp_a*T0_4)/(cp_g*dmdt_g_2)
+
+        T0_6 = T0_5_2 - dWdt_HPC / (dmdt_g_2 * cp_g * Shaft_mechanical_efficiency)
+        p0_6 = p0_5 * (T0_6 / T0_5) ** (gamma_g / ((gamma_g - 1) * HPT_polytropic_efficiency))
+        dmdt_g = dmdt_g_2+dmdt_cool_r
+    else:
+        dmdt_f = FAR * dmdt_hot
+        dmdt_g = dmdt_f + dmdt_hot
+
+        T0_5 = Turbine_inlet_temperature
+        p0_5 = p0_4 * Combustor_pressure_loss
+
+        T0_6 = T0_5 - dWdt_HPC / (dmdt_g * cp_g * Shaft_mechanical_efficiency)
+        p0_6 = p0_5 * (T0_6 / T0_5) ** (gamma_g / ((gamma_g - 1) * HPT_polytropic_efficiency))
 
     T0_7 = T0_6 - dWdt_IPC / (dmdt_g * cp_g * Shaft_mechanical_efficiency)
     p0_7 = p0_6 * (T0_7 / T0_6) ** (gamma_g / ((gamma_g - 1) * IPT_polytropic_efficiency))
@@ -155,7 +172,7 @@ testTrust = np.array(testTrust)
 # Calculate correct mass flow value
 i_closest = np.argmin(np.abs(testTrust - Net_thrust))
 final_dmdt = np.interp(Net_thrust, testTrust[i_closest:i_closest+2], massFlows[i_closest:i_closest+2])
-_, SFC, hotChokedStatus, coldChokedStatus, PR_hot, PR_cold = massFlowToThrust(final_dmdt)
+_, SFC, hotChokedStatus, coldChokedStatus, PR_hot, PR_cold = massFlowToThrust(final_dmdt, True)
 
 # Plot mass flow to thrust
 plt.figure()
