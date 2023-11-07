@@ -48,7 +48,7 @@ C_a = Flight_Mach_number * Speed_of_sound_1  # m/s
 IPC_pressure_ratio = OPR / (FPR * HPC_pressure_ratio)
 
 
-def massFlowToThrust(dmdt_0):
+def massFlowToThrust(dmdt_0, hasCooling):
     dmdt_hot = dmdt_0 / (BPR + 1)
     dmdt_cold = BPR * dmdt_hot
 
@@ -147,8 +147,9 @@ def massFlowToThrust(dmdt_0):
 # Assemble mass flow data
 massFlows = np.linspace(1, 1000, 100)
 testTrust = []
+cooling = False
 for dmdt in massFlows:
-    testTrust.append(massFlowToThrust(dmdt)[0])
+    testTrust.append(massFlowToThrust(dmdt, cooling)[0])
 testTrust = np.array(testTrust)
 
 # Calculate correct mass flow value
