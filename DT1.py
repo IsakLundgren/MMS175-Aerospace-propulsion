@@ -188,7 +188,7 @@ testTrust = np.array(testTrust)
 # Calculate correct mass flow value
 i_closest = np.argmin(np.abs(testTrust - Net_thrust))
 final_dmdt = np.interp(Net_thrust, testTrust[i_closest:i_closest+2], massFlows[i_closest:i_closest+2])
-_, SFC, hotChokedStatus, coldChokedStatus, PR_hot, PR_cold = massFlowToThrust(final_dmdt, True)
+_, SFC, hotChokedStatus, coldChokedStatus, PR_hot, PR_cold, eta_p, eta_th, eta_0 = massFlowToThrust(final_dmdt, False)
 
 # Plot mass flow to thrust
 plt.figure()
@@ -200,8 +200,11 @@ plt.xlabel('Intake mass flow [kg/s]')
 plt.ylabel('Net thrust [kN]')
 plt.grid()
 plt.legend()
-plt.show()
+
 
 # Print result from code
 print(f'Intake mass flow: {final_dmdt:.3g} kg/s.')
 print(f'Thrust: {Net_thrust * 1e-3:.3g} kN.')
+print(f'Propulsion efficiency: {Net_thrust * 1e-3:.3g}')
+
+plt.show()
