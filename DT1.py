@@ -175,8 +175,10 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
         print(f'Station 3: P_03: {p0_3 * 1e-3:.4g} kPa, T_03: {T0_3:.4g} K, dmdt_03: {dmdt_hot:.3g} kg/s.')
         print(f'Station 4: P_04: {p0_4 * 1e-3:.4g} kPa, T_04: {T0_4:.4g} K, dmdt_04: {dmdt_hot:.3g} kg/s.')
         if hasCooling:
-            print(f'Station 5.1: P_05.1: {p0_5 * 1e-3:.4g} kPa, T_05.1: {T0_5:.4g} K, dmdt_05.1: {dmdt_g_1:.3g} kg/s.')
-            print(f'Station 5.2: P_05.2: {p0_5 * 1e-3:.4g} kPa, T_05.2: {T0_5_2:.4g} K, dmdt_05.2: {dmdt_g_2:.3g} kg/s.')
+            print(f'Station 5.1: P_05.1: {p0_5 * 1e-3:.4g} kPa, T_05.1: {T0_5:.4g} K, dmdt_05.1: '
+                  f'{dmdt_g_1:.3g} kg/s.')
+            print(f'Station 5.2: P_05.2: {p0_5 * 1e-3:.4g} kPa, T_05.2: {T0_5_2:.4g} K, dmdt_05.2: '
+                  f'{dmdt_g_2:.3g} kg/s.')
         else:
             print(f'Station 5: P_05: {p0_5 * 1e-3:.4g} kPa, T_05: {T0_5:.4g} K, dmdt_05: {dmdt_g:.3g} kg/s.')
         print(f'Station 6: P_06: {p0_6 * 1e-3:.4g} kPa, T_06: {T0_6:.4g} K, dmdt_06: {dmdt_g:.3g} kg/s.')
