@@ -34,8 +34,8 @@ T_1 = np.interp(Altitude, sourceAlt, sourceTemperature) + dT_isa   # K
 p_1 = np.interp(Altitude, sourceAlt, sourcePressure)  # Pa
 gamma_a = 1.4
 gamma_g = 1.333
-cp_a = 1005 # J/kgK
-cp_g = 1148 # # J/kgK
+cp_a = 1005  # J/kgK
+cp_g = 1148  # # J/kgK
 R_a = 287     # unit
 R_g = cp_g * (gamma_g-1)/gamma_g
 Speed_of_sound_1 = np.sqrt(gamma_a * R_a * T_1)  # m/s
@@ -50,7 +50,7 @@ C_a = Flight_Mach_number * Speed_of_sound_1  # m/s
 IPC_pressure_ratio = OPR / (FPR * HPC_pressure_ratio)
 
 
-def massFlowToThrust(dmdt_0, hasCooling):
+def massFlowToThrust(dmdt_0, hasCooling, hasPrinting):
     dmdt_hot = dmdt_0 / (BPR + 1)
     dmdt_cold = BPR * dmdt_hot
 
@@ -90,7 +90,7 @@ def massFlowToThrust(dmdt_0, hasCooling):
         p0_5 = p0_4 * Combustor_pressure_loss
 
         dmdt_g_2 = dmdt_g_1 + dmdt_cool_s
-        T0_5_2 =(dmdt_CC * cp_g * T0_5 + dmdt_cool_s*cp_a*T0_4)/(cp_g*dmdt_g_2)
+        T0_5_2 = (dmdt_CC * cp_g * T0_5 + dmdt_cool_s * cp_a * T0_4) / (cp_g * dmdt_g_2)
 
         T0_6 = T0_5_2 - dWdt_HPC / (dmdt_g_2 * cp_g * Shaft_mechanical_efficiency)
         p0_6 = p0_5 * (T0_6 / T0_5) ** (gamma_g / ((gamma_g - 1) * HPT_polytropic_efficiency))
@@ -156,7 +156,7 @@ def massFlowToThrust(dmdt_0, hasCooling):
         C_10_eta = C_10_ideal
     else:
         p_10 = p_1
-        T_10 = T0_2 - Cold_Jet_efficiency * T0_2 *(1 - (1 / (p0_2 / p_10)) ** ((gamma_a - 1) / gamma_a))
+        T_10 = T0_2 - Cold_Jet_efficiency * T0_2 * (1 - (1 / (p0_2 / p_10)) ** ((gamma_a - 1) / gamma_a))
         C_10 = np.sqrt((T0_2 - T_10) * 2 * cp_a)
         F_GC = dmdt_cold * C_10
         cold_pratio = (p0_2 / p_1)
@@ -173,6 +173,21 @@ def massFlowToThrust(dmdt_0, hasCooling):
     eta_th = deltaW_kin / dmdt_f / Q_net_JA
     eta_0 = eta_p * eta_th
 
+    if hasPrinting:
+        if hasCooling:
+            print('\n---Results with cooling flow---')
+        else:
+            print('\n---Results without cooling flow---')
+        print(f'Intake mass flow: {final_dmdt:.3g} kg/s.')
+        print(f'SFC: {SFC * 1e6:.3g} mg/Ns.')
+        print(f'Hot channel is {"choked" if hotIsChoked else "not choked"}.')
+        print(f'Cold channel is {"choked" if coldIsChoked else "not choked"}.')
+        print(f'Hot nozzle pressure ratio: {hot_pratio:.3g}')
+        print(f'Cold nozzle pressure ratio: {cold_pratio:.3g}')
+        print(f'Propulsion efficiency: {eta_p:.3g}.')
+        print(f'Thermal efficiency: {eta_th:.3g}.')
+        print(f'Total efficiency: {eta_0:.3g}.')
+
     return F_net, SFC, hotIsChoked, coldIsChoked, hot_pratio, cold_pratio, eta_p, eta_th, eta_0
 
 
@@ -182,45 +197,22 @@ testTrust = []
 testTrustCool = []
 
 for dmdt in massFlows:
-    testTrust.append(massFlowToThrust(dmdt, False)[0])
-    testTrustCool.append(massFlowToThrust(dmdt, True)[0])
+    testTrust.append(massFlowToThrust(dmdt, False, False)[0])
+    testTrustCool.append(massFlowToThrust(dmdt, True, False)[0])
 testTrust = np.array(testTrust)
 testTrustCool = np.array(testTrustCool)
 
-# Calculate correct mass flow value
+# Calculate correct mass flow value and print
 i_closest = np.argmin(np.abs(testTrust - Net_thrust))
 final_dmdt = np.interp(Net_thrust, testTrust[i_closest:i_closest+2], massFlows[i_closest:i_closest+2])
-_, SFC, hotChokedStatus, coldChokedStatus, PR_hot, PR_cold, eta_p, eta_th, eta_0 =\
-    massFlowToThrust(final_dmdt, False)
+
 i_closest_c = np.argmin(np.abs(testTrustCool - Net_thrust))
 final_dmdt_c = np.interp(Net_thrust, testTrust[i_closest_c:i_closest_c+2], massFlows[i_closest_c:i_closest_c+2])
-_, SFC_c, hotChokedStatus_c, coldChokedStatus_c, PR_hot_c, PR_cold_c, eta_p_c, eta_th_c, eta_0_c =\
-    massFlowToThrust(final_dmdt, False)
 
 # Print result from code
-print(f'Thrust: {Net_thrust * 1e-3:.3g} kN.\n')
-
-print('Results without cooling flow:')
-print(f'Intake mass flow: {final_dmdt:.3g} kg/s.')
-print(f'SFC: {SFC * 1e6:.3g} mg/Ns.')
-print(f'Hot channel is choked: {hotChokedStatus}.')
-print(f'Cold channel is choked: {coldChokedStatus}.')
-print(f'Hot nozzle pressure ratio: {PR_hot:.3g}')
-print(f'Cold nozzle pressure ratio: {PR_cold:.3g}')
-print(f'Propulsion efficiency: {eta_p:.3g}.')
-print(f'Thermal efficiency: {eta_th:.3g}.')
-print(f'Total efficiency: {eta_0:.3g}.\n')
-
-print('Results with cooling flow:')
-print(f'Intake mass flow: {final_dmdt_c:.3g} kg/s.')
-print(f'SFC: {SFC_c * 1e6:.3g} mg/Ns.')
-print(f'Hot channel is choked: {hotChokedStatus_c}.')
-print(f'Cold channel is choked: {coldChokedStatus_c}.')
-print(f'Hot nozzle pressure ratio: {PR_hot_c:.3g}')
-print(f'Cold nozzle pressure ratio: {PR_cold_c:.3g}')
-print(f'Propulsion efficiency: {eta_p_c:.3g}.')
-print(f'Thermal efficiency: {eta_th_c:.3g}.')
-print(f'Total efficiency: {eta_0_c:.3g}.')
+print(f'Thrust: {Net_thrust * 1e-3:.3g} kN.')
+massFlowToThrust(final_dmdt, False, True)
+massFlowToThrust(final_dmdt, True, True)
 
 # Plot mass flow to thrust
 plt.figure()
