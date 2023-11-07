@@ -164,5 +164,3 @@ plt.show()
 # Print result from code
 print(f'Intake mass flow: {final_dmdt:.3g} kg/s.')
 print(f'Thrust: {Net_thrust * 1e-3:.3g} kN.')
-
-
