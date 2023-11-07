@@ -111,11 +111,13 @@ def massFlowToThrust(dmdt_0):
         rho_9 = p_9/(R_g*T_9)
         A_9 = dmdt_g / (rho_9*c_9)
         F_GH = dmdt_g * c_9 + A_9*(p_9-p_1)  # Gross hot gases thrust
+        hot_pratio = CPR_hot
     else:
         p_9 = p_1
         T_9 = T0_8-Hot_jet_efficiency*T0_8*(1-(1/p0_8/p_9)**((gamma_g-1)/gamma_g))
         c_9 = np.sqrt((T0_8-T_9)*2*cp_g)
         F_GH = dmdt_g * c_9
+        hot_pratio = (p0_8 / p_1)
 
     if coldIsChoked:
         p_10 = p0_2 / CPR_cold
@@ -125,29 +127,34 @@ def massFlowToThrust(dmdt_0):
         rho_10 = p_10 / R_a / T_10
         A_10 = dmdt_cold / rho_10 / C_10
         F_GC = dmdt_cold * C_10 + A_10 * (p_10 - p_1)
+        cold_pratio = CPR_hot
     else:
         p_10 = p_1
         T_10 = T0_2 - Cold_Jet_efficiency * T0_2 *(1 - (1 / (p0_2 / p_10)) ** ((gamma_a - 1) / gamma_a))
         C_10 = np.sqrt((T0_2 - T_10) * 2 * cp_a)
         F_GC = dmdt_cold * C_10
+        cold_pratio = (p0_2 / p_1)
 
     F_D = dmdt_0 * C_a
 
     F_net = F_GH + F_GC - F_D
+    SFC = dmdt_f / F_net
 
-    return F_net
+    return F_net, SFC, hotIsChoked, coldIsChoked, hot_pratio, cold_pratio
+
 
 
 # Assemble mass flow data
 massFlows = np.linspace(1, 1000, 100)
 testTrust = []
 for dmdt in massFlows:
-    testTrust.append(massFlowToThrust(dmdt))
+    testTrust.append(massFlowToThrust(dmdt)[0])
 testTrust = np.array(testTrust)
 
 # Calculate correct mass flow value
 i_closest = np.argmin(np.abs(testTrust - Net_thrust))
 final_dmdt = np.interp(Net_thrust, testTrust[i_closest:i_closest+2], massFlows[i_closest:i_closest+2])
+_, SFC, hotChokedStatus, coldChokedStatus, PR_hot, PR_cold = massFlowToThrust(final_dmdt)
 
 # Plot mass flow to thrust
 plt.figure()
