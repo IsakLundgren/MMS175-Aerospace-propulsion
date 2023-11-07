@@ -12,18 +12,18 @@ FPR = 1.55  # Fan pressure ratio
 OPR = 47  # Overall pressure ratio
 HPC_pressure_ratio = 4.5
 Turbine_inlet_temperature = 1680  # K
-Intake_efficiency = 0.995  # %
-Fan_polytropic_efficiency = 0.92  # %
-Combustor_efficiency = 0.99  # %
-Combustor_pressure_loss = 0.035  # %
-HPT_polytropic_efficiency = 0.905  # %
-IPT_polytropic_efficiency = 0.91  # %
-LPT_polytropic_efficiency = 0.915  # %
-Cold_Jet_efficiency = 0.98  # %
-Hot_jet_efficiency = 0.99  # %
-Shaft_mechanical_efficiency = 0.995  # %
-IPC_polytropic_efficiency = 0.91  # %
-HPC_polytropic_efficiency = 0.915  # %
+Intake_efficiency = 0.995  #
+Fan_polytropic_efficiency = 0.92  #
+Combustor_efficiency = 0.99  #
+Combustor_pressure_loss = 0.035  #
+HPT_polytropic_efficiency = 0.905  #
+IPT_polytropic_efficiency = 0.91  #
+LPT_polytropic_efficiency = 0.915  #
+Cold_Jet_efficiency = 0.98  #
+Hot_jet_efficiency = 0.99  #
+Shaft_mechanical_efficiency = 0.995  #
+IPC_polytropic_efficiency = 0.91  #
+HPC_polytropic_efficiency = 0.915  #
 
 # Thermodynamic ambient properties at design altitude
 sourceAlt = [10000, 11000]  # m https://www.engineeringtoolbox.com/elevation-speed-sound-air-d_1534.html
@@ -50,7 +50,11 @@ C_a = Flight_Mach_number * Speed_of_sound_1  # m/s
 IPC_pressure_ratio = OPR / (FPR * HPC_pressure_ratio)
 
 
-def massFlowToThrust(dmdt_0, hasCooling, hasPrinting):
+def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting=False):
+    assert(1 > coolingFraction >= 0)
+    assert(1 > coolSplitFrac >= 0)
+    hasCooling = coolingFraction > 0
+
     dmdt_hot = dmdt_0 / (BPR + 1)
     dmdt_cold = BPR * dmdt_hot
 
@@ -79,31 +83,22 @@ def massFlowToThrust(dmdt_0, hasCooling, hasPrinting):
     FAR_gamma = 8.889E-08 * (Turbine_inlet_temperature - 950)
     FAR = (FAR_alpha - np.sqrt(FAR_alpha ** 2 + FAR_beta) - FAR_gamma) / Combustor_efficiency
 
-    if hasCooling:
-        dmdt_CC = 0.8*dmdt_hot
-        dmdt_cool_s = 0.6*0.2*dmdt_hot
-        dmdt_cool_r = 0.4*0.2*dmdt_hot
-        dmdt_f = FAR * dmdt_CC
-        dmdt_g_1 = dmdt_f + dmdt_CC
+    dmdt_CC = (1 - coolingFraction) * dmdt_hot
+    dmdt_cool = coolingFraction * dmdt_hot
+    dmdt_cool_s = (1 - coolSplitFrac) * dmdt_cool
+    dmdt_cool_r = coolSplitFrac * dmdt_cool
+    dmdt_f = FAR * dmdt_CC
+    dmdt_g_1 = dmdt_f + dmdt_CC
 
-        T0_5 = Turbine_inlet_temperature
-        p0_5 = p0_4 * Combustor_pressure_loss
+    T0_5 = Turbine_inlet_temperature
+    p0_5 = p0_4 * (1 - Combustor_pressure_loss)
 
-        dmdt_g_2 = dmdt_g_1 + dmdt_cool_s
-        T0_5_2 = (dmdt_CC * cp_g * T0_5 + dmdt_cool_s * cp_a * T0_4) / (cp_g * dmdt_g_2)
+    dmdt_g_2 = dmdt_g_1 + dmdt_cool_s
+    T0_5_2 = (dmdt_CC * cp_g * T0_5 + dmdt_cool_s * cp_a * T0_4) / (cp_g * dmdt_g_2)
 
-        T0_6 = T0_5_2 - dWdt_HPC / (dmdt_g_2 * cp_g * Shaft_mechanical_efficiency)
-        p0_6 = p0_5 * (T0_6 / T0_5) ** (gamma_g / ((gamma_g - 1) * HPT_polytropic_efficiency))
-        dmdt_g = dmdt_g_2+dmdt_cool_r
-    else:
-        dmdt_f = FAR * dmdt_hot
-        dmdt_g = dmdt_f + dmdt_hot
-
-        T0_5 = Turbine_inlet_temperature
-        p0_5 = p0_4 * Combustor_pressure_loss
-
-        T0_6 = T0_5 - dWdt_HPC / (dmdt_g * cp_g * Shaft_mechanical_efficiency)
-        p0_6 = p0_5 * (T0_6 / T0_5) ** (gamma_g / ((gamma_g - 1) * HPT_polytropic_efficiency))
+    T0_6 = T0_5_2 - dWdt_HPC / (dmdt_g_2 * cp_g * Shaft_mechanical_efficiency)
+    p0_6 = p0_5 * (T0_6 / T0_5_2) ** (gamma_g / ((gamma_g - 1) * HPT_polytropic_efficiency))
+    dmdt_g = dmdt_g_2 + dmdt_cool_r
 
     T0_7 = T0_6 - dWdt_IPC / (dmdt_g * cp_g * Shaft_mechanical_efficiency)
     p0_7 = p0_6 * (T0_7 / T0_6) ** (gamma_g / ((gamma_g - 1) * IPT_polytropic_efficiency))
@@ -117,11 +112,6 @@ def massFlowToThrust(dmdt_0, hasCooling, hasPrinting):
 
     hotIsChoked = (p0_8 / p_1) > CPR_hot
     coldIsChoked = (p0_2 / p_1) > CPR_cold
-    # print(hotIsChoked)
-    # print(coldIsChoked)
-    if hotIsChoked and not coldIsChoked:
-        print(hotIsChoked)
-        print(coldIsChoked)
 
     if hotIsChoked:  # p9=p9c critical pressure
         p_9 = p0_8 / CPR_hot
@@ -179,22 +169,23 @@ def massFlowToThrust(dmdt_0, hasCooling, hasPrinting):
         else:
             print('\n\n---Results without cooling flow---')
 
-        print('\n-Station thermodynamic properties-')
-        print(f'Station 1: P_01: {p0_1 * 1e-3:.3g} kPa, T_01: {T0_1:.3g} K, dmdt_01: {dmdt_0:.3g} kg/s.')
-        print(f'Station 2: P_02: {p0_2 * 1e-3:.3g} kPa, T_02: {T0_2:.3g} K, dmdt_02: {dmdt_hot:.3g} kg/s.')
-        print(f'Station 3: P_03: {p0_3 * 1e-3:.3g} kPa, T_03: {T0_3:.3g} K, dmdt_03: {dmdt_hot:.3g} kg/s.')
-        print(f'Station 4: P_04: {p0_4 * 1e-3:.3g} kPa, T_04: {T0_4:.3g} K, dmdt_04: {dmdt_hot:.3g} kg/s.')
+        print('\n--Station thermodynamic properties--')
+        print(f'Station 1: P_01: {p0_1 * 1e-3:.4g} kPa, T_01: {T0_1:.4g} K, dmdt_01: {dmdt_0:.3g} kg/s.')
+        print(f'Station 2: P_02: {p0_2 * 1e-3:.4g} kPa, T_02: {T0_2:.4g} K, dmdt_02: {dmdt_hot:.3g} kg/s.')
+        print(f'Station 3: P_03: {p0_3 * 1e-3:.4g} kPa, T_03: {T0_3:.4g} K, dmdt_03: {dmdt_hot:.3g} kg/s.')
+        print(f'Station 4: P_04: {p0_4 * 1e-3:.4g} kPa, T_04: {T0_4:.4g} K, dmdt_04: {dmdt_hot:.3g} kg/s.')
         if hasCooling:
-            print(f'Station 5: P_05: {p0_5 * 1e-3:.3g} kPa, T_05: {T0_5:.3g} K, dmdt_05: {dmdt_g_1:.3g} kg/s.')
-            print(f'Station 5.2: P_05.2: {p0_5 * 1e-3:.3g} kPa, T_05.2: {T0_5_2:.3g} K, dmdt_05: {dmdt_g_2:.3g} kg/s.')
+            print(f'Station 5.1: P_05.1: {p0_5 * 1e-3:.4g} kPa, T_05.1: {T0_5:.4g} K, dmdt_05.1: {dmdt_g_1:.3g} kg/s.')
+            print(f'Station 5.2: P_05.2: {p0_5 * 1e-3:.4g} kPa, T_05.2: {T0_5_2:.4g} K, dmdt_05.2: {dmdt_g_2:.3g} kg/s.')
         else:
-            print(f'Station 5: P_05: {p0_5 * 1e-3:.3g} kPa, T_05: {T0_5:.3g} K, dmdt_05: {dmdt_g:.3g} kg/s.')
-        print(f'Station 6: P_06: {p0_6 * 1e-3:.3g} kPa, T_06: {T0_6:.3g} K, dmdt_06: {dmdt_g:.3g} kg/s.')
-        print(f'Station 7: P_07: {p0_7 * 1e-3:.3g} kPa, T_07: {T0_7:.3g} K, dmdt_07: {dmdt_g:.3g} kg/s.')
-        print(f'Station 8: P_08: {p0_8 * 1e-3:.3g} kPa, T_08: {T0_8:.3g} K, dmdt_08: {dmdt_g:.3g} kg/s.')
+            print(f'Station 5: P_05: {p0_5 * 1e-3:.4g} kPa, T_05: {T0_5:.4g} K, dmdt_05: {dmdt_g:.3g} kg/s.')
+        print(f'Station 6: P_06: {p0_6 * 1e-3:.4g} kPa, T_06: {T0_6:.4g} K, dmdt_06: {dmdt_g:.3g} kg/s.')
+        print(f'Station 7: P_07: {p0_7 * 1e-3:.4g} kPa, T_07: {T0_7:.4g} K, dmdt_07: {dmdt_g:.3g} kg/s.')
+        print(f'Station 8: P_08: {p0_8 * 1e-3:.4g} kPa, T_08: {T0_8:.4g} K, dmdt_08: {dmdt_g:.3g} kg/s.')
 
-        print('\n-Overall performance-')
-        print(f'Intake mass flow: {final_dmdt:.3g} kg/s.')
+        print('\n--Overall performance--')
+        print(f'Thrust: {Net_thrust * 1e-3:.3g} kN.')
+        print(f'Intake mass flow: {dmdt_0:.3g} kg/s.')
         print(f'SFC: {SFC * 1e6:.3g} mg/Ns.')
         print(f'Hot channel is {"choked" if hotIsChoked else "not choked"}.')
         print(f'Cold channel is {"choked" if coldIsChoked else "not choked"}.')
@@ -208,13 +199,13 @@ def massFlowToThrust(dmdt_0, hasCooling, hasPrinting):
 
 
 # Assemble mass flow data
-massFlows = np.linspace(200, 400, 1000)
+massFlows = np.linspace(300, 500, 1000)
 testTrust = []
 testTrustCool = []
 
 for dmdt in massFlows:
-    testTrust.append(massFlowToThrust(dmdt, False, False)[0])
-    testTrustCool.append(massFlowToThrust(dmdt, True, False)[0])
+    testTrust.append(massFlowToThrust(dmdt)[0])
+    testTrustCool.append(massFlowToThrust(dmdt, coolingFraction=0.2, coolSplitFrac=0.4)[0])
 testTrust = np.array(testTrust)
 testTrustCool = np.array(testTrustCool)
 
@@ -226,9 +217,8 @@ i_closest_c = np.argmin(np.abs(testTrustCool - Net_thrust))
 final_dmdt_c = np.interp(Net_thrust, testTrust[i_closest_c:i_closest_c+2], massFlows[i_closest_c:i_closest_c+2])
 
 # Print result from code
-print(f'\nThrust: {Net_thrust * 1e-3:.3g} kN.')
-massFlowToThrust(final_dmdt, False, True)
-massFlowToThrust(final_dmdt, True, True)
+massFlowToThrust(final_dmdt, hasPrinting=True)
+massFlowToThrust(final_dmdt_c, coolingFraction=0.2, coolSplitFrac=0.4, hasPrinting=True)
 
 # Plot mass flow to thrust
 fig = plt.figure()
@@ -238,7 +228,7 @@ plt.plot(massFlows, testTrust * 1e-3, label='Calculated thrust', color='b', zord
 plt.plot(massFlows, testTrustCool * 1e-3, label='Calculated thrust w. cooling', color='m', zorder=2)
 plt.scatter(final_dmdt, Net_thrust * 1e-3, c='r', marker='o', label='Design point', zorder=3)
 plt.scatter(final_dmdt_c, Net_thrust * 1e-3, c='k', marker='o', label='Design point w. cooling', zorder=4)
-plt.title('Mass flow versus thrust')
+plt.title('Mass flow versus Thrust')
 plt.xlabel('Intake mass flow [kg/s]')
 plt.ylabel('Net thrust [kN]')
 plt.grid()
