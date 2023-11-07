@@ -133,7 +133,7 @@ def massFlowToThrust(dmdt_0, hasCooling):
         hot_pratio = CPR_hot
         # ideal velocity
         C9_ideal = np.sqrt(2 * cp_g * T0_8 * (1 - (1 / (p0_8 / p_1)) ** ((gamma_g - 1) / gamma_g)))
-        C9_eta = C9_ideal
+        C_9_eta = C9_ideal
     else:
         p_9 = p_1
         T_9 = T0_8-Hot_jet_efficiency*T0_8*(1-(1/p0_8/p_9)**((gamma_g-1)/gamma_g))
@@ -167,7 +167,7 @@ def massFlowToThrust(dmdt_0, hasCooling):
     F_net = F_GH + F_GC - F_D
     SFC = dmdt_f / F_net
 
-    deltaW_kin = dmdt_cold * C_10_eta ** 2 / 2 + dmdt_hot * C_9_eta ** 2 / 2 - dmdt_0 * C_a**2 / 2
+    deltaW_kin = dmdt_cold * C_10_eta ** 2 / 2 + dmdt_g * C_9_eta ** 2 / 2 - dmdt_0 * C_a**2 / 2
 
     eta_p = F_net * C_a / deltaW_kin
     eta_th = deltaW_kin / dmdt_f / Q_net_JA
