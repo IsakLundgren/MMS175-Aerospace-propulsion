@@ -152,7 +152,7 @@ final_dmdt = np.interp(Net_thrust, testTrust[i_closest:i_closest+2], massFlows[i
 # Plot mass flow to thrust
 plt.figure()
 plt.hlines(Net_thrust * 1e-3, min(massFlows), max(massFlows)
-           , label='Thrust requirement', color='y', linestyles='--', zorder=0)
+           , label='Thrust requirement', color='g', linestyles='--', zorder=0)
 plt.plot(massFlows, testTrust * 1e-3, label='Calculated thrust', color='b', zorder=1)
 plt.scatter(final_dmdt, Net_thrust * 1e-3, c='r', marker='o', label='Design point', zorder=2)
 plt.xlabel('Intake mass flow [kg/s]')
