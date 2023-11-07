@@ -181,6 +181,7 @@ def massFlowToThrust(dmdt_0, hasCooling):
 massFlows = np.linspace(1, 1000, 100)
 testTrust = []
 cooling = False
+
 for dmdt in massFlows:
     testTrust.append(massFlowToThrust(dmdt, cooling)[0])
 testTrust = np.array(testTrust)
@@ -188,7 +189,7 @@ testTrust = np.array(testTrust)
 # Calculate correct mass flow value
 i_closest = np.argmin(np.abs(testTrust - Net_thrust))
 final_dmdt = np.interp(Net_thrust, testTrust[i_closest:i_closest+2], massFlows[i_closest:i_closest+2])
-_, SFC, hotChokedStatus, coldChokedStatus, PR_hot, PR_cold, eta_p, eta_th, eta_0 = massFlowToThrust(final_dmdt, False)
+_, SFC, hotChokedStatus, coldChokedStatus, PR_hot, PR_cold, eta_p, eta_th, eta_0 = massFlowToThrust(final_dmdt, cooling)
 
 # Plot mass flow to thrust
 plt.figure()
