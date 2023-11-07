@@ -40,6 +40,8 @@ R_a = 287     # unit
 R_g = cp_g * (gamma_g-1)/gamma_g
 Speed_of_sound_1 = np.sqrt(gamma_a * R_a * T_1)  # m/s
 
+# Chemical energy in jet-A
+Q_net_JA = 43.1e6   # J/kg
 
 # Flight velocity
 C_a = Flight_Mach_number * Speed_of_sound_1  # m/s
@@ -107,17 +109,21 @@ def massFlowToThrust(dmdt_0, hasCooling):
     if hotIsChoked:  # p9=p9c critical pressure
         p_9 = p0_8 / CPR_hot
         T_9 = 2*T0_8/(gamma_g+1)
-        c_9 = np.sqrt(gamma_g*R_g*T_9)
+        C_9 = np.sqrt(gamma_g*R_g*T_9)
         rho_9 = p_9/(R_g*T_9)
-        A_9 = dmdt_g / (rho_9*c_9)
-        F_GH = dmdt_g * c_9 + A_9*(p_9-p_1)  # Gross hot gases thrust
+        A_9 = dmdt_g / (rho_9*C_9)
+        F_GH = dmdt_g * C_9 + A_9*(p_9-p_1)  # Gross hot gases thrust
         hot_pratio = CPR_hot
+        # ideal velocity
+        C9_ideal = np.sqrt(2 * cp_g * T0_8 * (1 - (1 / (p0_8 / p_1)) ** ((gamma_g - 1) / gamma_g)))
+        C9_eta = C9_ideal
     else:
         p_9 = p_1
         T_9 = T0_8-Hot_jet_efficiency*T0_8*(1-(1/p0_8/p_9)**((gamma_g-1)/gamma_g))
-        c_9 = np.sqrt((T0_8-T_9)*2*cp_g)
-        F_GH = dmdt_g * c_9
+        C_9 = np.sqrt((T0_8-T_9)*2*cp_g)
+        F_GH = dmdt_g * C_9
         hot_pratio = (p0_8 / p_1)
+        C_9_eta = C_9
 
     if coldIsChoked:
         p_10 = p0_2 / CPR_cold
@@ -128,19 +134,29 @@ def massFlowToThrust(dmdt_0, hasCooling):
         A_10 = dmdt_cold / rho_10 / C_10
         F_GC = dmdt_cold * C_10 + A_10 * (p_10 - p_1)
         cold_pratio = CPR_hot
+        # ideal velocity
+        C_10_ideal = np.sqrt(2 * cp_a * T0_2 * (1 - (1 / (p0_2 / p_1)) ** ((gamma_a - 1) / gamma_a)))
+        C_10_eta = C_10_ideal
     else:
         p_10 = p_1
         T_10 = T0_2 - Cold_Jet_efficiency * T0_2 *(1 - (1 / (p0_2 / p_10)) ** ((gamma_a - 1) / gamma_a))
         C_10 = np.sqrt((T0_2 - T_10) * 2 * cp_a)
         F_GC = dmdt_cold * C_10
         cold_pratio = (p0_2 / p_1)
+        C_10_eta = C_10
 
     F_D = dmdt_0 * C_a
 
     F_net = F_GH + F_GC - F_D
     SFC = dmdt_f / F_net
 
-    return F_net, SFC, hotIsChoked, coldIsChoked, hot_pratio, cold_pratio
+    deltaW_kin = dmdt_cold * C_9_eta**2 / 2 + dmdt_hot * C_10_eta**2 / 2 - dmdt_0 * C_a**2 / 2
+
+    eta_p = F_net * C_a / deltaW_kin
+    eta_th = deltaW_kin / dmdt_f / Q_net_JA
+    eta_0 = eta_p * eta_th
+
+    return F_net, SFC, hotIsChoked, coldIsChoked, hot_pratio, cold_pratio, eta_p, eta_th, eta_0
 
 
 
