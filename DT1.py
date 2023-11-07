@@ -167,7 +167,7 @@ def massFlowToThrust(dmdt_0, hasCooling):
     F_net = F_GH + F_GC - F_D
     SFC = dmdt_f / F_net
 
-    deltaW_kin = dmdt_cold * C_9_eta**2 / 2 + dmdt_hot * C_10_eta**2 / 2 - dmdt_0 * C_a**2 / 2
+    deltaW_kin = dmdt_cold * C_10_eta ** 2 / 2 + dmdt_hot * C_9_eta ** 2 / 2 - dmdt_0 * C_a**2 / 2
 
     eta_p = F_net * C_a / deltaW_kin
     eta_th = deltaW_kin / dmdt_f / Q_net_JA
@@ -176,36 +176,63 @@ def massFlowToThrust(dmdt_0, hasCooling):
     return F_net, SFC, hotIsChoked, coldIsChoked, hot_pratio, cold_pratio, eta_p, eta_th, eta_0
 
 
-
 # Assemble mass flow data
-massFlows = np.linspace(1, 1000, 100)
+massFlows = np.linspace(200, 400, 1000)
 testTrust = []
-cooling = False
+testTrustCool = []
 
 for dmdt in massFlows:
-    testTrust.append(massFlowToThrust(dmdt, cooling)[0])
+    testTrust.append(massFlowToThrust(dmdt, False)[0])
+    testTrustCool.append(massFlowToThrust(dmdt, True)[0])
 testTrust = np.array(testTrust)
+testTrustCool = np.array(testTrustCool)
 
 # Calculate correct mass flow value
 i_closest = np.argmin(np.abs(testTrust - Net_thrust))
 final_dmdt = np.interp(Net_thrust, testTrust[i_closest:i_closest+2], massFlows[i_closest:i_closest+2])
-_, SFC, hotChokedStatus, coldChokedStatus, PR_hot, PR_cold, eta_p, eta_th, eta_0 = massFlowToThrust(final_dmdt, cooling)
+_, SFC, hotChokedStatus, coldChokedStatus, PR_hot, PR_cold, eta_p, eta_th, eta_0 =\
+    massFlowToThrust(final_dmdt, False)
+i_closest_c = np.argmin(np.abs(testTrustCool - Net_thrust))
+final_dmdt_c = np.interp(Net_thrust, testTrust[i_closest_c:i_closest_c+2], massFlows[i_closest_c:i_closest_c+2])
+_, SFC_c, hotChokedStatus_c, coldChokedStatus_c, PR_hot_c, PR_cold_c, eta_p_c, eta_th_c, eta_0_c =\
+    massFlowToThrust(final_dmdt, False)
+
+# Print result from code
+print(f'Thrust: {Net_thrust * 1e-3:.3g} kN.\n')
+
+print('Results without cooling flow:')
+print(f'Intake mass flow: {final_dmdt:.3g} kg/s.')
+print(f'SFC: {SFC * 1e6:.3g} mg/Ns.')
+print(f'Hot channel is choked: {hotChokedStatus}.')
+print(f'Cold channel is choked: {coldChokedStatus}.')
+print(f'Hot nozzle pressure ratio: {PR_hot:.3g}')
+print(f'Cold nozzle pressure ratio: {PR_cold:.3g}')
+print(f'Propulsion efficiency: {eta_p:.3g}.')
+print(f'Thermal efficiency: {eta_th:.3g}.')
+print(f'Total efficiency: {eta_0:.3g}.\n')
+
+print('Results with cooling flow:')
+print(f'Intake mass flow: {final_dmdt_c:.3g} kg/s.')
+print(f'SFC: {SFC_c * 1e6:.3g} mg/Ns.')
+print(f'Hot channel is choked: {hotChokedStatus_c}.')
+print(f'Cold channel is choked: {coldChokedStatus_c}.')
+print(f'Hot nozzle pressure ratio: {PR_hot_c:.3g}')
+print(f'Cold nozzle pressure ratio: {PR_cold_c:.3g}')
+print(f'Propulsion efficiency: {eta_p_c:.3g}.')
+print(f'Thermal efficiency: {eta_th_c:.3g}.')
+print(f'Total efficiency: {eta_0_c:.3g}.')
 
 # Plot mass flow to thrust
 plt.figure()
-plt.hlines(Net_thrust * 1e-3, min(massFlows), max(massFlows)
-           , label='Thrust requirement', color='g', linestyles='--', zorder=0)
+plt.hlines(Net_thrust * 1e-3, min(massFlows), max(massFlows),
+           label='Thrust requirement', color='g', linestyles='--', zorder=0)
 plt.plot(massFlows, testTrust * 1e-3, label='Calculated thrust', color='b', zorder=1)
-plt.scatter(final_dmdt, Net_thrust * 1e-3, c='r', marker='o', label='Design point', zorder=2)
+plt.plot(massFlows, testTrustCool * 1e-3, label='Calculated thrust w. cooling', color='m', zorder=2)
+plt.scatter(final_dmdt, Net_thrust * 1e-3, c='r', marker='o', label='Design point', zorder=3)
+plt.scatter(final_dmdt_c, Net_thrust * 1e-3, c='k', marker='o', label='Design point w. cooling', zorder=4)
 plt.xlabel('Intake mass flow [kg/s]')
 plt.ylabel('Net thrust [kN]')
 plt.grid()
 plt.legend()
-
-
-# Print result from code
-print(f'Intake mass flow: {final_dmdt:.3g} kg/s.')
-print(f'Thrust: {Net_thrust * 1e-3:.3g} kN.')
-print(f'Propulsion efficiency: {Net_thrust * 1e-3:.3g}')
 
 plt.show()
