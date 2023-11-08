@@ -199,13 +199,17 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
                     for data in station_data_no_cooling:
                         station_properties_table += " & ".join(data) + " \\\\\n"
 
-                station_properties_table += "6 & " + f"{p0_6 * 1e-3:.4g}" + " & " + f"{T0_6:.4g}" + " & " + f"{dmdt_g:.3g}" + " \\\\\n"
-                station_properties_table += "7 & " + f"{p0_7 * 1e-3:.4g}" + " & " + f"{T0_7:.4g}" + " & " + f"{dmdt_g:.3g}" + " \\\\\n"
-                station_properties_table += "8 & " + f"{p0_8 * 1e-3:.4g}" + " & " + f"{T0_8:.4g}" + " & " + f"{dmdt_g:.3g}" + " \\\\\n"
+                station_properties_table += ("6 & " + f"{p0_6 * 1e-3:.4g}" + " & " + f"{T0_6:.4g}" +
+                                             " & " + f"{dmdt_g:.3g}" + " \\\\\n")
+                station_properties_table += ("7 & " + f"{p0_7 * 1e-3:.4g}" + " & " + f"{T0_7:.4g}" +
+                                             " & " + f"{dmdt_g:.3g}" + " \\\\\n")
+                station_properties_table += ("8 & " + f"{p0_8 * 1e-3:.4g}" + " & " + f"{T0_8:.4g}" +
+                                             " & " + f"{dmdt_g:.3g}" + " \\\\\n")
 
                 station_properties_table += "\\hline\n"
                 station_properties_table += "\\end{tabular}\n"
                 station_properties_table += "\\caption{Station Thermodynamic Properties}\n"
+                station_properties_table += "\\label{tab:thermStatCool_" + f"{coolingFraction:.2g}" + "}\n"
                 station_properties_table += "\\end{table}"
 
                 print(station_properties_table)
@@ -236,6 +240,7 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
                 overall_performance_table += "\\hline\n"
                 overall_performance_table += "\\end{tabular}\n"
                 overall_performance_table += "\\caption{Overall Performance}\n"
+                overall_performance_table += "\\label{tab:ovPerfCool_" + f"{coolingFraction:.2g}" + "}\n"
                 overall_performance_table += "\\end{table}"
 
                 print(overall_performance_table)
