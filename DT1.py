@@ -166,18 +166,24 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
     if hasPrinting:
         if printLatex:
             if hasPrinting:
-                station_properties_table = "\n\\begin{table}[ht]\n"
+                station_properties_table = "\\begin{table}[ht]\n"
                 station_properties_table += "\\centering\n"
+                station_properties_table += ("\\caption{Analysis results, cooling fraction: "
+                                             + f"{coolingFraction * 100:.2g}" +
+                                             "\\%.}\n")
+                station_properties_table += "\\begin{subtable}{0.45\\textwidth}\n"
+                station_properties_table += "\\centering\n"
+                station_properties_table += "\\caption{Station Thermodynamic Properties}\n"
                 station_properties_table += "\\begin{tabular}{|l|l|l|l|}\n"
                 station_properties_table += "\\hline\n"
-                station_properties_table += "Station & Pressure (kPa) & Temperature (K) & Mass Flow (kg/s) \\\\\n"
+                station_properties_table += "Station & $P$ (kPa) & $T$ (K) & $\\dot{m}$ (kg/s) \\\\\n"
                 station_properties_table += "\\hline\n"
 
                 station_data = [
-                    ["1", f"{p0_1 * 1e-3:.4g}", f"{T0_1:.4g}", f"{dmdt_0:.3g}"],
-                    ["2", f"{p0_2 * 1e-3:.4g}", f"{T0_2:.4g}", f"{dmdt_hot:.3g}"],
-                    ["3", f"{p0_3 * 1e-3:.4g}", f"{T0_3:.4g}", f"{dmdt_hot:.3g}"],
-                    ["4", f"{p0_4 * 1e-3:.4g}", f"{T0_4:.4g}", f"{dmdt_hot:.3g}"],
+                    ["1", f"{p0_1 * 1e-3:.4g}", f"{T0_1:.4g}", f"{dmdt_0:.4g}"],
+                    ["2", f"{p0_2 * 1e-3:.4g}", f"{T0_2:.4g}", f"{dmdt_hot:.4g}"],
+                    ["3", f"{p0_3 * 1e-3:.4g}", f"{T0_3:.4g}", f"{dmdt_hot:.4g}"],
+                    ["4", f"{p0_4 * 1e-3:.4g}", f"{T0_4:.4g}", f"{dmdt_hot:.4g}"],
                 ]
 
                 for data in station_data:
@@ -185,53 +191,51 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
 
                 if hasCooling:
                     station_data_cooling = [
-                        ["5.1", f"{p0_5 * 1e-3:.4g}", f"{T0_5:.4g}", f"{dmdt_g_1:.3g}"],
-                        ["5.2", f"{p0_5 * 1e-3:.4g}", f"{T0_5_2:.4g}", f"{dmdt_g_2:.3g}"],
+                        ["5.1", f"{p0_5 * 1e-3:.4g}", f"{T0_5:.4g}", f"{dmdt_g_1:.4g}"],
+                        ["5.2", f"{p0_5 * 1e-3:.4g}", f"{T0_5_2:.4g}", f"{dmdt_g_2:.4g}"],
                     ]
 
                     for data in station_data_cooling:
                         station_properties_table += " & ".join(data) + " \\\\\n"
                 else:
                     station_data_no_cooling = [
-                        ["5", f"{p0_5 * 1e-3:.4g}", f"{T0_5:.4g}", f"{dmdt_g:.3g}"],
+                        ["5", f"{p0_5 * 1e-3:.4g}", f"{T0_5:.4g}", f"{dmdt_g:.4g}"],
                     ]
 
                     for data in station_data_no_cooling:
                         station_properties_table += " & ".join(data) + " \\\\\n"
 
                 station_properties_table += ("6 & " + f"{p0_6 * 1e-3:.4g}" + " & " + f"{T0_6:.4g}" +
-                                             " & " + f"{dmdt_g:.3g}" + " \\\\\n")
+                                             " & " + f"{dmdt_g:.4g}" + " \\\\\n")
                 station_properties_table += ("7 & " + f"{p0_7 * 1e-3:.4g}" + " & " + f"{T0_7:.4g}" +
-                                             " & " + f"{dmdt_g:.3g}" + " \\\\\n")
+                                             " & " + f"{dmdt_g:.4g}" + " \\\\\n")
                 station_properties_table += ("8 & " + f"{p0_8 * 1e-3:.4g}" + " & " + f"{T0_8:.4g}" +
-                                             " & " + f"{dmdt_g:.3g}" + " \\\\\n")
+                                             " & " + f"{dmdt_g:.4g}" + " \\\\\n")
 
                 station_properties_table += "\\hline\n"
                 station_properties_table += "\\end{tabular}\n"
-                station_properties_table += "\\caption{Station Thermodynamic Properties}\n"
                 station_properties_table += "\\label{tab:thermStatCool_" + f"{coolingFraction:.2g}" + "}\n"
-                station_properties_table += "\\end{table}"
+                station_properties_table += "\\end{subtable}"
 
-                print(station_properties_table)
-
-                overall_performance_table = "\n\\begin{table}[ht]\n"
+                overall_performance_table = "\\begin{subtable}{0.45\\textwidth}\n"
                 overall_performance_table += "\\centering\n"
+                overall_performance_table += "\\caption{Overall Performance}\n"
                 overall_performance_table += "\\begin{tabular}{|l|l|}\n"
                 overall_performance_table += "\\hline\n"
                 overall_performance_table += "Parameter & Value \\\\\n"
                 overall_performance_table += "\\hline\n"
 
                 overall_performance_data = [
-                    ["Thrust (kN)", f"{Net_thrust * 1e-3:.3g}"],
-                    ["Intake mass flow (kg/s)", f"{dmdt_0:.3g}"],
-                    ["SFC (mg/Ns)", f"{SFC * 1e6:.3g}"],
+                    ["Thrust (kN)", f"{Net_thrust * 1e-3:.4g}"],
+                    ["Intake mass flow (kg/s)", f"{dmdt_0:.4g}"],
+                    ["SFC (mg/Ns)", f"{SFC * 1e6:.4g}"],
                     ["Hot channel choke status", "choked" if hotIsChoked else "not choked"],
                     ["Cold channel choke status", "choked" if coldIsChoked else "not choked"],
-                    ["Hot nozzle pressure ratio", f"{hot_pratio:.3g}"],
-                    ["Cold nozzle pressure ratio", f"{cold_pratio:.3g}"],
-                    ["Propulsion efficiency", f"{eta_p:.3g}"],
-                    ["Thermal efficiency", f"{eta_th:.3g}"],
-                    ["Total efficiency", f"{eta_0:.3g}"],
+                    ["Hot nozzle pressure ratio", f"{hot_pratio:.4g}"],
+                    ["Cold nozzle pressure ratio", f"{cold_pratio:.4g}"],
+                    ["Propulsion efficiency", f"{eta_p:.4g}"],
+                    ["Thermal efficiency", f"{eta_th:.4g}"],
+                    ["Total efficiency", f"{eta_0:.4g}"],
                 ]
 
                 for data in overall_performance_data:
@@ -239,10 +243,12 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
 
                 overall_performance_table += "\\hline\n"
                 overall_performance_table += "\\end{tabular}\n"
-                overall_performance_table += "\\caption{Overall Performance}\n"
                 overall_performance_table += "\\label{tab:ovPerfCool_" + f"{coolingFraction:.2g}" + "}\n"
-                overall_performance_table += "\\end{table}"
+                overall_performance_table += "\\end{subtable}\n"
+                overall_performance_table += "\\label{tab:anResCool_" + f"{coolingFraction:.2g}" + "}\n"
+                overall_performance_table += "\\end{table}\n"
 
+                print(station_properties_table)
                 print(overall_performance_table)
 
         else:
