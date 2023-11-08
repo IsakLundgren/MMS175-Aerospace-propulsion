@@ -50,7 +50,7 @@ C_a = Flight_Mach_number * Speed_of_sound_1  # m/s
 IPC_pressure_ratio = OPR / (FPR * HPC_pressure_ratio)
 
 
-def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting=False):
+def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting=False, printLatex=False):
     assert(1 > coolingFraction >= 0)
     assert(1 > coolSplitFrac >= 0)
     hasCooling = coolingFraction > 0
@@ -164,38 +164,115 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
     eta_0 = eta_p * eta_th
 
     if hasPrinting:
-        if hasCooling:
-            print('\n\n---Results with cooling flow---')
-        else:
-            print('\n\n---Results without cooling flow---')
+        if printLatex:
+            if hasPrinting:
+                station_properties_table = "\n\\begin{table}[ht]\n"
+                station_properties_table += "\\centering\n"
+                station_properties_table += "\\begin{tabular}{|l|l|l|l|}\n"
+                station_properties_table += "\\hline\n"
+                station_properties_table += "Station & Pressure (kPa) & Temperature (K) & Mass Flow (kg/s) \\\\\n"
+                station_properties_table += "\\hline\n"
 
-        print('\n--Station thermodynamic properties--')
-        print(f'Station 1: P_01: {p0_1 * 1e-3:.4g} kPa, T_01: {T0_1:.4g} K, dmdt_01: {dmdt_0:.3g} kg/s.')
-        print(f'Station 2: P_02: {p0_2 * 1e-3:.4g} kPa, T_02: {T0_2:.4g} K, dmdt_02: {dmdt_hot:.3g} kg/s.')
-        print(f'Station 3: P_03: {p0_3 * 1e-3:.4g} kPa, T_03: {T0_3:.4g} K, dmdt_03: {dmdt_hot:.3g} kg/s.')
-        print(f'Station 4: P_04: {p0_4 * 1e-3:.4g} kPa, T_04: {T0_4:.4g} K, dmdt_04: {dmdt_hot:.3g} kg/s.')
-        if hasCooling:
-            print(f'Station 5.1: P_05.1: {p0_5 * 1e-3:.4g} kPa, T_05.1: {T0_5:.4g} K, dmdt_05.1: '
-                  f'{dmdt_g_1:.3g} kg/s.')
-            print(f'Station 5.2: P_05.2: {p0_5 * 1e-3:.4g} kPa, T_05.2: {T0_5_2:.4g} K, dmdt_05.2: '
-                  f'{dmdt_g_2:.3g} kg/s.')
-        else:
-            print(f'Station 5: P_05: {p0_5 * 1e-3:.4g} kPa, T_05: {T0_5:.4g} K, dmdt_05: {dmdt_g:.3g} kg/s.')
-        print(f'Station 6: P_06: {p0_6 * 1e-3:.4g} kPa, T_06: {T0_6:.4g} K, dmdt_06: {dmdt_g:.3g} kg/s.')
-        print(f'Station 7: P_07: {p0_7 * 1e-3:.4g} kPa, T_07: {T0_7:.4g} K, dmdt_07: {dmdt_g:.3g} kg/s.')
-        print(f'Station 8: P_08: {p0_8 * 1e-3:.4g} kPa, T_08: {T0_8:.4g} K, dmdt_08: {dmdt_g:.3g} kg/s.')
+                station_data = [
+                    ["1", f"{p0_1 * 1e-3:.4g}", f"{T0_1:.4g}", f"{dmdt_0:.3g}"],
+                    ["2", f"{p0_2 * 1e-3:.4g}", f"{T0_2:.4g}", f"{dmdt_hot:.3g}"],
+                    ["3", f"{p0_3 * 1e-3:.4g}", f"{T0_3:.4g}", f"{dmdt_hot:.3g}"],
+                    ["4", f"{p0_4 * 1e-3:.4g}", f"{T0_4:.4g}", f"{dmdt_hot:.3g}"],
+                ]
 
-        print('\n--Overall performance--')
-        print(f'Thrust: {Net_thrust * 1e-3:.3g} kN.')
-        print(f'Intake mass flow: {dmdt_0:.3g} kg/s.')
-        print(f'SFC: {SFC * 1e6:.3g} mg/Ns.')
-        print(f'Hot channel is {"choked" if hotIsChoked else "not choked"}.')
-        print(f'Cold channel is {"choked" if coldIsChoked else "not choked"}.')
-        print(f'Hot nozzle pressure ratio: {hot_pratio:.3g}')
-        print(f'Cold nozzle pressure ratio: {cold_pratio:.3g}')
-        print(f'Propulsion efficiency: {eta_p:.3g}.')
-        print(f'Thermal efficiency: {eta_th:.3g}.')
-        print(f'Total efficiency: {eta_0:.3g}.')
+                for data in station_data:
+                    station_properties_table += " & ".join(data) + " \\\\\n"
+
+                if hasCooling:
+                    station_data_cooling = [
+                        ["5.1", f"{p0_5 * 1e-3:.4g}", f"{T0_5:.4g}", f"{dmdt_g_1:.3g}"],
+                        ["5.2", f"{p0_5 * 1e-3:.4g}", f"{T0_5_2:.4g}", f"{dmdt_g_2:.3g}"],
+                    ]
+
+                    for data in station_data_cooling:
+                        station_properties_table += " & ".join(data) + " \\\\\n"
+                else:
+                    station_data_no_cooling = [
+                        ["5", f"{p0_5 * 1e-3:.4g}", f"{T0_5:.4g}", f"{dmdt_g:.3g}"],
+                    ]
+
+                    for data in station_data_no_cooling:
+                        station_properties_table += " & ".join(data) + " \\\\\n"
+
+                station_properties_table += "6 & " + f"{p0_6 * 1e-3:.4g}" + " & " + f"{T0_6:.4g}" + " & " + f"{dmdt_g:.3g}" + " \\\\\n"
+                station_properties_table += "7 & " + f"{p0_7 * 1e-3:.4g}" + " & " + f"{T0_7:.4g}" + " & " + f"{dmdt_g:.3g}" + " \\\\\n"
+                station_properties_table += "8 & " + f"{p0_8 * 1e-3:.4g}" + " & " + f"{T0_8:.4g}" + " & " + f"{dmdt_g:.3g}" + " \\\\\n"
+
+                station_properties_table += "\\hline\n"
+                station_properties_table += "\\end{tabular}\n"
+                station_properties_table += "\\caption{Station Thermodynamic Properties}\n"
+                station_properties_table += "\\end{table}"
+
+                print(station_properties_table)
+
+                overall_performance_table = "\n\\begin{table}[ht]\n"
+                overall_performance_table += "\\centering\n"
+                overall_performance_table += "\\begin{tabular}{|l|l|}\n"
+                overall_performance_table += "\\hline\n"
+                overall_performance_table += "Parameter & Value \\\\\n"
+                overall_performance_table += "\\hline\n"
+
+                overall_performance_data = [
+                    ["Thrust (kN)", f"{Net_thrust * 1e-3:.3g}"],
+                    ["Intake mass flow (kg/s)", f"{dmdt_0:.3g}"],
+                    ["SFC (mg/Ns)", f"{SFC * 1e6:.3g}"],
+                    ["Hot channel choke status", "choked" if hotIsChoked else "not choked"],
+                    ["Cold channel choke status", "choked" if coldIsChoked else "not choked"],
+                    ["Hot nozzle pressure ratio", f"{hot_pratio:.3g}"],
+                    ["Cold nozzle pressure ratio", f"{cold_pratio:.3g}"],
+                    ["Propulsion efficiency", f"{eta_p:.3g}"],
+                    ["Thermal efficiency", f"{eta_th:.3g}"],
+                    ["Total efficiency", f"{eta_0:.3g}"],
+                ]
+
+                for data in overall_performance_data:
+                    overall_performance_table += " & ".join(data) + " \\\\\n"
+
+                overall_performance_table += "\\hline\n"
+                overall_performance_table += "\\end{tabular}\n"
+                overall_performance_table += "\\caption{Overall Performance}\n"
+                overall_performance_table += "\\end{table}"
+
+                print(overall_performance_table)
+
+        else:
+            if hasCooling:
+                print('\n\n---Results with cooling flow---')
+            else:
+                print('\n\n---Results without cooling flow---')
+
+            print('\n--Station thermodynamic properties--')
+            print(f'Station 1: P_01: {p0_1 * 1e-3:.4g} kPa, T_01: {T0_1:.4g} K, dmdt_01: {dmdt_0:.3g} kg/s.')
+            print(f'Station 2: P_02: {p0_2 * 1e-3:.4g} kPa, T_02: {T0_2:.4g} K, dmdt_02: {dmdt_hot:.3g} kg/s.')
+            print(f'Station 3: P_03: {p0_3 * 1e-3:.4g} kPa, T_03: {T0_3:.4g} K, dmdt_03: {dmdt_hot:.3g} kg/s.')
+            print(f'Station 4: P_04: {p0_4 * 1e-3:.4g} kPa, T_04: {T0_4:.4g} K, dmdt_04: {dmdt_hot:.3g} kg/s.')
+            if hasCooling:
+                print(f'Station 5.1: P_05.1: {p0_5 * 1e-3:.4g} kPa, T_05.1: {T0_5:.4g} K, dmdt_05.1: '
+                      f'{dmdt_g_1:.3g} kg/s.')
+                print(f'Station 5.2: P_05.2: {p0_5 * 1e-3:.4g} kPa, T_05.2: {T0_5_2:.4g} K, dmdt_05.2: '
+                      f'{dmdt_g_2:.3g} kg/s.')
+            else:
+                print(f'Station 5: P_05: {p0_5 * 1e-3:.4g} kPa, T_05: {T0_5:.4g} K, dmdt_05: {dmdt_g:.3g} kg/s.')
+            print(f'Station 6: P_06: {p0_6 * 1e-3:.4g} kPa, T_06: {T0_6:.4g} K, dmdt_06: {dmdt_g:.3g} kg/s.')
+            print(f'Station 7: P_07: {p0_7 * 1e-3:.4g} kPa, T_07: {T0_7:.4g} K, dmdt_07: {dmdt_g:.3g} kg/s.')
+            print(f'Station 8: P_08: {p0_8 * 1e-3:.4g} kPa, T_08: {T0_8:.4g} K, dmdt_08: {dmdt_g:.3g} kg/s.')
+
+            print('\n--Overall performance--')
+            print(f'Thrust: {Net_thrust * 1e-3:.3g} kN.')
+            print(f'Intake mass flow: {dmdt_0:.3g} kg/s.')
+            print(f'SFC: {SFC * 1e6:.3g} mg/Ns.')
+            print(f'Hot channel is {"choked" if hotIsChoked else "not choked"}.')
+            print(f'Cold channel is {"choked" if coldIsChoked else "not choked"}.')
+            print(f'Hot nozzle pressure ratio: {hot_pratio:.3g}')
+            print(f'Cold nozzle pressure ratio: {cold_pratio:.3g}')
+            print(f'Propulsion efficiency: {eta_p:.3g}.')
+            print(f'Thermal efficiency: {eta_th:.3g}.')
+            print(f'Total efficiency: {eta_0:.3g}.')
 
     return F_net, SFC, hotIsChoked, coldIsChoked, hot_pratio, cold_pratio, eta_p, eta_th, eta_0
 
@@ -219,8 +296,9 @@ i_closest_c = np.argmin(np.abs(testTrustCool - Net_thrust))
 final_dmdt_c = np.interp(Net_thrust, testTrust[i_closest_c:i_closest_c+2], massFlows[i_closest_c:i_closest_c+2])
 
 # Print result from code
-massFlowToThrust(final_dmdt, hasPrinting=True)
-massFlowToThrust(final_dmdt_c, coolingFraction=0.2, coolSplitFrac=0.4, hasPrinting=True)
+pl = True
+massFlowToThrust(final_dmdt, hasPrinting=True, printLatex=pl)
+massFlowToThrust(final_dmdt_c, coolingFraction=0.2, coolSplitFrac=0.4, hasPrinting=True, printLatex=pl)
 
 # Plot mass flow to thrust
 fig = plt.figure()
