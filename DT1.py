@@ -176,7 +176,7 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
                 station_properties_table += "\\caption{Station Thermodynamic Properties}\n"
                 station_properties_table += "\\begin{tabular}{|l|l|l|l|}\n"
                 station_properties_table += "\\hline\n"
-                station_properties_table += "Station & $P$ (kPa) & $T$ (K) & $\\dot{m}$ (kg/s) \\\\\n"
+                station_properties_table += "Station & $P_0$ (kPa) & $T_0$ (K) & $\\dot{m}$ (kg/s) \\\\\n"
                 station_properties_table += "\\hline\n"
 
                 station_data = [
