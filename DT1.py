@@ -66,7 +66,7 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
 
     p0_2 = p0_1 * FPR   # pressure after fan
     T0_2 = T0_1 * FPR ** ((gamma_a - 1) / (Fan_polytropic_efficiency * gamma_a))
-    dWdt_fan = dmdt_hot * cp_a * (T0_2 - T0_1)
+    dWdt_fan = dmdt_0 * cp_a * (T0_2 - T0_1)
 
     p0_3 = p0_2 * IPC_pressure_ratio    # pressure after IPC
     T0_3 = T0_2 * IPC_pressure_ratio ** ((gamma_a - 1) / (IPC_polytropic_efficiency * gamma_a))
@@ -94,7 +94,7 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
     p0_5 = p0_4 * (1 - Combustor_pressure_loss)
 
     dmdt_g_2 = dmdt_g_1 + dmdt_cool_s
-    T0_5_2 = (dmdt_CC * cp_g * T0_5 + dmdt_cool_s * cp_a * T0_4) / (cp_g * dmdt_g_2)
+    T0_5_2 = (dmdt_g_1 * cp_g * T0_5 + dmdt_cool_s * cp_a * T0_4) / (cp_g * dmdt_g_2)
 
     T0_6 = T0_5_2 - dWdt_HPC / (dmdt_g_2 * cp_g * Shaft_mechanical_efficiency)
     p0_6 = p0_5 * (T0_6 / T0_5_2) ** (gamma_g / ((gamma_g - 1) * HPT_polytropic_efficiency))
@@ -290,6 +290,7 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
 
 
 # Assemble mass flow data
+#massFlowToThrust(1)
 massFlows = np.linspace(300, 500, 1000)
 testTrust = []
 testTrustCool = []
@@ -331,4 +332,4 @@ figureDPI = 200
 fig.set_size_inches(8, 6)
 fig.savefig('img/MassFlowToThrust.png', dpi=figureDPI)
 
-plt.show()
+# plt.show()
