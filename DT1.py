@@ -199,7 +199,8 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
                         station_properties_table += " & ".join(data) + " \\\\\n"
                 else:
                     station_data_no_cooling = [
-                        ["5", f"{p0_5 * 1e-3:.4g}", f"{T0_5:.4g}", f"{dmdt_g:.4g}"],
+                        ["5.1", f"{p0_5 * 1e-3:.4g}", f"{T0_5:.4g}", f"{dmdt_g:.4g}"],
+                        ["5.2", f"{p0_5 * 1e-3:.4g}", f"{T0_5:.4g}", f"{dmdt_g:.4g}"],
                     ]
 
                     for data in station_data_no_cooling:
