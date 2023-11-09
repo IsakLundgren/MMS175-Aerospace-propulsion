@@ -95,9 +95,10 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
     dmdt_g_2 = dmdt_g_1 + dmdt_cool_s
     T0_5_2 = (dmdt_g_1 * cp_g * T0_5 + dmdt_cool_s * cp_a * T0_4) / (cp_g * dmdt_g_2)
 
-    T0_6 = T0_5_2 - dWdt_HPC / (dmdt_g_2 * cp_g * Shaft_mechanical_efficiency)
-    p0_6 = p0_5 * (T0_6 / T0_5_2) ** (gamma_g / ((gamma_g - 1) * HPT_polytropic_efficiency))
+    T0_5_3 = T0_5_2 - dWdt_HPC / (dmdt_g_2 * cp_g * Shaft_mechanical_efficiency)
     dmdt_g = dmdt_g_2 + dmdt_cool_r
+    T0_6 = (dmdt_g_2 * cp_g * T0_5_3 + dmdt_cool_r * cp_a * T0_4) / (cp_g * dmdt_g)
+    p0_6 = p0_5 * (T0_5_3 / T0_5_2) ** (gamma_g / ((gamma_g - 1) * HPT_polytropic_efficiency))
 
     T0_7 = T0_6 - dWdt_IPC / (dmdt_g * cp_g * Shaft_mechanical_efficiency)
     p0_7 = p0_6 * (T0_7 / T0_6) ** (gamma_g / ((gamma_g - 1) * IPT_polytropic_efficiency))
@@ -191,7 +192,8 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
                 if hasCooling:
                     station_data_cooling = [
                         ["5.1", f"{p0_5 * 1e-3:.4g}", f"{T0_5:.4g}", f"{dmdt_g_1:.4g}"],
-                        ["5.2", f"-", f"{T0_5_2:.4g}", f"{dmdt_g_2:.4g}"],
+                        ["5.2", f"{p0_5 * 1e-3:.4g}", f"{T0_5_2:.4g}", f"{dmdt_g_2:.4g}"],
+                        ["5.3", f"{p0_6 * 1e-3:.4g}", f"{T0_5_3:.4g}", f"{dmdt_g_2:.4g}"],
                     ]
 
                     for data in station_data_cooling:
@@ -199,7 +201,8 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
                 else:
                     station_data_no_cooling = [
                         ["5.1", f"{p0_5 * 1e-3:.4g}", f"{T0_5:.4g}", f"{dmdt_g:.4g}"],
-                        ["5.2", f"-", f"{T0_5:.4g}", f"{dmdt_g:.4g}"],
+                        ["5.2", f"{p0_5 * 1e-3:.4g}", f"{T0_5_2:.4g}", f"{dmdt_g:.4g}"],
+                        ["5.3", f"{p0_6 * 1e-3:.4g}", f"{T0_5_3:.4g}", f"{dmdt_g:.4g}"],
                     ]
 
                     for data in station_data_no_cooling:
@@ -229,8 +232,8 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
                     ["Thrust (kN)", f"{Net_thrust * 1e-3:.4g}"],
                     ["Intake mass flow (kg/s)", f"{dmdt_0:.4g}"],
                     ["SFC (mg/Ns)", f"{SFC * 1e6:.4g}"],
-                    ["Hot channel choke status", "choked" if hotIsChoked else "not choked"],
-                    ["Cold channel choke status", "choked" if coldIsChoked else "not choked"],
+                    ["Hot nozzle choke status", "choked" if hotIsChoked else "not choked"],
+                    ["Cold nozzle choke status", "choked" if coldIsChoked else "not choked"],
                     ["Hot nozzle pressure ratio", f"{hot_pratio:.4g}"],
                     ["Cold nozzle pressure ratio", f"{cold_pratio:.4g}"],
                     ["Propulsion efficiency", f"{eta_p:.4g}"],
@@ -277,8 +280,8 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
             print(f'Thrust: {Net_thrust * 1e-3:.3g} kN.')
             print(f'Intake mass flow: {dmdt_0:.3g} kg/s.')
             print(f'SFC: {SFC * 1e6:.3g} mg/Ns.')
-            print(f'Hot channel is {"choked" if hotIsChoked else "not choked"}.')
-            print(f'Cold channel is {"choked" if coldIsChoked else "not choked"}.')
+            print(f'Hot nozzle is {"choked" if hotIsChoked else "not choked"}.')
+            print(f'Cold nozzle is {"choked" if coldIsChoked else "not choked"}.')
             print(f'Hot nozzle pressure ratio: {hot_pratio:.3g}')
             print(f'Cold nozzle pressure ratio: {cold_pratio:.3g}')
             print(f'Propulsion efficiency: {eta_p:.3g}.')
@@ -289,6 +292,7 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
 
 
 # Assemble mass flow data
+#massFlowToThrust(1, coolingFraction=0.2, coolSplitFrac=0.4)
 massFlows = np.linspace(400, 800, 1000)
 testTrust = []
 testTrustCool = []
