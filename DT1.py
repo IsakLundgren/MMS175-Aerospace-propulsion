@@ -140,7 +140,7 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
         rho_10 = p_10 / R_a / T_10
         A_10 = dmdt_cold / rho_10 / C_10
         F_GC = dmdt_cold * C_10 + A_10 * (p_10 - p_1)
-        cold_pratio = CPR_hot
+        cold_pratio = CPR_cold
         # ideal velocity
         C_10_ideal = np.sqrt(2 * cp_a * T0_2 * (1 - (1 / (p0_2 / p_1)) ** ((gamma_a - 1) / gamma_a)))
         C_10_eta = C_10_ideal
