@@ -76,8 +76,7 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
     T0_4 = T0_3 * HPC_pressure_ratio ** ((gamma_a - 1) / (HPC_polytropic_efficiency * gamma_a))
     dWdt_HPC = dmdt_hot * cp_a * (T0_4 - T0_3)
 
-    # carlos code
-    # TODO static conditions not total
+    # fuel air mass ratio
     FAR_alpha = 0.10118 + 2.00376E-05 * (700 - T0_4)
     FAR_beta = 3.7078E-03 - 5.2368E-06 * (700 - T0_4) - 5.2632E-06 * Turbine_inlet_temperature
     FAR_gamma = 8.889E-08 * (Turbine_inlet_temperature - 950)
@@ -126,7 +125,7 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
         C_9_eta = C9_ideal
     else:
         p_9 = p_1
-        T_9 = T0_8-Hot_jet_efficiency*T0_8*(1-(1/p0_8/p_9)**((gamma_g-1)/gamma_g))
+        T_9 = T0_8-Hot_jet_efficiency*T0_8*(1-(1/(p0_8/p_9))**((gamma_g-1)/gamma_g))
         C_9 = np.sqrt((T0_8-T_9)*2*cp_g)
         F_GH = dmdt_g * C_9
         hot_pratio = (p0_8 / p_1)
@@ -192,7 +191,7 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
                 if hasCooling:
                     station_data_cooling = [
                         ["5.1", f"{p0_5 * 1e-3:.4g}", f"{T0_5:.4g}", f"{dmdt_g_1:.4g}"],
-                        ["5.2", f"{p0_5 * 1e-3:.4g}", f"{T0_5_2:.4g}", f"{dmdt_g_2:.4g}"],
+                        ["5.2", f"-", f"{T0_5_2:.4g}", f"{dmdt_g_2:.4g}"],
                     ]
 
                     for data in station_data_cooling:
@@ -200,7 +199,7 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
                 else:
                     station_data_no_cooling = [
                         ["5.1", f"{p0_5 * 1e-3:.4g}", f"{T0_5:.4g}", f"{dmdt_g:.4g}"],
-                        ["5.2", f"{p0_5 * 1e-3:.4g}", f"{T0_5:.4g}", f"{dmdt_g:.4g}"],
+                        ["5.2", f"-", f"{T0_5:.4g}", f"{dmdt_g:.4g}"],
                     ]
 
                     for data in station_data_no_cooling:
@@ -266,7 +265,7 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
             if hasCooling:
                 print(f'Station 5.1: P_05.1: {p0_5 * 1e-3:.4g} kPa, T_05.1: {T0_5:.4g} K, dmdt_05.1: '
                       f'{dmdt_g_1:.3g} kg/s.')
-                print(f'Station 5.2: P_05.2: {p0_5 * 1e-3:.4g} kPa, T_05.2: {T0_5_2:.4g} K, dmdt_05.2: '
+                print(f'Station 5.2: P_05.2: - kPa, T_05.2: {T0_5_2:.4g} K, dmdt_05.2: '
                       f'{dmdt_g_2:.3g} kg/s.')
             else:
                 print(f'Station 5: P_05: {p0_5 * 1e-3:.4g} kPa, T_05: {T0_5:.4g} K, dmdt_05: {dmdt_g:.3g} kg/s.')
@@ -290,8 +289,7 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
 
 
 # Assemble mass flow data
-#massFlowToThrust(1)
-massFlows = np.linspace(300, 500, 1000)
+massFlows = np.linspace(400, 800, 1000)
 testTrust = []
 testTrustCool = []
 
