@@ -50,7 +50,8 @@ C_a = Flight_Mach_number * Speed_of_sound_1  # m/s
 IPC_pressure_ratio = OPR / (FPR * HPC_pressure_ratio)
 
 
-def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting=False, printLatex=False):
+def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting=False, printLatex=False,
+                     BPR=11.8, FPR=1.55):
     assert(1 > coolingFraction >= 0)
     assert(1 > coolSplitFrac >= 0)
     hasCooling = coolingFraction > 0
@@ -293,45 +294,62 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
 
 # Assemble mass flow data
 #massFlowToThrust(1, coolingFraction=0.2, coolSplitFrac=0.4)
-massFlows = np.linspace(400, 800, 1000)
-testTrust = []
-testTrustCool = []
+# massFlows = np.linspace(400, 800, 1000)
+# testTrust = []
+# testTrustCool = []
+#
+# for dmdt in massFlows:
+#     testTrust.append(massFlowToThrust(dmdt)[0])
+#     testTrustCool.append(massFlowToThrust(dmdt, coolingFraction=0.2, coolSplitFrac=0.4)[0])
+# testTrust = np.array(testTrust)
+# testTrustCool = np.array(testTrustCool)
+#
+# # Calculate correct mass flow value and print
+# i_closest = np.argmin(np.abs(testTrust - Net_thrust))
+# final_dmdt = np.interp(Net_thrust, testTrust[i_closest:i_closest+2], massFlows[i_closest:i_closest+2])
+#
+# i_closest_c = np.argmin(np.abs(testTrustCool - Net_thrust))
+# final_dmdt_c = np.interp(Net_thrust, testTrust[i_closest_c:i_closest_c+2], massFlows[i_closest_c:i_closest_c+2])
+#
+# # Print result from code
+# pl = False
+# massFlowToThrust(final_dmdt, hasPrinting=True, printLatex=pl)
+# massFlowToThrust(final_dmdt_c, coolingFraction=0.2, coolSplitFrac=0.4, hasPrinting=True, printLatex=pl)
+#
+# # Plot mass flow to thrust
+# fig = plt.figure()
+# plt.hlines(Net_thrust * 1e-3, min(massFlows), max(massFlows),
+#            label='Thrust requirement', color='g', linestyles='--', zorder=0)
+# plt.plot(massFlows, testTrust * 1e-3, label='Calculated thrust', color='b', zorder=1)
+# plt.plot(massFlows, testTrustCool * 1e-3, label='Calculated thrust w. cooling', color='m', zorder=2)
+# plt.scatter(final_dmdt, Net_thrust * 1e-3, c='r', marker='o', label='Design point', zorder=3)
+# plt.scatter(final_dmdt_c, Net_thrust * 1e-3, c='k', marker='o', label='Design point w. cooling', zorder=4)
+# plt.title('Mass flow versus Thrust')
+# plt.xlabel('Intake mass flow [kg/s]')
+# plt.ylabel('Net thrust [kN]')
+# plt.grid()
+# plt.legend()
+#
+# # Save figure
+# figureDPI = 200
+# fig.set_size_inches(8, 6)
+# fig.savefig('img/MassFlowToThrust.png', dpi=figureDPI)
 
-for dmdt in massFlows:
-    testTrust.append(massFlowToThrust(dmdt)[0])
-    testTrustCool.append(massFlowToThrust(dmdt, coolingFraction=0.2, coolSplitFrac=0.4)[0])
-testTrust = np.array(testTrust)
-testTrustCool = np.array(testTrustCool)
+# DT1b
 
-# Calculate correct mass flow value and print
-i_closest = np.argmin(np.abs(testTrust - Net_thrust))
-final_dmdt = np.interp(Net_thrust, testTrust[i_closest:i_closest+2], massFlows[i_closest:i_closest+2])
+BPR = np.linspace(8, 14, 100)
+FPR = np.linspace(1, 1.8, 100)
 
-i_closest_c = np.argmin(np.abs(testTrustCool - Net_thrust))
-final_dmdt_c = np.interp(Net_thrust, testTrust[i_closest_c:i_closest_c+2], massFlows[i_closest_c:i_closest_c+2])
+sfc = np.zeros((100, 100))
 
-# Print result from code
-pl = True
-massFlowToThrust(final_dmdt, hasPrinting=True, printLatex=pl)
-massFlowToThrust(final_dmdt_c, coolingFraction=0.2, coolSplitFrac=0.4, hasPrinting=True, printLatex=pl)
+for i, bpr in enumerate(BPR):
+    for j, fpr in enumerate(FPR):
+        sfc[i, j] = massFlowToThrust(1, coolingFraction=0.2, coolSplitFrac=0.4, BPR=bpr, FPR=fpr)[1]
 
-# Plot mass flow to thrust
-fig = plt.figure()
-plt.hlines(Net_thrust * 1e-3, min(massFlows), max(massFlows),
-           label='Thrust requirement', color='g', linestyles='--', zorder=0)
-plt.plot(massFlows, testTrust * 1e-3, label='Calculated thrust', color='b', zorder=1)
-plt.plot(massFlows, testTrustCool * 1e-3, label='Calculated thrust w. cooling', color='m', zorder=2)
-plt.scatter(final_dmdt, Net_thrust * 1e-3, c='r', marker='o', label='Design point', zorder=3)
-plt.scatter(final_dmdt_c, Net_thrust * 1e-3, c='k', marker='o', label='Design point w. cooling', zorder=4)
-plt.title('Mass flow versus Thrust')
-plt.xlabel('Intake mass flow [kg/s]')
-plt.ylabel('Net thrust [kN]')
-plt.grid()
-plt.legend()
+print('hello')
 
-# Save figure
-figureDPI = 200
-fig.set_size_inches(8, 6)
-fig.savefig('img/MassFlowToThrust.png', dpi=figureDPI)
+plt.figure()
+plt.contourf(BPR, FPR, sfc*1e6)
 
-# plt.show()
+
+plt.show()
