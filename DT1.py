@@ -164,6 +164,8 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
     eta_th = deltaW_kin / dmdt_f / Q_net_JA
     eta_0 = eta_p * eta_th
 
+    xi = C_10_eta / C_9_eta
+
     if hasPrinting:
         if printLatex:
             if hasPrinting:
@@ -289,7 +291,7 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
             print(f'Thermal efficiency: {eta_th:.3g}.')
             print(f'Total efficiency: {eta_0:.3g}.')
 
-    return F_net, SFC, hotIsChoked, coldIsChoked, hot_pratio, cold_pratio, eta_p, eta_th, eta_0
+    return F_net, SFC, hotIsChoked, coldIsChoked, hot_pratio, cold_pratio, eta_p, eta_th, eta_0, xi
 
 
 # Assemble mass flow data
@@ -337,36 +339,61 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
 
 # DT1b
 
-BPR = np.linspace(10, 14, 100)
-FPR = np.linspace(1.15, 1.65, 100)
+BPR_min = 8
+BPR_max = 50
+FPR_min = 1.1
+FPR_max = 1.65
+
+BPR = np.linspace(BPR_min, BPR_max, 100)
+FPR = np.linspace(FPR_min, FPR_max, 100)
 
 sfc = np.zeros((100, 100))
 thrust = np.zeros((100, 100))
+xi = np.zeros((100, 100))
 
 for i, bpr in enumerate(BPR):
     for j, fpr in enumerate(FPR):
         thrust[j, i] = massFlowToThrust(1, coolingFraction=0.2, coolSplitFrac=0.4, BPR=bpr, FPR=fpr)[0]
         massFlow = Net_thrust / thrust[j, i]
         sfc[j, i] = massFlowToThrust(massFlow, coolingFraction=0.2, coolSplitFrac=0.4, BPR=bpr, FPR=fpr)[1]
+        xi[j, i] = massFlowToThrust(massFlow, coolingFraction=0.2, coolSplitFrac=0.4, BPR=bpr, FPR=fpr)[9]
+        if xi[j, i] > 1.5:
+            xi[j, i] = 1.5
 
 print('hello :D')
 
 plt.figure()
-plt.contourf(BPR, FPR, sfc*1e6, 1000)
+plt.contourf(BPR, FPR, sfc*1e6, 25)
 plt.colorbar(label='SFC [mg/NS]')
 plt.xlabel('BPR')
 plt.ylabel('FPR')
+# plt.scatter(11.9, 1.55, label='DT1', c='red')
+# plt.vlines(11.9, color='red', ymin=FPR_min, ymax=1.55, linestyle='dashed')
+# plt.hlines(1.55, color='red', xmin=BPR_min, xmax=11.9, linestyle='dashed')
+plt.legend()
 
 plt.figure()
-plt.contourf(BPR, FPR, thrust, 1000)
-plt.colorbar(label='Thrust [N]')
+plt.contourf(BPR, FPR, xi, 25)
+plt.colorbar(label='$\\xi$ [-]')
 plt.xlabel('BPR')
 plt.ylabel('FPR')
+# plt.scatter(11.9, 1.55, label='DT1', c='red')
+# plt.vlines(11.9, color='red', ymin=FPR_min, ymax=1.55, linestyle='dashed')
+# plt.hlines(1.55, color='red', xmin=BPR_min, xmax=11.9, linestyle='dashed')
+plt.legend()
+
+# plt.figure()
+# plt.contourf(BPR, FPR, thrust, 1000)
+# plt.colorbar(label='Thrust [N]')
+# plt.xlabel('BPR')
+# plt.ylabel('FPR')
 
 plt.figure()
-plt.contourf(BPR, FPR, Net_thrust / thrust, 1000)
+plt.contourf(BPR, FPR, Net_thrust / thrust, 25)
 plt.colorbar(label='mass flow [kg/s]')
 plt.xlabel('BPR')
 plt.ylabel('FPR')
-
+# plt.scatter(11.9, 1.55, label='DT1', c='red')
+# plt.vlines(11.9, color='red', ymin=FPR_min, ymax=1.55, linestyle='dashed')
+# plt.hlines(1.55, color='red', xmin=BPR_min, xmax=11.9, linestyle='dashed')
 plt.show()
