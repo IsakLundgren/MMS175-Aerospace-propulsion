@@ -349,7 +349,7 @@ for i, bpr in enumerate(BPR):
         massFlow = Net_thrust / thrust[j, i]
         sfc[j, i] = massFlowToThrust(massFlow, coolingFraction=0.2, coolSplitFrac=0.4, BPR=bpr, FPR=fpr)[1]
 
-print('hello')
+print('hello :D')
 
 plt.figure()
 plt.contourf(BPR, FPR, sfc*1e6, 1000)
