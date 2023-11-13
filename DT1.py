@@ -337,19 +337,36 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
 
 # DT1b
 
-BPR = np.linspace(8, 14, 100)
-FPR = np.linspace(1, 1.8, 100)
+BPR = np.linspace(10, 14, 100)
+FPR = np.linspace(1.15, 1.65, 100)
 
 sfc = np.zeros((100, 100))
+thrust = np.zeros((100, 100))
 
 for i, bpr in enumerate(BPR):
     for j, fpr in enumerate(FPR):
-        sfc[i, j] = massFlowToThrust(1, coolingFraction=0.2, coolSplitFrac=0.4, BPR=bpr, FPR=fpr)[1]
+        thrust[j, i] = massFlowToThrust(1, coolingFraction=0.2, coolSplitFrac=0.4, BPR=bpr, FPR=fpr)[0]
+        massFlow = Net_thrust / thrust[j, i]
+        sfc[j, i] = massFlowToThrust(massFlow, coolingFraction=0.2, coolSplitFrac=0.4, BPR=bpr, FPR=fpr)[1]
 
 print('hello')
 
 plt.figure()
-plt.contourf(BPR, FPR, sfc*1e6)
+plt.contourf(BPR, FPR, sfc*1e6, 1000)
+plt.colorbar(label='SFC [mg/NS]')
+plt.xlabel('BPR')
+plt.ylabel('FPR')
 
+plt.figure()
+plt.contourf(BPR, FPR, thrust, 1000)
+plt.colorbar(label='Thrust [N]')
+plt.xlabel('BPR')
+plt.ylabel('FPR')
+
+plt.figure()
+plt.contourf(BPR, FPR, Net_thrust / thrust, 1000)
+plt.colorbar(label='mass flow [kg/s]')
+plt.xlabel('BPR')
+plt.ylabel('FPR')
 
 plt.show()
