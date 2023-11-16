@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.optimize import fsolve
 
 
 # Given parameters
@@ -166,6 +167,14 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
 
     xi = C_10_eta / C_9_eta
 
+    dmdt = np.array([0, dmdt_0, dmdt_hot, dmdt_hot, dmdt_CC, dmdt_CC, dmdt_g, dmdt_g, dmdt_g])
+    T0 = np.array([0, T0_1, T0_2, T0_3, T0_4, T0_5, T0_6, T0_7, T0_8])
+    p0 = np.array([0, p0_1, p0_2, p0_3, p0_4, p0_5, p0_6, p0_7, p0_8])
+    gamma = np.array([0, gamma_a, gamma_a, gamma_a, gamma_a, gamma_g, gamma_g, gamma_g, gamma_g])
+    R = np.array([0, R_a, R_a, R_a, R_a, R_g, R_g, R_g, R_g])
+    cp = np.array([0, cp_a, cp_a, cp_a, cp_a, cp_g, cp_g, cp_g, cp_g])
+
+
     if hasPrinting:
         if printLatex:
             if hasPrinting:
@@ -291,109 +300,222 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
             print(f'Thermal efficiency: {eta_th:.3g}.')
             print(f'Total efficiency: {eta_0:.3g}.')
 
-    return F_net, SFC, hotIsChoked, coldIsChoked, hot_pratio, cold_pratio, eta_p, eta_th, eta_0, xi
+    return F_net, SFC, hotIsChoked, coldIsChoked, hot_pratio, cold_pratio, eta_p, eta_th, eta_0, xi, dmdt, T0, p0, gamma, R, cp
 
 
-# Assemble mass flow data
-#massFlowToThrust(1, coolingFraction=0.2, coolSplitFrac=0.4)
-# massFlows = np.linspace(400, 800, 1000)
-# testTrust = []
-# testTrustCool = []
-#
-# for dmdt in massFlows:
-#     testTrust.append(massFlowToThrust(dmdt)[0])
-#     testTrustCool.append(massFlowToThrust(dmdt, coolingFraction=0.2, coolSplitFrac=0.4)[0])
-# testTrust = np.array(testTrust)
-# testTrustCool = np.array(testTrustCool)
-#
-# # Calculate correct mass flow value and print
-# i_closest = np.argmin(np.abs(testTrust - Net_thrust))
-# final_dmdt = np.interp(Net_thrust, testTrust[i_closest:i_closest+2], massFlows[i_closest:i_closest+2])
-#
-# i_closest_c = np.argmin(np.abs(testTrustCool - Net_thrust))
-# final_dmdt_c = np.interp(Net_thrust, testTrust[i_closest_c:i_closest_c+2], massFlows[i_closest_c:i_closest_c+2])
-#
-# # Print result from code
-# pl = False
-# massFlowToThrust(final_dmdt, hasPrinting=True, printLatex=pl)
-# massFlowToThrust(final_dmdt_c, coolingFraction=0.2, coolSplitFrac=0.4, hasPrinting=True, printLatex=pl)
-#
-# # Plot mass flow to thrust
-# fig = plt.figure()
-# plt.hlines(Net_thrust * 1e-3, min(massFlows), max(massFlows),
-#            label='Thrust requirement', color='g', linestyles='--', zorder=0)
-# plt.plot(massFlows, testTrust * 1e-3, label='Calculated thrust', color='b', zorder=1)
-# plt.plot(massFlows, testTrustCool * 1e-3, label='Calculated thrust w. cooling', color='m', zorder=2)
-# plt.scatter(final_dmdt, Net_thrust * 1e-3, c='r', marker='o', label='Design point', zorder=3)
-# plt.scatter(final_dmdt_c, Net_thrust * 1e-3, c='k', marker='o', label='Design point w. cooling', zorder=4)
-# plt.title('Mass flow versus Thrust')
-# plt.xlabel('Intake mass flow [kg/s]')
-# plt.ylabel('Net thrust [kN]')
-# plt.grid()
-# plt.legend()
-#
-# # Save figure
-# figureDPI = 200
-# fig.set_size_inches(8, 6)
-# fig.savefig('img/MassFlowToThrust.png', dpi=figureDPI)
+#Assemble mass flow data
+massFlowToThrust(1, coolingFraction=0.2, coolSplitFrac=0.4)
+massFlows = np.linspace(400, 800, 1000)
+testTrust = []
+testTrustCool = []
+
+for dmdt in massFlows:
+    testTrust.append(massFlowToThrust(dmdt)[0])
+    testTrustCool.append(massFlowToThrust(dmdt, coolingFraction=0.2, coolSplitFrac=0.4)[0])
+testTrust = np.array(testTrust)
+testTrustCool = np.array(testTrustCool)
+
+# Calculate correct mass flow value and print
+i_closest = np.argmin(np.abs(testTrust - Net_thrust))
+final_dmdt = np.interp(Net_thrust, testTrust[i_closest:i_closest+2], massFlows[i_closest:i_closest+2])
+
+i_closest_c = np.argmin(np.abs(testTrustCool - Net_thrust))
+final_dmdt_c = np.interp(Net_thrust, testTrust[i_closest_c:i_closest_c+2], massFlows[i_closest_c:i_closest_c+2])
+
+# Print result from code
+pl = False
+massFlowToThrust(final_dmdt, hasPrinting=True, printLatex=pl)
+dmdt, T0, p0, gamma, R, cp = massFlowToThrust(final_dmdt_c, coolingFraction=0.2, coolSplitFrac=0.4, hasPrinting=True, printLatex=pl)[-6:]
+
+# Plot mass flow to thrust
+fig = plt.figure()
+plt.hlines(Net_thrust * 1e-3, min(massFlows), max(massFlows),
+           label='Thrust requirement', color='g', linestyles='--', zorder=0)
+plt.plot(massFlows, testTrust * 1e-3, label='Calculated thrust', color='b', zorder=1)
+plt.plot(massFlows, testTrustCool * 1e-3, label='Calculated thrust w. cooling', color='m', zorder=2)
+plt.scatter(final_dmdt, Net_thrust * 1e-3, c='r', marker='o', label='Design point', zorder=3)
+plt.scatter(final_dmdt_c, Net_thrust * 1e-3, c='k', marker='o', label='Design point w. cooling', zorder=4)
+plt.title('Mass flow versus Thrust')
+plt.xlabel('Intake mass flow [kg/s]')
+plt.ylabel('Net thrust [kN]')
+plt.grid()
+plt.legend()
+
+# Save figure
+figureDPI = 200
+fig.set_size_inches(8, 6)
+fig.savefig('img/MassFlowToThrust.png', dpi=figureDPI)
 
 # DT1b
-
-BPR_min = 8
-BPR_max = 50
-FPR_min = 1.1
-FPR_max = 1.65
-
-BPR = np.linspace(BPR_min, BPR_max, 100)
-FPR = np.linspace(FPR_min, FPR_max, 100)
-
-sfc = np.zeros((100, 100))
-thrust = np.zeros((100, 100))
-xi = np.zeros((100, 100))
-
-for i, bpr in enumerate(BPR):
-    for j, fpr in enumerate(FPR):
-        thrust[j, i] = massFlowToThrust(1, coolingFraction=0.2, coolSplitFrac=0.4, BPR=bpr, FPR=fpr)[0]
-        massFlow = Net_thrust / thrust[j, i]
-        sfc[j, i] = massFlowToThrust(massFlow, coolingFraction=0.2, coolSplitFrac=0.4, BPR=bpr, FPR=fpr)[1]
-        xi[j, i] = massFlowToThrust(massFlow, coolingFraction=0.2, coolSplitFrac=0.4, BPR=bpr, FPR=fpr)[9]
-        if xi[j, i] > 1.5:
-            xi[j, i] = 1.5
-
-print('hello :D')
-
-plt.figure()
-plt.contourf(BPR, FPR, sfc*1e6, 25)
-plt.colorbar(label='SFC [mg/NS]')
-plt.xlabel('BPR')
-plt.ylabel('FPR')
-# plt.scatter(11.9, 1.55, label='DT1', c='red')
-# plt.vlines(11.9, color='red', ymin=FPR_min, ymax=1.55, linestyle='dashed')
-# plt.hlines(1.55, color='red', xmin=BPR_min, xmax=11.9, linestyle='dashed')
-plt.legend()
-
-plt.figure()
-plt.contourf(BPR, FPR, xi, 25)
-plt.colorbar(label='$\\xi$ [-]')
-plt.xlabel('BPR')
-plt.ylabel('FPR')
-# plt.scatter(11.9, 1.55, label='DT1', c='red')
-# plt.vlines(11.9, color='red', ymin=FPR_min, ymax=1.55, linestyle='dashed')
-# plt.hlines(1.55, color='red', xmin=BPR_min, xmax=11.9, linestyle='dashed')
-plt.legend()
-
+#
+# BPR_min = 8
+# BPR_max = 50
+# FPR_min = 1.1
+# FPR_max = 1.65
+#
+# BPR = np.linspace(BPR_min, BPR_max, 100)
+# FPR = np.linspace(FPR_min, FPR_max, 100)
+#
+# sfc = np.zeros((100, 100))
+# thrust = np.zeros((100, 100))
+# xi = np.zeros((100, 100))
+#
+# for i, bpr in enumerate(BPR):
+#     for j, fpr in enumerate(FPR):
+#         thrust[j, i] = massFlowToThrust(1, coolingFraction=0.2, coolSplitFrac=0.4, BPR=bpr, FPR=fpr)[0]
+#         massFlow = Net_thrust / thrust[j, i]
+#         sfc[j, i] = massFlowToThrust(massFlow, coolingFraction=0.2, coolSplitFrac=0.4, BPR=bpr, FPR=fpr)[1]
+#         xi[j, i] = massFlowToThrust(massFlow, coolingFraction=0.2, coolSplitFrac=0.4, BPR=bpr, FPR=fpr)[9]
+#         if xi[j, i] > 1.5:
+#             xi[j, i] = 1.5
+#
+# print('hello :D')
+#
 # plt.figure()
-# plt.contourf(BPR, FPR, thrust, 1000)
-# plt.colorbar(label='Thrust [N]')
+# plt.contourf(BPR, FPR, sfc*1e6, 25)
+# plt.colorbar(label='SFC [mg/NS]')
 # plt.xlabel('BPR')
 # plt.ylabel('FPR')
-
-plt.figure()
-plt.contourf(BPR, FPR, Net_thrust / thrust, 25)
-plt.colorbar(label='mass flow [kg/s]')
-plt.xlabel('BPR')
-plt.ylabel('FPR')
-# plt.scatter(11.9, 1.55, label='DT1', c='red')
-# plt.vlines(11.9, color='red', ymin=FPR_min, ymax=1.55, linestyle='dashed')
+# # plt.scatter(11.9, 1.55, label='DT1', c='red')
+# # plt.vlines(11.9, color='red', ymin=FPR_min, ymax=1.55, linestyle='dashed')
+# # plt.hlines(1.55, color='red', xmin=BPR_min, xmax=11.9, linestyle='dashed')
+# plt.legend()
+#
+# plt.figure()
+# plt.contourf(BPR, FPR, xi, 25)
+# plt.colorbar(label='$\\xi$ [-]')
+# plt.xlabel('BPR')
+# plt.ylabel('FPR')
+# # plt.scatter(11.9, 1.55, label='DT1', c='red')
+# # plt.vlines(11.9, color='red', ymin=FPR_min, ymax=1.55, linestyle='dashed')
+# # plt.hlines(1.55, color='red', xmin=BPR_min, xmax=11.9, linestyle='dashed')
+# plt.legend()
+#
+# # plt.figure()
+# # plt.contourf(BPR, FPR, thrust, 1000)
+# # plt.colorbar(label='Thrust [N]')
+# # plt.xlabel('BPR')
+# # plt.ylabel('FPR')
+#
+# plt.figure()
+# plt.contourf(BPR, FPR, Net_thrust / thrust, 25)
+# plt.colorbar(label='mass flow [kg/s]')
+# plt.xlabel('BPR')
+# plt.ylabel('FPR')
+# # plt.scatter(11.9, 1.55, label='DT1', c='red')
+# # plt.vlines(11.9, color='red', ymin=FPR_min, ymax=1.55, linestyle='dashed')
 # plt.hlines(1.55, color='red', xmin=BPR_min, xmax=11.9, linestyle='dashed')
-plt.show()
+
+# DT2 --------------------------------
+
+def areaFuntion(M, station):
+    p = p0[station] / (1 + (gamma[station]-1) / 2 * M**2)**gamma[station]/(gamma[station]-1)
+    T = T0[station] / (1 + (gamma[station]-1) / 2 * M**2)
+    rho = p / R[station] / T
+
+    v = np.sqrt(gamma[station]*R[station]*T) * M
+    A = dmdt[station] / rho / v
+
+    return A
+
+def qAreaFunction(M, station):
+    return dmdt[station] * np.sqrt(R[station] * T0[station]) / p0[station] / \
+        (np.sqrt(gamma[station]) * M * (1 + (gamma[station]-1)/2 * M**2)**(-(gamma[station]+1)/(2*(gamma[station]-1))))
+
+def getRadius(A, htr):
+    r_t = np.sqrt(A * 4 / np.pi * (1 / (1 - htr ** 2)))
+
+    r_h = htr * r_t
+
+    r_m = (r_t + r_h) / 2
+
+    return r_t, r_h, r_m
+
+def calcStageLoad(dH, U_first, N, r_m_first, r_m_last):
+    U_last = r_m_last * U_first / r_m_first
+    sumSqU = 0
+    for i in range(1, N + 1):
+        sumSqU += (U_first + (U_last - U_first) * (i - 1) / (N-1)) ** 2
+
+    stageLoad = 2 * dH / sumSqU
+
+    return stageLoad
+
+
+EIS = 2020
+
+# Fan ---------------------------------------------------------------------------
+M_ax1_fan = 0.603
+
+htr_1_fan = 44.29 / (98.94 + np.exp(0.0185 * EIS - 33.31))
+
+dmdt_1_fan = final_dmdt_c
+
+rho_1_fan = p_1 / R_a / T_1
+
+c_1_fan = M_ax1_fan * np.sqrt(gamma_a*R_a*T_1)
+
+A_1_fan = dmdt_1_fan / rho_1_fan / c_1_fan
+print(A_1_fan)
+A_1_fan = areaFuntion(M_ax1_fan, 1)
+print(A_1_fan)
+# A_1_fan = qAreaFunction(M_ax1_fan, 1)
+
+r_t1_fan, r_h1_fan = getRadius(A_1_fan, htr_1_fan)[0:2]
+
+r_t2_fan = 0.98 * r_t1_fan
+
+AR_1_fan = 2.4
+
+alpha_fan = 15*np.pi/180    # rad
+
+l_ax1_fan = (1.98*r_t1_fan - 2*r_h1_fan) / (2*AR_1_fan + np.tan(alpha_fan))
+
+r_h2_fan = r_h1_fan + l_ax1_fan * np.tan(alpha_fan)
+
+U_t1_fan = np.sqrt(T0[1]) * (-59.74*FPR + 88.07 * FPR**2 - 25.93 * FPR**3)
+
+A_2_fan = np.pi*(r_t2_fan**2 - r_h2_fan**2) / 4
+
+A_duct_entry = A_2_fan / (BPR + 1)
+
+r_splitter_lip = np.sqrt(A_duct_entry / np.pi + r_h1_fan**2)
+
+# IPC --------------------------------------------------------------------------------------
+AR_duct_FAN_IPC = 0.4
+
+l_ax_duct_FAN_IPC = (r_splitter_lip - r_h1_fan) / AR_duct_FAN_IPC
+
+M_ax_1_IPC = 0.539
+M_ax_3_IPC = 0.341
+
+M_t_IPC = 1.55
+
+htr_1_IPC = 0.63
+htr_3_IPC = 0.819
+
+psi_IPC = -8.968 + 0.004877 * EIS
+
+A_1_IPC = areaFuntion(M_ax_1_IPC, 2)
+A_3_IPC = areaFuntion(M_ax_3_IPC, 3)
+
+r_t1_IPC, r_h1_IPC, r_m1_IPC = getRadius(A_1_IPC, htr_1_IPC)
+r_t3_IPC, r_h3_IPC, r_m3_IPC = getRadius(A_3_IPC, htr_3_IPC)
+
+dH = cp[2] * (T0[3] - T0[2])
+
+# Guess stages
+N_stages_IPC = 8
+
+def optimFuncIPC(U):
+    return calcStageLoad(dH, U, N_stages_IPC, r_m1_IPC, r_m3_IPC) - psi_IPC
+
+
+U_mid1_IPC = fsolve(optimFuncIPC, 200)
+
+
+a = 10
+
+
+
+# plt.show()
