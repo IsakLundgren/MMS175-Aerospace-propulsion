@@ -510,11 +510,9 @@ N_stages_IPC = 8
 def optimFuncIPC(U):
     return calcStageLoad(dH, U, N_stages_IPC, r_m1_IPC, r_m3_IPC) - psi_IPC
 
-
 U_mid1_IPC = fsolve(optimFuncIPC, 200)
 
 
-a = 10
 
 
 
