@@ -512,7 +512,21 @@ def optimFuncIPC(U):
 
 U_mid1_IPC = fsolve(optimFuncIPC, 200)
 
+omega_IPC = U_mid1_IPC/r_m1_IPC
+U_mid3_IPC = r_m3_IPC * omega_IPC
+U_t1_IPC = r_t1_IPC * omega_IPC
+U_h1_IPC = r_h1_IPC * omega_IPC
+U_t3_IPC = r_t3_IPC * omega_IPC
+U_h3_IPC = r_h3_IPC * omega_IPC
 
+# aspect ratios IPC
+AR_1_IPC = 36.20 - 0.01694*EIS
+AR_3_IPC = 35.47 - 0.01694*EIS
+
+h_1_IPC = r_t1_IPC - r_h1_IPC
+h_3_IPC = r_t3_IPC - r_h3_IPC
+h_mean_1_IPC = np.sqrt(h_1_IPC*h_3_IPC)
+#l_IPC = 2*N_stages_IPC *h_mean_1_IPC*(1+)
 
 
 
