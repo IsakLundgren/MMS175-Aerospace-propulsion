@@ -441,6 +441,10 @@ def calcStageLoad(dH, U_first, N, r_m_first, r_m_last):
 
     return stageLoad
 
+def calcSOS(M, station):
+    T = T0[station] / (1 + (gamma[station]-1) / 2 * M**2)
+    return np.sqrt(gamma[station] * R[station] * T)
+
 
 EIS = 2020
 
@@ -502,22 +506,25 @@ A_3_IPC = areaFuntion(M_ax_3_IPC, 3)
 r_t1_IPC, r_h1_IPC, r_m1_IPC = getRadius(A_1_IPC, htr_1_IPC)
 r_t3_IPC, r_h3_IPC, r_m3_IPC = getRadius(A_3_IPC, htr_3_IPC)
 
-dH = cp[2] * (T0[3] - T0[2])
+dH_IPC = cp[2] * (T0[3] - T0[2])
 
-# Guess stages
-N_stages_IPC = 8
+# Interpolate to get requested blade tip speed
+U_t1_IPC = M_t_IPC * calcSOS(M_t_IPC, 2)
+omega_IPC = U_t1_IPC / r_t1_IPC
 
-def optimFuncIPC(U):
-    return calcStageLoad(dH, U, N_stages_IPC, r_m1_IPC, r_m3_IPC) - psi_IPC
-
-U_mid1_IPC = fsolve(optimFuncIPC, 200)
-
-omega_IPC = U_mid1_IPC/r_m1_IPC
-U_mid3_IPC = r_m3_IPC * omega_IPC
-U_t1_IPC = r_t1_IPC * omega_IPC
-U_h1_IPC = r_h1_IPC * omega_IPC
+U_m1_IPC = r_m1_IPC * omega_IPC
+U_m3_IPC = r_m3_IPC * omega_IPC
 U_t3_IPC = r_t3_IPC * omega_IPC
+U_h1_IPC = r_h1_IPC * omega_IPC
 U_h3_IPC = r_h3_IPC * omega_IPC
+
+idealres = []
+N_list = []
+for i in range(2, 8):
+    N_list.append(i)
+    idealres.append(np.abs(calcStageLoad(dH_IPC, U_m1_IPC, i, r_m1_IPC, r_m3_IPC) - psi_IPC))
+
+N_stages_IPC = N_list[np.argmin(idealres)]
 
 # aspect ratios IPC
 AR_1_IPC = 36.20 - 0.01694*EIS
@@ -527,9 +534,58 @@ h_1_IPC = r_t1_IPC - r_h1_IPC
 h_3_IPC = r_t3_IPC - r_h3_IPC
 h_mean_1_IPC = np.sqrt(h_1_IPC*h_3_IPC)
 AR_mean_IPC = np.sqrt(AR_1_IPC**2 + AR_3_IPC**2)
-c = 0.3 # spacing
-l_IPC = 2*N_stages_IPC *h_mean_1_IPC*(1+c)/AR_mean_IPC
+c = 0.3  # spacing
+l_IPC = 2 * N_stages_IPC * h_mean_1_IPC * (1 + c) / AR_mean_IPC
 
+# HPC --------------------------------------------------------------------
+AR_duct_IPC_HPC = 0.4
+
+M_ax_1_HPC = 0.482
+M_ax_3_HPC = 0.263
+
+M_t_HPC = 1.3
+
+htr_1_HPC = 0.5613 / (1.487 - np.exp(-0.04286 * (p0[4]/p0[3] + 0.5718)))
+htr_3_HPC = 0.908
+
+psi_HPC = -5.736 + 0.00323 * EIS
+
+A_1_HPC = areaFuntion(M_ax_1_HPC, 3)
+A_3_HPC = areaFuntion(M_ax_3_HPC, 4)
+
+r_t1_HPC, r_h1_HPC, r_m1_HPC = getRadius(A_1_HPC, htr_1_HPC)
+r_t3_HPC, r_h3_HPC, r_m3_HPC = getRadius(A_3_HPC, htr_3_HPC)
+
+dH_HPC = cp[3] * (T0[4] - T0[3])  # TODO This might be wrong considering cooling
+
+# Interpolate to get requested blade tip speed
+U_t1_HPC = M_t_HPC * calcSOS(M_t_HPC, 3)
+omega_HPC = U_t1_HPC / r_t1_HPC
+
+U_m1_HPC = r_m1_HPC * omega_HPC
+U_m3_HPC = r_m3_HPC * omega_HPC
+U_t3_HPC = r_t3_HPC * omega_HPC
+U_h1_HPC = r_h1_HPC * omega_HPC
+U_h3_HPC = r_h3_HPC * omega_HPC
+
+idealres = []
+N_list = []
+for i in range(2, 8):
+    N_list.append(i)
+    idealres.append(np.abs(calcStageLoad(dH_HPC, U_m1_HPC, i, r_m1_HPC, r_m3_HPC) - psi_HPC))
+
+N_stages_HPC = N_list[np.argmin(idealres)]
+
+# aspect ratios IPC
+AR_1_HPC = 31.40 - 0.0147*EIS
+AR_3_HPC = 30.70 - 0.0147*EIS
+
+h_1_HPC = r_t1_HPC - r_h1_HPC
+h_3_HPC = r_t3_HPC - r_h3_HPC
+h_mean_1_HPC = np.sqrt(h_1_HPC*h_3_HPC)
+AR_mean_HPC = np.sqrt(AR_1_HPC**2 + AR_3_HPC**2)
+c = 0.3  # spacing
+l_HPC = 2 * N_stages_HPC * h_mean_1_HPC * (1 + c) / AR_mean_HPC
 
 
 # plt.show()
