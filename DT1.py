@@ -556,7 +556,7 @@ A_3_HPC = areaFuntion(M_ax_3_HPC, 4)
 r_t1_HPC, r_h1_HPC, r_m1_HPC = getRadius(A_1_HPC, htr_1_HPC)
 r_t3_HPC, r_h3_HPC, r_m3_HPC = getRadius(A_3_HPC, htr_3_HPC)
 
-dH_HPC = cp[3] * (T0[4] - T0[3])  # TODO This might be wrong considering cooling
+dH_HPC = cp[3] * (T0[4] - T0[3])
 
 # Interpolate to get requested blade tip speed
 U_t1_HPC = M_t_HPC * calcSOS(M_t_HPC, 3)
@@ -586,6 +586,21 @@ h_mean_1_HPC = np.sqrt(h_1_HPC*h_3_HPC)
 AR_mean_HPC = np.sqrt(AR_1_HPC**2 + AR_3_HPC**2)
 c = 0.3  # spacing
 l_HPC = 2 * N_stages_HPC * h_mean_1_HPC * (1 + c) / AR_mean_HPC
+
+# Combustor -------------------------------------------------------------------------------------
+
+t_CC = 6e-3  # s combustor residence time
+M_CC = 0.06  # - Mach number average in combustor
+V_CC = M_CC * calcSOS(M_CC, 4)
+
+l_CC = t_CC * V_CC
+
+beta_CC = 10  # degrees
+dy_CC = l_CC * np.tan(np.pi / 180 * beta_CC)
+
+r_m1_HPT = r_m3_HPC + dy_CC
+
+
 
 
 # plt.show()
