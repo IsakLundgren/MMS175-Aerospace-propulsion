@@ -527,7 +527,7 @@ h_1_IPC = r_t1_IPC - r_h1_IPC
 h_3_IPC = r_t3_IPC - r_h3_IPC
 h_mean_1_IPC = np.sqrt(h_1_IPC*h_3_IPC)
 AR_mean_IPC = np.sqrt(AR_1_IPC**2 + AR_3_IPC**2)
-c = 0.3
+c = 0.3 # spacing
 l_IPC = 2*N_stages_IPC *h_mean_1_IPC*(1+c)/AR_mean_IPC
 
 
