@@ -526,7 +526,8 @@ AR_3_IPC = 35.47 - 0.01694*EIS
 h_1_IPC = r_t1_IPC - r_h1_IPC
 h_3_IPC = r_t3_IPC - r_h3_IPC
 h_mean_1_IPC = np.sqrt(h_1_IPC*h_3_IPC)
-#l_IPC = 2*N_stages_IPC *h_mean_1_IPC*(1+)
+c = 0.3
+l_IPC = 2*N_stages_IPC *h_mean_1_IPC*(1+c)
 
 
 
