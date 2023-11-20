@@ -587,8 +587,9 @@ AR_mean_HPC = np.sqrt(AR_1_HPC**2 + AR_3_HPC**2)
 c = 0.3  # spacing
 l_HPC = 2 * N_stages_HPC * h_mean_1_HPC * (1 + c) / AR_mean_HPC
 
-# Combustor -------------------------------------------------------------------------------------
+l_ax_duct_IPC_HPC = (r_t3_IPC - r_h3_IPC + r_t1_HPC - r_h1_HPC) / 2 * AR_duct_IPC_HPC
 
+# Combustor -------------------------------------------------------------------------------------
 t_CC = 6e-3  # s combustor residence time
 M_CC = 0.06  # - Mach number average in combustor
 V_CC = M_CC * calcSOS(M_CC, 4)
