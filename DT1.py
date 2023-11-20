@@ -433,9 +433,12 @@ def getRadius(A, htr):
 
 def calcStageLoad(dH, U_first, N, r_m_first, r_m_last):
     U_last = r_m_last * U_first / r_m_first
-    sumSqU = 0
-    for i in range(1, N + 1):
-        sumSqU += (U_first + (U_last - U_first) * (i - 1) / (N-1)) ** 2
+    if N > 1:
+        sumSqU = 0
+        for i in range(1, N + 1):
+            sumSqU += (U_first + (U_last - U_first) * (i - 1) / (N-1)) ** 2
+    else:
+        sumSqU = ((U_first + U_last) / 2) ** 2
 
     stageLoad = 2 * dH / sumSqU
 
@@ -601,7 +604,14 @@ dy_CC = l_CC * np.tan(np.pi / 180 * beta_CC)
 
 r_m1_HPT = r_m3_HPC + dy_CC
 
+# HPT ------------------------------------------------------------------------------------------
+psi_HPT = 3.247
 
+dH_HPT = cp[5] * (T0[5] - T0[6])
+U_m1_HPT = r_m1_HPT * omega_HPC
+# TODO Set hub and tip
 
+# IPT ------------------------------------------------------------------------------------------
+psi_IPT = 3.247
 
 # plt.show()
