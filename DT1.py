@@ -631,7 +631,7 @@ dH_HPT = cp[5] * (T0[5] - T0[6])
 U_m1_HPT = r_m1_HPT * omega_HPC
 
 M_ax_1_HPT = 0.150
-M_ax_3_HPT = 0.331 + 0.061 * p0[6] / p0[5]
+M_ax_3_HPT = 0.420
 
 A_1_HPT = areaFuntion(M_ax_1_HPT, 5)
 A_3_HPT = areaFuntion(M_ax_3_HPT, 6)
@@ -759,6 +759,10 @@ AR_mean_LPT = np.sqrt(AR_1_LPT ** 2 + AR_3_LPT ** 2)
 c = 0.4  # spacing
 l_ax_LPT = 2 * N_stages_LPT * h_mean_1_LPT * (1 + c) / AR_mean_LPT
 
+rps_LPT = omega_LPT / (2 * np.pi)
+AN2_1_LPT = A_1_LPT * rps_LPT ** 2
+AN2_3_LPT = A_3_LPT * rps_LPT ** 2
+
 # DUCT IPT-LPT--------------------------
 h_mean_duct_HPT_IPT = (r_t3_HPT - r_h3_HPT) + (r_t1_IPT - r_h1_IPT)
 l_ax_duct_HPT_IPT = h_mean_duct_HPT_IPT * 0.4
@@ -850,4 +854,4 @@ print(f'LPT {N_stages_LPT}')
 
 
 a = 10
-# plt.show()
+plt.show()
