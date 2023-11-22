@@ -455,7 +455,7 @@ def calcSOS(M, station):
 
 
 def calcHubTip(r_mean, area):
-    r_tip = area / (4 * np.pi * r_mean) - r_mean
+    r_tip = area / (4 * np.pi * r_mean) + r_mean
     r_hub = 2 * r_mean - r_tip
     return r_hub, r_tip
 
@@ -498,6 +498,8 @@ l_ax1_fan = (1.98*r_t1_fan - 2*r_h1_fan) / (2*AR_1_fan + np.tan(alpha_fan))
 r_h2_fan = r_h1_fan + l_ax1_fan * np.tan(alpha_fan)
 
 U_t1_fan = np.sqrt(T0[1]) * (-59.74*FPR + 88.07 * FPR**2 - 25.93 * FPR**3)
+
+omega_fan = U_t1_fan / r_t1_fan
 
 A_2_fan = np.pi*(r_t2_fan**2 - r_h2_fan**2) / 4
 
@@ -718,15 +720,52 @@ c = 0.2  # spacing
 l_ax_IPT = 2 * N_stages_IPT * h_mean_1_IPT * (1 + c) / AR_1_IPT
 
 # LPT -------------------------------------------------------------------------------------
+r_m1_LPT = 1.15 * r_m3_IPT
+omega_LPT = omega_fan
+U_m1_LPT = r_m1_LPT * omega_LPT
 
+ttr_LPT_FAN = 1.25 / (1.9176 - np.exp(-0.2503 * (BPR + 0.6410)))
+r_t3_LPT = r_t1_fan * ttr_LPT_FAN
+
+psi_LPT = -39.26 + 0.02185 * EIS
+
+M_ax_1_LPT = 0.368
+M_ax_3_LPT = 0.322
+
+A_1_LPT = areaFuntion(M_ax_1_LPT, 7)
+A_3_LPT = areaFuntion(M_ax_3_LPT, 8)
+
+r_h1_LPT, r_t1_LPT = calcHubTip(r_m1_LPT, A_1_LPT)
+r_h3_LPT = np.sqrt(r_t3_LPT ** 2 - A_3_LPT / np.pi)
+r_m3_LPT = (r_t3_LPT + r_h3_LPT) / 2
+
+AR_1_LPT = 29.510 - 0.0140 * EIS
+AR_3_LPT = 30.143 - 0.0140 * EIS
+
+dH_LPT = cp[7] * (T0[7] - T0[8])
+
+idealres = []
+N_list = []
+for i in range(2, 20):
+    N_list.append(i)
+    idealres.append(np.abs(calcStageLoad(dH_LPT, U_m1_LPT, i, r_m1_LPT, r_m3_LPT) - psi_LPT))
+
+N_stages_LPT = N_list[np.argmin(idealres)]
+
+h_1_LPT = r_t1_LPT - r_h1_LPT
+h_3_LPT = r_t3_LPT - r_h3_LPT
+h_mean_1_LPT = np.sqrt(h_1_LPT * h_3_LPT)
+AR_mean_LPT = np.sqrt(AR_1_LPT ** 2 + AR_3_LPT ** 2)
+c = 0.4  # spacing
+l_ax_LPT = 2 * N_stages_LPT * h_mean_1_LPT * (1 + c) / AR_mean_LPT
 
 # DUCT IPT-LPT--------------------------
 h_mean_duct_HPT_IPT = (r_t3_HPT - r_h3_HPT) + (r_t1_IPT - r_h1_IPT)
 l_ax_duct_HPT_IPT = h_mean_duct_HPT_IPT * 0.4
 
 # DUCT IPT-LPT--------------------------
-#h_mean_duct_IPT_LPT = (r_t3_IPT - r_h3_IPT) + (r_t1_LPT - r_h1_LPT)
-#l_ax_duct_IPT_LPT = h_mean_duct_IPT_LPT * 0.4
+h_mean_duct_IPT_LPT = (r_t3_IPT - r_h3_IPT) + (r_t1_LPT - r_h1_LPT)
+l_ax_duct_IPT_LPT = h_mean_duct_IPT_LPT * 0.4
 
 # drawing engine sketch ------------------------------------------------------------------------
 # ul = upper left
