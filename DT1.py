@@ -408,6 +408,7 @@ fig.savefig('img/MassFlowToThrust.png', dpi=figureDPI)
 
 # DT2 --------------------------------
 
+
 def areaFuntion(M, station):
     p = p0[station] / (1 + (gamma[station]-1) / 2 * M**2)**gamma[station]/(gamma[station]-1)
     T = T0[station] / (1 + (gamma[station]-1) / 2 * M**2)
@@ -418,9 +419,11 @@ def areaFuntion(M, station):
 
     return A
 
+
 def qAreaFunction(M, station):
     return dmdt[station] * np.sqrt(R[station] * T0[station]) / p0[station] / \
         (np.sqrt(gamma[station]) * M * (1 + (gamma[station]-1)/2 * M**2)**(-(gamma[station]+1)/(2*(gamma[station]-1))))
+
 
 def getRadius(A, htr):
     r_t = np.sqrt(A * 4 / np.pi * (1 / (1 - htr ** 2)))
@@ -430,6 +433,7 @@ def getRadius(A, htr):
     r_m = (r_t + r_h) / 2
 
     return r_t, r_h, r_m
+
 
 def calcStageLoad(dH, U_first, N, r_m_first, r_m_last):
     U_last = r_m_last * U_first / r_m_first
@@ -444,6 +448,7 @@ def calcStageLoad(dH, U_first, N, r_m_first, r_m_last):
 
     return stageLoad
 
+
 def calcSOS(M, station):
     T = T0[station] / (1 + (gamma[station]-1) / 2 * M**2)
     return np.sqrt(gamma[station] * R[station] * T)
@@ -453,6 +458,12 @@ def calcHubTip(r_mean, area):
     r_tip = area / (4 * np.pi * r_mean) - r_mean
     r_hub = 2 * r_mean - r_tip
     return r_hub, r_tip
+
+
+def aboveCritAN2(omega, A, critVal):
+    rps = omega / (2 * np.pi)
+    val = A * rps ** 2
+    return val > critVal
 
 
 EIS = 2020
@@ -612,6 +623,7 @@ r_m1_HPT = r_m3_HPC + dy_CC
 
 # HPT ------------------------------------------------------------------------------------------
 psi_HPT_required = 3.247
+omega_HPT = omega_HPC
 
 dH_HPT = cp[5] * (T0[5] - T0[6])
 U_m1_HPT = r_m1_HPT * omega_HPC
@@ -639,8 +651,49 @@ if psi_HPT_double_stage > psi_HPT_required:
     print('Error: Number of hpt stages exceeds 2!')
     exit()
 
+aN2crit_1_HPT = (-129.44 + EIS * 0.0675) * 1e3
+aN2crit_3_HPT = (-177.33 + EIS * 0.0930) * 1e3
+
+if aboveCritAN2(omega_HPT, A_1_HPT, aN2crit_1_HPT) or aboveCritAN2(omega_HPT, A_3_HPT, aN2crit_3_HPT):
+    print('Error: Exceeding stress predictions in HPT!')
+    exit()
 
 # IPT ------------------------------------------------------------------------------------------
-psi_IPT = 3.247
+psi_IPT_required = 3.247
+omega_IPT = omega_IPC
 
+r_m1_IPT = 1.3 * r_m3_HPT
+r_m3_IPT = r_m1_IPT  # Assume same radius TODO Validate this
+
+dH_IPT = cp[6] * (T0[6] - T0[7])
+U_m1_IPT = r_m1_IPT * omega_IPT
+
+M_ax_1_IPT = 0.314
+M_ax_3_IPT = 0.554
+
+A_1_IPT = areaFuntion(M_ax_1_IPT, 6)
+A_3_IPT = areaFuntion(M_ax_3_IPT, 7)
+
+r_h1_IPT, r_t1_IPT = calcHubTip(r_m1_IPT, A_1_IPT)
+r_h3_IPT, r_t3_IPT = calcHubTip(r_m3_IPT, A_3_IPT)
+
+# Find if number of stages is one or two
+N_stages_IPT = 1
+psi_IPT_single_stage = 2 * dH_IPT / (U_m1_IPT ** 2)
+psi_IPT_double_stage = 2 * dH_IPT / (2 * U_m1_IPT ** 2)
+if psi_IPT_single_stage > psi_IPT_required:
+    N_stages_IPT = 2
+
+if psi_IPT_double_stage > psi_IPT_required:
+    print('Error: Number of hpt stages exceeds 2!')
+    exit()
+
+aN2crit_1_IPT = (-133.97 + EIS * 0.07099) * 1e3
+
+if aboveCritAN2(omega_IPT, A_1_IPT, aN2crit_1_IPT):
+    print('Error: Exceeding stress predictions in IPT!')
+    exit()
+
+
+a = 10
 # plt.show()
