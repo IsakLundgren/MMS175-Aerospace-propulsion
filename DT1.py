@@ -555,7 +555,7 @@ h_3_IPC = r_t3_IPC - r_h3_IPC
 h_mean_1_IPC = np.sqrt(h_1_IPC*h_3_IPC)
 AR_mean_IPC = np.sqrt(AR_1_IPC**2 + AR_3_IPC**2)
 c = 0.3  # spacing
-l_IPC = 2 * N_stages_IPC * h_mean_1_IPC * (1 + c) / AR_mean_IPC
+l_ax_IPC = 2 * N_stages_IPC * h_mean_1_IPC * (1 + c) / AR_mean_IPC
 
 # HPC --------------------------------------------------------------------
 AR_duct_IPC_HPC = 0.4
@@ -615,6 +615,7 @@ M_CC = 0.06  # - Mach number average in combustor
 V_CC = M_CC * calcSOS(M_CC, 4)
 
 l_CC = t_CC * V_CC
+l_CC = t_CC * V_CC
 
 beta_CC = 10  # degrees
 dy_CC = l_CC * np.tan(np.pi / 180 * beta_CC)
@@ -658,6 +659,13 @@ if aboveCritAN2(omega_HPT, A_1_HPT, aN2crit_1_HPT) or aboveCritAN2(omega_HPT, A_
     print('Error: Exceeding stress predictions in HPT!')
     exit()
 
+AR_1_HPT = 29.510 - 0.0140 * EIS
+AR_3_HPT = 30.143 - 0.0140 * EIS
+
+# Calculate axial length
+if N_stages_HPT == 2:
+    l_ax_HPT = (r_t1_HPT - r_h1_HPT) / AR_1_HPT + (r_t3_HPT - r_h3_HPT) / AR_3_HPT
+
 # IPT ------------------------------------------------------------------------------------------
 psi_IPT_required = 3.247
 omega_IPT = omega_IPC
@@ -696,4 +704,11 @@ if aboveCritAN2(omega_IPT, A_1_IPT, aN2crit_1_IPT):
 
 
 a = 10
+
+# DUCT IPT-LPT--------------------------
+
+
+# LPT -------------------------------------------------------------------------------------
+
+
 # plt.show()
