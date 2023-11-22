@@ -449,6 +449,12 @@ def calcSOS(M, station):
     return np.sqrt(gamma[station] * R[station] * T)
 
 
+def calcHubTip(r_mean, area):
+    r_tip = area / (4 * np.pi * r_mean) - r_mean
+    r_hub = 2 * r_mean - r_tip
+    return r_hub, r_tip
+
+
 EIS = 2020
 
 # Fan ---------------------------------------------------------------------------
@@ -605,11 +611,34 @@ dy_CC = l_CC * np.tan(np.pi / 180 * beta_CC)
 r_m1_HPT = r_m3_HPC + dy_CC
 
 # HPT ------------------------------------------------------------------------------------------
-psi_HPT = 3.247
+psi_HPT_required = 3.247
 
 dH_HPT = cp[5] * (T0[5] - T0[6])
 U_m1_HPT = r_m1_HPT * omega_HPC
-# TODO Set hub and tip
+
+M_ax_1_HPT = 0.150
+M_ax_3_HPT = 0.331 + 0.061 * p0[6] / p0[5]
+
+A_1_HPT = areaFuntion(M_ax_1_HPT, 5)
+A_3_HPT = areaFuntion(M_ax_3_HPT, 6)
+
+r_m3_HPT = r_m1_HPT  # Assume same radius
+
+r_h1_HPT, r_t1_HPT = calcHubTip(r_m1_HPT, A_1_HPT)
+r_h3_HPT, r_t3_HPT = calcHubTip(r_m3_HPT, A_3_HPT)
+
+# Find if number of stages is one or two
+N_stages_HPT = 1
+psi_HPT_single_stage = 2 * dH_HPT / (U_m1_HPT ** 2)
+psi_HPT_double_stage = 2 * dH_HPT / (2 * U_m1_HPT ** 2)
+
+if psi_HPT_single_stage > psi_HPT_required:
+    N_stages_HPT = 2
+
+if psi_HPT_double_stage > psi_HPT_required:
+    print('Error: Number of hpt stages exceeds 2!')
+    exit()
+
 
 # IPT ------------------------------------------------------------------------------------------
 psi_IPT = 3.247
