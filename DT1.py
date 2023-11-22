@@ -614,4 +614,46 @@ U_m1_HPT = r_m1_HPT * omega_HPC
 # IPT ------------------------------------------------------------------------------------------
 psi_IPT = 3.247
 
-# plt.show()
+
+
+# drawing engine sketch ------------------------------------------------------------------------
+# ul = upper left
+# ur = upper right
+# ll = lower left
+# lr = lower right
+# [ul, ur, lr, ll, ul]
+
+# fan
+x_fan = [0, l_ax1_fan, l_ax1_fan, 0, 0]
+y_fan = [r_t1_fan, r_t2_fan, r_h2_fan, r_h1_fan, r_t1_fan]
+
+# IPC
+x0_IPC = l_ax1_fan + l_ax_duct_FAN_IPC
+
+x_IPC = [x0_IPC, x0_IPC + l_IPC, x0_IPC + l_IPC, x0_IPC, x0_IPC]
+y_IPC = [r_t1_IPC, r_t3_IPC, r_h3_IPC, r_h1_IPC, r_t1_IPC]
+
+# HPC
+x0_HPC = x0_IPC + + l_IPC + l_ax_duct_IPC_HPC
+
+x_HPC = [x0_HPC, x0_HPC + l_HPC, x0_HPC + l_HPC, x0_HPC, x0_HPC]
+y_HPC = [r_t1_HPC, r_t3_HPC, r_h3_HPC, r_h1_HPC, r_t1_HPC]
+
+# CC
+x0_CC = x0_HPC + l_HPC
+
+r_t1_HPT = 1
+r_h1_HPT = 0.5
+x_CC = [x0_CC, x0_CC + l_CC, x0_CC + l_CC, x0_CC, x0_CC]
+y_CC = [r_t3_HPC, r_t1_HPT, r_h1_HPT, r_h3_HPC, r_t3_HPC]
+
+plt.figure()
+plt.axhline(y=0, color='k', linestyle='--')
+plt.plot(x_fan, y_fan, color='b')
+plt.plot(x_IPC, y_IPC, color='g')
+plt.plot(x_HPC, y_HPC, color='c')
+plt.plot(x_CC, y_CC, color='r')
+plt.ylim(-1, r_t1_fan+0.5)
+plt.axis('equal')
+
+plt.show()
