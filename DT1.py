@@ -742,11 +742,11 @@ y_fan = [r_t1_fan, r_t2_fan, r_h2_fan, r_h1_fan, r_t1_fan]
 # IPC
 x0_IPC = l_ax1_fan + l_ax_duct_FAN_IPC
 
-x_IPC = [x0_IPC, x0_IPC + l_IPC, x0_IPC + l_IPC, x0_IPC, x0_IPC]
+x_IPC = [x0_IPC, x0_IPC + l_ax_IPC, x0_IPC + l_ax_IPC, x0_IPC, x0_IPC]
 y_IPC = [r_t1_IPC, r_t3_IPC, r_h3_IPC, r_h1_IPC, r_t1_IPC]
 
 # HPC
-x0_HPC = x0_IPC + + l_IPC + l_ax_duct_IPC_HPC
+x0_HPC = x0_IPC + + l_ax_IPC + l_ax_duct_IPC_HPC
 
 x_HPC = [x0_HPC, x0_HPC + l_HPC, x0_HPC + l_HPC, x0_HPC, x0_HPC]
 y_HPC = [r_t1_HPC, r_t3_HPC, r_h3_HPC, r_h1_HPC, r_t1_HPC]
