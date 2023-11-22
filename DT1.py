@@ -728,5 +728,88 @@ l_ax_duct_HPT_IPT = h_mean_duct_HPT_IPT * 0.4
 #h_mean_duct_IPT_LPT = (r_t3_IPT - r_h3_IPT) + (r_t1_LPT - r_h1_LPT)
 #l_ax_duct_IPT_LPT = h_mean_duct_IPT_LPT * 0.4
 
+# drawing engine sketch ------------------------------------------------------------------------
+# ul = upper left
+# ur = upper right
+# ll = lower left
+# lr = lower right
+# [ul, ur, lr, ll, ul]
+
+# fan
+x_fan = [0, l_ax1_fan, l_ax1_fan, 0, 0]
+y_fan = [r_t1_fan, r_t2_fan, r_h2_fan, r_h1_fan, r_t1_fan]
+
+# IPC
+x0_IPC = l_ax1_fan + l_ax_duct_FAN_IPC
+
+x_IPC = [x0_IPC, x0_IPC + l_IPC, x0_IPC + l_IPC, x0_IPC, x0_IPC]
+y_IPC = [r_t1_IPC, r_t3_IPC, r_h3_IPC, r_h1_IPC, r_t1_IPC]
+
+# HPC
+x0_HPC = x0_IPC + + l_IPC + l_ax_duct_IPC_HPC
+
+x_HPC = [x0_HPC, x0_HPC + l_HPC, x0_HPC + l_HPC, x0_HPC, x0_HPC]
+y_HPC = [r_t1_HPC, r_t3_HPC, r_h3_HPC, r_h1_HPC, r_t1_HPC]
+
+# CC
+x0_CC = x0_HPC + l_HPC
+
+# guessed values
+r_t1_HPT = 1
+r_h1_HPT = 0.5
+r_t3_HPT = 1
+r_h3_HPT = 0.5
+l_ax_HPT = 1
+
+l_ax_duct_HPT_IPT = 0.5
+
+r_t1_IPT = 1.5
+r_h1_IPT = 0.5
+r_t3_IPT = 1.5
+r_h3_IPT = 0.5
+l_ax_IPT = 1
+
+l_ax_duct_IPT_LPT = 0.5
+
+r_t1_LPT = 2
+r_h1_LPT = 1.5
+r_t3_LPT = 2
+r_h3_LPT = 1.5
+l_ax_LPT = 1
+
+x_CC = [x0_CC, x0_CC + l_CC, x0_CC + l_CC, x0_CC, x0_CC]
+y_CC = [r_t3_HPC, r_t1_HPT, r_h1_HPT, r_h3_HPC, r_t3_HPC]
+
+# HPT
+x0_HPT = x0_CC + l_CC
+
+x_HPT = [x0_HPT, x0_HPT + l_ax_HPT, x0_HPT + l_ax_HPT, x0_HPT, x0_HPT]
+y_HPT = [r_t1_HPT, r_t3_HPT, r_h3_HPT, r_h1_HPT, r_t1_HPT]
+
+# IPT
+x0_IPT = x0_HPT + l_ax_HPT + l_ax_duct_HPT_IPT
+
+x_IPT = [x0_IPT, x0_IPT + l_ax_IPT, x0_IPT + l_ax_IPT, x0_IPT, x0_IPT]
+y_IPT = [r_t1_IPT, r_t3_IPT, r_h3_IPT, r_h1_IPT, r_t1_IPT]
+
+#LPT
+x0_LPT = x0_IPT + l_ax_IPT + l_ax_duct_IPT_LPT
+
+x_LPT = [x0_LPT, x0_LPT + l_ax_LPT, x0_LPT + l_ax_LPT, x0_LPT, x0_LPT]
+y_LPT = [r_t1_LPT, r_t3_LPT, r_h3_LPT, r_h1_LPT, r_t1_LPT]
+
+
+plt.figure()
+plt.axhline(y=0, color='k', linestyle='--')
+plt.plot(x_fan, y_fan, color='b')
+plt.plot(x_IPC, y_IPC, color='g')
+plt.plot(x_HPC, y_HPC, color='c')
+plt.plot(x_CC, y_CC, color='r')
+plt.plot(x_HPT, y_HPT, color='c')
+plt.plot(x_IPT, y_IPT, color='g')
+plt.plot(x_LPT, y_LPT, color='b')
+plt.ylim(-1, r_t1_fan+0.5)
+plt.axis('equal')
+
 a = 10
 # plt.show()
