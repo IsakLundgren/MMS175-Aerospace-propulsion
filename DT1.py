@@ -615,7 +615,6 @@ M_CC = 0.06  # - Mach number average in combustor
 V_CC = M_CC * calcSOS(M_CC, 4)
 
 l_CC = t_CC * V_CC
-l_CC = t_CC * V_CC
 
 beta_CC = 10  # degrees
 dy_CC = l_CC * np.tan(np.pi / 180 * beta_CC)
@@ -659,12 +658,18 @@ if aboveCritAN2(omega_HPT, A_1_HPT, aN2crit_1_HPT) or aboveCritAN2(omega_HPT, A_
     print('Error: Exceeding stress predictions in HPT!')
     exit()
 
-AR_1_HPT = 29.510 - 0.0140 * EIS
-AR_3_HPT = 30.143 - 0.0140 * EIS
-
 # Calculate axial length
 if N_stages_HPT == 2:
-    l_ax_HPT = (r_t1_HPT - r_h1_HPT) / AR_1_HPT + (r_t3_HPT - r_h3_HPT) / AR_3_HPT
+    AR_1_HPT = 29.510 - 0.0140 * EIS
+    AR_3_HPT = 30.143 - 0.0140 * EIS
+
+    h_1_HPT = r_t1_HPT - r_h1_HPT
+    h_3_HPT = r_t3_HPT - r_h3_HPT
+    h_mean_1_HPT = np.sqrt(h_1_HPT * h_3_HPT)
+    AR_mean_HPT = np.sqrt(AR_1_HPT ** 2 + AR_3_HPT ** 2)
+    c = 0.2  # spacing
+    l_ax_HPT = 2 * N_stages_HPT * h_mean_1_HPT * (1 + c) / AR_mean_HPT
+
 
 # IPT ------------------------------------------------------------------------------------------
 psi_IPT_required = 3.247
@@ -689,6 +694,7 @@ r_h3_IPT, r_t3_IPT = calcHubTip(r_m3_IPT, A_3_IPT)
 N_stages_IPT = 1
 psi_IPT_single_stage = 2 * dH_IPT / (U_m1_IPT ** 2)
 psi_IPT_double_stage = 2 * dH_IPT / (2 * U_m1_IPT ** 2)
+
 if psi_IPT_single_stage > psi_IPT_required:
     N_stages_IPT = 2
 
@@ -702,13 +708,25 @@ if aboveCritAN2(omega_IPT, A_1_IPT, aN2crit_1_IPT):
     print('Error: Exceeding stress predictions in IPT!')
     exit()
 
+# Calculate axial length
+AR_1_IPT = 29.510 - 0.0140 * EIS
 
-a = 10
-
-# DUCT IPT-LPT--------------------------
-
+h_1_IPT = r_t1_IPT - r_h1_IPT
+h_3_IPT = r_t3_IPT - r_h3_IPT
+h_mean_1_IPT = np.sqrt(h_1_IPT * h_3_IPT)
+c = 0.2  # spacing
+l_ax_IPT = 2 * N_stages_IPT * h_mean_1_IPT * (1 + c) / AR_1_IPT
 
 # LPT -------------------------------------------------------------------------------------
 
 
+# DUCT IPT-LPT--------------------------
+h_mean_duct_HPT_IPT = (r_t3_HPT - r_h3_HPT) + (r_t1_IPT - r_h1_IPT)
+l_ax_duct_HPT_IPT = h_mean_duct_HPT_IPT * 0.4
+
+# DUCT IPT-LPT--------------------------
+#h_mean_duct_IPT_LPT = (r_t3_IPT - r_h3_IPT) + (r_t1_LPT - r_h1_LPT)
+#l_ax_duct_IPT_LPT = h_mean_duct_IPT_LPT * 0.4
+
+a = 10
 # plt.show()
