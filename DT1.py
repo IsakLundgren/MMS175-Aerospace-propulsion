@@ -607,7 +607,7 @@ h_3_HPC = r_t3_HPC - r_h3_HPC
 h_mean_1_HPC = np.sqrt(h_1_HPC*h_3_HPC)
 AR_mean_HPC = np.sqrt(AR_1_HPC**2 + AR_3_HPC**2)
 c = 0.3  # spacing
-l_HPC = 2 * N_stages_HPC * h_mean_1_HPC * (1 + c) / AR_mean_HPC
+l_ax_HPC = 2 * N_stages_HPC * h_mean_1_HPC * (1 + c) / AR_mean_HPC
 
 l_ax_duct_IPC_HPC = (r_t3_IPC - r_h3_IPC + r_t1_HPC - r_h1_HPC) / 2 * AR_duct_IPC_HPC
 
@@ -787,34 +787,11 @@ y_IPC = [r_t1_IPC, r_t3_IPC, r_h3_IPC, r_h1_IPC, r_t1_IPC]
 # HPC
 x0_HPC = x0_IPC + + l_ax_IPC + l_ax_duct_IPC_HPC
 
-x_HPC = [x0_HPC, x0_HPC + l_HPC, x0_HPC + l_HPC, x0_HPC, x0_HPC]
+x_HPC = [x0_HPC, x0_HPC + l_ax_HPC, x0_HPC + l_ax_HPC, x0_HPC, x0_HPC]
 y_HPC = [r_t1_HPC, r_t3_HPC, r_h3_HPC, r_h1_HPC, r_t1_HPC]
 
 # CC
-x0_CC = x0_HPC + l_HPC
-
-# guessed values
-r_t1_HPT = 1
-r_h1_HPT = 0.5
-r_t3_HPT = 1
-r_h3_HPT = 0.5
-l_ax_HPT = 1
-
-l_ax_duct_HPT_IPT = 0.5
-
-r_t1_IPT = 1.5
-r_h1_IPT = 0.5
-r_t3_IPT = 1.5
-r_h3_IPT = 0.5
-l_ax_IPT = 1
-
-l_ax_duct_IPT_LPT = 0.5
-
-r_t1_LPT = 2
-r_h1_LPT = 1.5
-r_t3_LPT = 2
-r_h3_LPT = 1.5
-l_ax_LPT = 1
+x0_CC = x0_HPC + l_ax_HPC
 
 x_CC = [x0_CC, x0_CC + l_CC, x0_CC + l_CC, x0_CC, x0_CC]
 y_CC = [r_t3_HPC, r_t1_HPT, r_h1_HPT, r_h3_HPC, r_t3_HPC]
@@ -840,15 +817,37 @@ y_LPT = [r_t1_LPT, r_t3_LPT, r_h3_LPT, r_h1_LPT, r_t1_LPT]
 
 plt.figure()
 plt.axhline(y=0, color='k', linestyle='--')
-plt.plot(x_fan, y_fan, color='b')
-plt.plot(x_IPC, y_IPC, color='g')
-plt.plot(x_HPC, y_HPC, color='c')
-plt.plot(x_CC, y_CC, color='r')
+plt.plot(x_fan, y_fan, color='b', label='Fan/low pressure')
+plt.plot(x_IPC, y_IPC, color='g', label='Intermediate pressure')
+plt.plot(x_HPC, y_HPC, color='c', label='High pressure')
+plt.plot(x_CC, y_CC, color='r', label='Compustion chamber')
 plt.plot(x_HPT, y_HPT, color='c')
 plt.plot(x_IPT, y_IPT, color='g')
 plt.plot(x_LPT, y_LPT, color='b')
-plt.ylim(-1, r_t1_fan+0.5)
+plt.ylim(-0.25, r_t1_fan+0.25)
 plt.axis('equal')
+
+plt.legend()
+
+# prints for table
+print('Component lengths:')
+print(f'Fan: {l_ax1_fan: .4g} m')
+print(f'IPC: {l_ax_IPC: .4g} m')
+print(f'HPC: {l_ax_HPC: .4g} m')
+print(f'Combustion chamber: {l_CC: .4g} m')
+print(f'HPT: {l_ax_HPT: .4g} m')
+print(f'IPT: {l_ax_IPT: .4g} m')
+print(f'LPT: {l_ax_LPT: .4g} m')
+print(f'Total length: {x0_LPT + l_ax_LPT: .4g} m')
+
+print('Number of stages:')
+print(f'Fan 1')
+print(f'IPC {N_stages_IPC}')
+print(f'HPC {N_stages_HPC}')
+print(f'HPT {N_stages_HPT}')
+print(f'IPT {N_stages_IPT}')
+print(f'LPT {N_stages_LPT}')
+
 
 a = 10
 # plt.show()
