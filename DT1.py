@@ -631,7 +631,7 @@ dH_HPT = cp[5] * (T0[5] - T0[6])
 U_m1_HPT = r_m1_HPT * omega_HPC
 
 M_ax_1_HPT = 0.150
-M_ax_3_HPT = 0.331 + 0.061 * p0[6] / p0[5]
+M_ax_3_HPT = 0.420
 
 A_1_HPT = areaFuntion(M_ax_1_HPT, 5)
 A_3_HPT = areaFuntion(M_ax_3_HPT, 6)
@@ -850,4 +850,4 @@ print(f'LPT {N_stages_LPT}')
 
 
 a = 10
-# plt.show()
+plt.show()
