@@ -426,7 +426,7 @@ def qAreaFunction(M, station):
 
 
 def getRadius(A, htr):
-    r_t = np.sqrt(A * 4 / np.pi * (1 / (1 - htr ** 2)))
+    r_t = np.sqrt(A / np.pi * (1 / (1 - htr ** 2)))
 
     r_h = htr * r_t
 
@@ -472,18 +472,10 @@ EIS = 2020
 M_ax1_fan = 0.603
 
 htr_1_fan = 44.29 / (98.94 + np.exp(0.0185 * EIS - 33.31))
-
-dmdt_1_fan = final_dmdt_c
-
-rho_1_fan = p_1 / R_a / T_1
-
-c_1_fan = M_ax1_fan * np.sqrt(gamma_a*R_a*T_1)
-
-A_1_fan = dmdt_1_fan / rho_1_fan / c_1_fan
-print(A_1_fan)
 A_1_fan = areaFuntion(M_ax1_fan, 1)
 print(A_1_fan)
-# A_1_fan = qAreaFunction(M_ax1_fan, 1)
+A_1_fan = qAreaFunction(M_ax1_fan, 1)
+print(A_1_fan)
 
 r_t1_fan, r_h1_fan = getRadius(A_1_fan, htr_1_fan)[0:2]
 
@@ -501,16 +493,16 @@ U_t1_fan = np.sqrt(T0[1]) * (-59.74*FPR + 88.07 * FPR**2 - 25.93 * FPR**3)
 
 omega_fan = U_t1_fan / r_t1_fan
 
-A_2_fan = np.pi*(r_t2_fan**2 - r_h2_fan**2) / 4
+A_2_fan = np.pi*(r_t2_fan**2 - r_h2_fan**2)
 
 A_duct_entry = A_2_fan / (BPR + 1)
 
-r_splitter_lip = np.sqrt(A_duct_entry / np.pi + r_h1_fan**2)
+r_splitter_lip = np.sqrt(A_duct_entry / np.pi + r_h2_fan**2)
 
 # IPC --------------------------------------------------------------------------------------
 AR_duct_FAN_IPC = 0.4
 
-l_ax_duct_FAN_IPC = (r_splitter_lip - r_h1_fan) / AR_duct_FAN_IPC
+l_ax_duct_FAN_IPC = (r_splitter_lip - r_h2_fan) / AR_duct_FAN_IPC
 
 M_ax_1_IPC = 0.539
 M_ax_3_IPC = 0.341
@@ -522,8 +514,8 @@ htr_3_IPC = 0.819
 
 psi_IPC = -8.968 + 0.004877 * EIS
 
-A_1_IPC = areaFuntion(M_ax_1_IPC, 2)
-A_3_IPC = areaFuntion(M_ax_3_IPC, 3)
+A_1_IPC = qAreaFunction(M_ax_1_IPC, 2)
+A_3_IPC = qAreaFunction(M_ax_3_IPC, 3)
 
 r_t1_IPC, r_h1_IPC, r_m1_IPC = getRadius(A_1_IPC, htr_1_IPC)
 r_t3_IPC, r_h3_IPC, r_m3_IPC = getRadius(A_3_IPC, htr_3_IPC)
@@ -531,7 +523,7 @@ r_t3_IPC, r_h3_IPC, r_m3_IPC = getRadius(A_3_IPC, htr_3_IPC)
 dH_IPC = cp[2] * (T0[3] - T0[2])
 
 # Interpolate to get requested blade tip speed
-U_t1_IPC = M_t_IPC * calcSOS(M_t_IPC, 2)
+U_t1_IPC = M_t_IPC * calcSOS(M_ax_1_IPC, 2)
 omega_IPC = U_t1_IPC / r_t1_IPC
 
 U_m1_IPC = r_m1_IPC * omega_IPC
@@ -555,7 +547,7 @@ AR_3_IPC = 35.47 - 0.01694*EIS
 h_1_IPC = r_t1_IPC - r_h1_IPC
 h_3_IPC = r_t3_IPC - r_h3_IPC
 h_mean_1_IPC = np.sqrt(h_1_IPC*h_3_IPC)
-AR_mean_IPC = np.sqrt(AR_1_IPC**2 + AR_3_IPC**2)
+AR_mean_IPC = np.sqrt(AR_1_IPC * AR_3_IPC)
 c = 0.3  # spacing
 l_ax_IPC = 2 * N_stages_IPC * h_mean_1_IPC * (1 + c) / AR_mean_IPC
 
@@ -572,8 +564,8 @@ htr_3_HPC = 0.908
 
 psi_HPC = -5.736 + 0.00323 * EIS
 
-A_1_HPC = areaFuntion(M_ax_1_HPC, 3)
-A_3_HPC = areaFuntion(M_ax_3_HPC, 4)
+A_1_HPC = qAreaFunction(M_ax_1_HPC, 3)
+A_3_HPC = qAreaFunction(M_ax_3_HPC, 4)
 
 r_t1_HPC, r_h1_HPC, r_m1_HPC = getRadius(A_1_HPC, htr_1_HPC)
 r_t3_HPC, r_h3_HPC, r_m3_HPC = getRadius(A_3_HPC, htr_3_HPC)
@@ -581,7 +573,7 @@ r_t3_HPC, r_h3_HPC, r_m3_HPC = getRadius(A_3_HPC, htr_3_HPC)
 dH_HPC = cp[3] * (T0[4] - T0[3])
 
 # Interpolate to get requested blade tip speed
-U_t1_HPC = M_t_HPC * calcSOS(M_t_HPC, 3)
+U_t1_HPC = M_t_HPC * calcSOS(M_ax_1_HPC, 3)
 omega_HPC = U_t1_HPC / r_t1_HPC
 
 U_m1_HPC = r_m1_HPC * omega_HPC
@@ -605,7 +597,7 @@ AR_3_HPC = 30.70 - 0.0147*EIS
 h_1_HPC = r_t1_HPC - r_h1_HPC
 h_3_HPC = r_t3_HPC - r_h3_HPC
 h_mean_1_HPC = np.sqrt(h_1_HPC*h_3_HPC)
-AR_mean_HPC = np.sqrt(AR_1_HPC**2 + AR_3_HPC**2)
+AR_mean_HPC = np.sqrt(AR_1_HPC * AR_3_HPC)
 c = 0.3  # spacing
 l_ax_HPC = 2 * N_stages_HPC * h_mean_1_HPC * (1 + c) / AR_mean_HPC
 
@@ -627,14 +619,14 @@ r_m1_HPT = r_m3_HPC + dy_CC
 psi_HPT_required = 3.247
 omega_HPT = omega_HPC
 
-dH_HPT = cp[5] * (T0[5] - T0[6])
+dH_HPT = cp[5] * (T0[5] + (1562 - 1680) - T0[6])
 U_m1_HPT = r_m1_HPT * omega_HPC
 
 M_ax_1_HPT = 0.150
 M_ax_3_HPT = 0.420
 
-A_1_HPT = areaFuntion(M_ax_1_HPT, 5)
-A_3_HPT = areaFuntion(M_ax_3_HPT, 6)
+A_1_HPT = qAreaFunction(M_ax_1_HPT, 5)
+A_3_HPT = qAreaFunction(M_ax_3_HPT, 6)
 
 r_m3_HPT = r_m1_HPT  # Assume same radius
 
@@ -653,22 +645,38 @@ if psi_HPT_double_stage > psi_HPT_required:
     print('Error: Number of hpt stages exceeds 2!')
     exit()
 
-aN2crit_1_HPT = (-129.44 + EIS * 0.0675) * 1e3
-aN2crit_3_HPT = (-177.33 + EIS * 0.0930) * 1e3
+if N_stages_HPT == 1:
+    aN2crit_HPT = (-158.99 + EIS * 0.0830) * 1e3
 
-if aboveCritAN2(omega_HPT, A_1_HPT, aN2crit_1_HPT) or aboveCritAN2(omega_HPT, A_3_HPT, aN2crit_3_HPT):
-    print('Error: Exceeding stress predictions in HPT!')
-    exit()
+    if aboveCritAN2(omega_HPT, A_1_HPT, aN2crit_HPT):
+        print('Error: Exceeding stress predictions in HPT!')
+        exit()
+elif N_stages_HPT == 2:
+    aN2crit_1_HPT = (-129.44 + EIS * 0.0675) * 1e3
+    aN2crit_3_HPT = (-177.33 + EIS * 0.0930) * 1e3
+
+    if aboveCritAN2(omega_HPT, A_1_HPT, aN2crit_1_HPT) or aboveCritAN2(omega_HPT, A_3_HPT, aN2crit_3_HPT):
+        print('Error: Exceeding stress predictions in HPT!')
+        exit()
 
 # Calculate axial length
-if N_stages_HPT == 2:
+if N_stages_HPT == 1:
+    AR_1_HPT = 29.233 - 0.0140 * EIS
+
+    h_1_HPT = r_t1_HPT - r_h1_HPT
+    h_3_HPT = r_t3_HPT - r_h3_HPT
+    h_mean_1_HPT = np.sqrt(h_1_HPT * h_3_HPT)
+    c = 0.2  # spacing
+    l_ax_HPT = 2 * N_stages_HPT * h_mean_1_HPT * (1 + c) / AR_1_HPT
+
+elif N_stages_HPT == 2:
     AR_1_HPT = 29.510 - 0.0140 * EIS
     AR_3_HPT = 30.143 - 0.0140 * EIS
 
     h_1_HPT = r_t1_HPT - r_h1_HPT
     h_3_HPT = r_t3_HPT - r_h3_HPT
     h_mean_1_HPT = np.sqrt(h_1_HPT * h_3_HPT)
-    AR_mean_HPT = np.sqrt(AR_1_HPT ** 2 + AR_3_HPT ** 2)
+    AR_mean_HPT = np.sqrt(AR_1_HPT * AR_3_HPT)
     c = 0.2  # spacing
     l_ax_HPT = 2 * N_stages_HPT * h_mean_1_HPT * (1 + c) / AR_mean_HPT
 
@@ -678,7 +686,7 @@ psi_IPT_required = 3.247
 omega_IPT = omega_IPC
 
 r_m1_IPT = 1.3 * r_m3_HPT
-r_m3_IPT = r_m1_IPT  # Assume same radius TODO Validate this
+r_m3_IPT = r_m1_IPT
 
 dH_IPT = cp[6] * (T0[6] - T0[7])
 U_m1_IPT = r_m1_IPT * omega_IPT
@@ -686,8 +694,8 @@ U_m1_IPT = r_m1_IPT * omega_IPT
 M_ax_1_IPT = 0.314
 M_ax_3_IPT = 0.554
 
-A_1_IPT = areaFuntion(M_ax_1_IPT, 6)
-A_3_IPT = areaFuntion(M_ax_3_IPT, 7)
+A_1_IPT = qAreaFunction(M_ax_1_IPT, 6)
+A_3_IPT = qAreaFunction(M_ax_3_IPT, 7)
 
 r_h1_IPT, r_t1_IPT = calcHubTip(r_m1_IPT, A_1_IPT)
 r_h3_IPT, r_t3_IPT = calcHubTip(r_m3_IPT, A_3_IPT)
@@ -711,7 +719,7 @@ if aboveCritAN2(omega_IPT, A_1_IPT, aN2crit_1_IPT):
     exit()
 
 # Calculate axial length
-AR_1_IPT = 29.510 - 0.0140 * EIS
+AR_1_IPT = 30.492 - 0.0140 * EIS
 
 h_1_IPT = r_t1_IPT - r_h1_IPT
 h_3_IPT = r_t3_IPT - r_h3_IPT
@@ -732,15 +740,15 @@ psi_LPT = -39.26 + 0.02185 * EIS
 M_ax_1_LPT = 0.368
 M_ax_3_LPT = 0.322
 
-A_1_LPT = areaFuntion(M_ax_1_LPT, 7)
-A_3_LPT = areaFuntion(M_ax_3_LPT, 8)
+A_1_LPT = qAreaFunction(M_ax_1_LPT, 7)
+A_3_LPT = qAreaFunction(M_ax_3_LPT, 8)
 
 r_h1_LPT, r_t1_LPT = calcHubTip(r_m1_LPT, A_1_LPT)
 r_h3_LPT = np.sqrt(r_t3_LPT ** 2 - A_3_LPT / np.pi)
 r_m3_LPT = (r_t3_LPT + r_h3_LPT) / 2
 
-AR_1_LPT = 29.510 - 0.0140 * EIS
-AR_3_LPT = 30.143 - 0.0140 * EIS
+AR_1_LPT = 31.40 - 0.0146 * EIS
+AR_3_LPT = -35.60 + 0.0209 * EIS
 
 dH_LPT = cp[7] * (T0[7] - T0[8])
 
@@ -755,7 +763,7 @@ N_stages_LPT = N_list[np.argmin(idealres)]
 h_1_LPT = r_t1_LPT - r_h1_LPT
 h_3_LPT = r_t3_LPT - r_h3_LPT
 h_mean_1_LPT = np.sqrt(h_1_LPT * h_3_LPT)
-AR_mean_LPT = np.sqrt(AR_1_LPT ** 2 + AR_3_LPT ** 2)
+AR_mean_LPT = np.sqrt(AR_1_LPT * AR_3_LPT)
 c = 0.4  # spacing
 l_ax_LPT = 2 * N_stages_LPT * h_mean_1_LPT * (1 + c) / AR_mean_LPT
 
