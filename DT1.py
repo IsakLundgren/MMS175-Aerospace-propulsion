@@ -826,20 +826,28 @@ x0_LPT = x0_IPT + l_ax_IPT + l_ax_duct_IPT_LPT
 x_LPT = [x0_LPT, x0_LPT + l_ax_LPT, x0_LPT + l_ax_LPT, x0_LPT, x0_LPT]
 y_LPT = [r_t1_LPT, r_t3_LPT, r_h3_LPT, r_h1_LPT, r_t1_LPT]
 
+# Plot engine layout
+fig, ax = plt.subplots()
+ax.axhline(y=0, color='k', linestyle='--')
+ax.fill(x_fan, y_fan, color='b', label='Fan/low pressure')
+ax.fill(x_IPC, y_IPC, color='g', label='Intermediate pressure')
+ax.fill(x_HPC, y_HPC, color='c', label='High pressure')
+ax.fill(x_CC, y_CC, color='r', label='Compustion chamber')
+ax.fill(x_HPT, y_HPT, color='c')
+ax.fill(x_IPT, y_IPT, color='g')
+ax.fill(x_LPT, y_LPT, color='b')
+ax.set_ylim(-0.1, r_t1_fan+0.1)
+ax.axis('equal')
+ax.set_xlabel('x [m]')
+ax.set_ylabel('r [m]')
+ax.set_title('Engine component layout')
+ax.grid()
+ax.legend()
 
-plt.figure()
-plt.axhline(y=0, color='k', linestyle='--')
-plt.fill(x_fan, y_fan, color='b', label='Fan/low pressure')
-plt.fill(x_IPC, y_IPC, color='g', label='Intermediate pressure')
-plt.fill(x_HPC, y_HPC, color='c', label='High pressure')
-plt.fill(x_CC, y_CC, color='r', label='Compustion chamber')
-plt.fill(x_HPT, y_HPT, color='c')
-plt.fill(x_IPT, y_IPT, color='g')
-plt.fill(x_LPT, y_LPT, color='b')
-plt.ylim(-0.25, r_t1_fan+0.25)
-plt.axis('equal')
-
-plt.legend()
+# Save figure
+figureDPI = 200
+fig.set_size_inches(8, 6)
+fig.savefig('img/EngineLayout.png', dpi=figureDPI)
 
 # prints for table
 print('Component lengths:')
