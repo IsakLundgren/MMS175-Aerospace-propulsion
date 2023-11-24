@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.optimize import fsolve
 
 
 # Given parameters
@@ -472,10 +471,7 @@ EIS = 2020
 M_ax1_fan = 0.603
 
 htr_1_fan = 44.29 / (98.94 + np.exp(0.0185 * EIS - 33.31))
-A_1_fan = areaFuntion(M_ax1_fan, 1)
-print(A_1_fan)
 A_1_fan = qAreaFunction(M_ax1_fan, 1)
-print(A_1_fan)
 
 r_t1_fan, r_h1_fan = getRadius(A_1_fan, htr_1_fan)[0:2]
 
@@ -669,7 +665,7 @@ if N_stages_HPT == 1:
     c = 0.2  # spacing
     l_ax_HPT = 2 * N_stages_HPT * h_mean_1_HPT * (1 + c) / AR_1_HPT
 
-elif N_stages_HPT == 2:
+else:
     AR_1_HPT = 29.510 - 0.0140 * EIS
     AR_3_HPT = 30.143 - 0.0140 * EIS
 
@@ -850,23 +846,89 @@ fig.set_size_inches(8, 6)
 fig.savefig('img/EngineLayout.png', dpi=figureDPI)
 
 # prints for table
-print('Component lengths:')
-print(f'Fan: {l_ax1_fan: .4g} m')
-print(f'IPC: {l_ax_IPC: .4g} m')
-print(f'HPC: {l_ax_HPC: .4g} m')
-print(f'Combustion chamber: {l_CC: .4g} m')
-print(f'HPT: {l_ax_HPT: .4g} m')
-print(f'IPT: {l_ax_IPT: .4g} m')
-print(f'LPT: {l_ax_LPT: .4g} m')
-print(f'Total length: {x0_LPT + l_ax_LPT: .4g} m')
+print('\n--Engine sizing---')
+printLatex = True
+if printLatex:
+    component_lengths_table = "\\begin{table}[ht]\n"
+    component_lengths_table += "\\centering\n"
+    component_lengths_table += "\\caption{Engine sizing results}\n"
+    component_lengths_table += "\\begin{subtable}{0.45\\textwidth}\n"
+    component_lengths_table += "\\centering\n"
+    component_lengths_table += "\\caption{Component Lengths}\n"
+    component_lengths_table += "\\begin{tabular}{|l|l|}\n"
+    component_lengths_table += "\\hline\n"
+    component_lengths_table += "Component & Length (m) \\\\\n"
+    component_lengths_table += "\\hline\n"
 
-print('Number of stages:')
-print(f'Fan 1')
-print(f'IPC {N_stages_IPC}')
-print(f'HPC {N_stages_HPC}')
-print(f'HPT {N_stages_HPT}')
-print(f'IPT {N_stages_IPT}')
-print(f'LPT {N_stages_LPT}')
+    component_lengths_data = [
+        ["Fan", f"{l_ax1_fan:.4g}"],
+        ["IPC", f"{l_ax_IPC:.4g}"],
+        ["HPC", f"{l_ax_HPC:.4g}"],
+        ["Combustion Chamber", f"{l_CC:.4g}"],
+        ["HPT", f"{l_ax_HPT:.4g}"],
+        ["IPT", f"{l_ax_IPT:.4g}"],
+        ["LPT", f"{l_ax_LPT:.4g}"],
+        ["Total Length", f"{x0_LPT + l_ax_LPT:.4g}"],
+    ]
+
+    for data in component_lengths_data:
+        component_lengths_table += " & ".join(data) + " \\\\\n"
+
+    component_lengths_table += "\\hline\n"
+    component_lengths_table += "\\end{tabular}\n"
+    component_lengths_table += "\\label{tab:compLength}\n"
+    component_lengths_table += "\\end{subtable}\n"
+
+    num_of_stages_table = "\\begin{subtable}{0.45\\textwidth}\n"
+    num_of_stages_table += "\\centering\n"
+    num_of_stages_table += "\\caption{Number of Stages}\n"
+    num_of_stages_table += "\\begin{tabular}{|l|l|}\n"
+    num_of_stages_table += "\\hline\n"
+    num_of_stages_table += "Component & Number of Stages \\\\\n"
+    num_of_stages_table += "\\hline\n"
+
+    num_of_stages_data = [
+        ["Fan", "1"],
+        ["IPC", str(N_stages_IPC)],
+        ["HPC", str(N_stages_HPC)],
+        ["HPT", str(N_stages_HPT)],
+        ["IPT", str(N_stages_IPT)],
+        ["LPT", str(N_stages_LPT)],
+    ]
+
+    for data in num_of_stages_data:
+        num_of_stages_table += " & ".join(data) + " \\\\\n"
+
+    num_of_stages_table += "\\hline\n"
+    num_of_stages_table += "\\end{tabular}\n"
+    num_of_stages_table += "\\label{tab:stageNo}\n"
+    num_of_stages_table += "\\end{subtable}\n"
+    num_of_stages_table += "\\label{tab:engSizing}\n"
+    num_of_stages_table += "\\end{table}\n"
+
+    print(component_lengths_table)
+    print(num_of_stages_table)
+else:
+    print('Component lengths:')
+    print(f'Fan: {l_ax1_fan: .4g} m')
+    print(f'IPC: {l_ax_IPC: .4g} m')
+    print(f'HPC: {l_ax_HPC: .4g} m')
+    print(f'Combustion chamber: {l_CC: .4g} m')
+    print(f'HPT: {l_ax_HPT: .4g} m')
+    print(f'IPT: {l_ax_IPT: .4g} m')
+    print(f'LPT: {l_ax_LPT: .4g} m')
+    print(f'Total length: {x0_LPT + l_ax_LPT: .4g} m')
+
+    print('Number of stages:')
+    print(f'Fan 1')
+    print(f'IPC {N_stages_IPC}')
+    print(f'HPC {N_stages_HPC}')
+    print(f'HPT {N_stages_HPT}')
+    print(f'IPT {N_stages_IPT}')
+    print(f'LPT {N_stages_LPT}')
+
+print('\n--Turbine stresses (AN2)--')
+# print(f'AN2_HPT = {AN2}')
 
 
 a = 10
