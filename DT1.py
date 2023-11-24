@@ -459,10 +459,10 @@ def calcHubTip(r_mean, area):
     return r_hub, r_tip
 
 
-def aboveCritAN2(omega, A, critVal):
+def calcAN2(omega, A):
     rps = omega / (2 * np.pi)
     val = A * rps ** 2
-    return val > critVal
+    return val
 
 
 EIS = 2020
@@ -641,17 +641,19 @@ if psi_HPT_double_stage > psi_HPT_required:
     print('Error: Number of hpt stages exceeds 2!')
     exit()
 
-if N_stages_HPT == 1:
-    aN2crit_HPT = (-158.99 + EIS * 0.0830) * 1e3
+AN2_HPT = calcAN2(omega_HPT, A_1_HPT)
 
-    if aboveCritAN2(omega_HPT, A_1_HPT, aN2crit_HPT):
+if N_stages_HPT == 1:
+    AN2crit_HPT = (-158.99 + EIS * 0.0830) * 1e3
+    if AN2_HPT > AN2crit_HPT:
         print('Error: Exceeding stress predictions in HPT!')
         exit()
-elif N_stages_HPT == 2:
-    aN2crit_1_HPT = (-129.44 + EIS * 0.0675) * 1e3
-    aN2crit_3_HPT = (-177.33 + EIS * 0.0930) * 1e3
 
-    if aboveCritAN2(omega_HPT, A_1_HPT, aN2crit_1_HPT) or aboveCritAN2(omega_HPT, A_3_HPT, aN2crit_3_HPT):
+elif N_stages_HPT == 2:
+    AN2crit_1_HPT = (-129.44 + EIS * 0.0675) * 1e3
+    AN2crit_3_HPT = (-177.33 + EIS * 0.0930) * 1e3
+
+    if AN2_HPT > AN2crit_1_HPT or AN2_HPT > AN2crit_3_HPT:
         print('Error: Exceeding stress predictions in HPT!')
         exit()
 
@@ -708,9 +710,10 @@ if psi_IPT_double_stage > psi_IPT_required:
     print('Error: Number of hpt stages exceeds 2!')
     exit()
 
-aN2crit_1_IPT = (-133.97 + EIS * 0.07099) * 1e3
+AN2_IPT = calcAN2(omega_IPT, A_1_IPT)
+AN2crit_1_IPT = (-133.97 + EIS * 0.07099) * 1e3
 
-if aboveCritAN2(omega_IPT, A_1_IPT, aN2crit_1_IPT):
+if AN2_IPT > AN2crit_1_IPT:
     print('Error: Exceeding stress predictions in IPT!')
     exit()
 
@@ -763,9 +766,8 @@ AR_mean_LPT = np.sqrt(AR_1_LPT * AR_3_LPT)
 c = 0.4  # spacing
 l_ax_LPT = 2 * N_stages_LPT * h_mean_1_LPT * (1 + c) / AR_mean_LPT
 
-rps_LPT = omega_LPT / (2 * np.pi)
-AN2_1_LPT = A_1_LPT * rps_LPT ** 2
-AN2_3_LPT = A_3_LPT * rps_LPT ** 2
+AN2_1_LPT = calcAN2(omega_LPT, A_1_LPT)
+AN2_3_LPT = calcAN2(omega_LPT, A_3_LPT)
 
 # DUCT IPT-LPT--------------------------
 h_mean_duct_HPT_IPT = (r_t3_HPT - r_h3_HPT) + (r_t1_IPT - r_h1_IPT)
@@ -904,7 +906,7 @@ if printLatex:
     num_of_stages_table += "\\label{tab:stageNo}\n"
     num_of_stages_table += "\\end{subtable}\n"
     num_of_stages_table += "\\label{tab:engSizing}\n"
-    num_of_stages_table += "\\end{table}\n"
+    num_of_stages_table += "\\end{table}"
 
     print(component_lengths_table)
     print(num_of_stages_table)
@@ -928,7 +930,35 @@ else:
     print(f'LPT {N_stages_LPT}')
 
 print('\n--Turbine stresses (AN2)--')
-# print(f'AN2_HPT = {AN2}')
+if printLatex:
+    single_table_package = "\\begin{table}[ht]\n"
+    single_table_package += "\\centering\n"
+    single_table_package += "\\begin{tabular}{|l|l|}\n"
+    single_table_package += "\\hline\n"
+    single_table_package += "Component & Stress (m\\textsuperscript{2}/s\\textsuperscript{2}) \\\\\n"
+    single_table_package += "\\hline\n"
+
+    data = [
+        ["$AN^2_\\text{HPT}$", f"{AN2_HPT:.4g}"],
+        ["$AN^2_\\text{IPT}$", f"{AN2_IPT:.4g}"],
+        ["$AN^2_\\text{LPT, 1}$", f"{AN2_1_LPT:.4g}"],
+        ["$AN^2_\\text{LPT, 3}$", f"{AN2_3_LPT:.4g}"],
+    ]
+
+    for entry in data:
+        single_table_package += " & ".join(entry) + " \\\\\n"
+
+    single_table_package += "\\hline\n"
+    single_table_package += "\\end{tabular}\n"
+    single_table_package += "\\caption{AN2 Parameters}\n"
+    single_table_package += "\\end{table}\n"
+
+    print(single_table_package)
+else:
+    print(f'AN2_HPT = {AN2_HPT:.3g} m^2 / s^2')
+    print(f'AN2_IPT = {AN2_IPT:.3g} m^2 / s^2')
+    print(f'AN2_1_LPT = {AN2_1_LPT:.3g} m^2 / s^2')
+    print(f'AN2_3_LPT = {AN2_3_LPT:.3g} m^2 / s^2')
 
 
 a = 10
