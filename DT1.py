@@ -572,7 +572,10 @@ r_t3_HPC, r_h3_HPC, r_m3_HPC = getRadius(A_3_HPC, htr_3_HPC)
 dH_HPC = cp[3] * (T0[4] - T0[3])
 
 # Interpolate to get requested blade tip speed
-U_t1_HPC = M_t_HPC * calcSOS(M_ax_1_HPC, 3)
+C_t1_HPC_rel = M_t_HPC * calcSOS(M_ax_1_HPC, 3)
+C_ax1_HPC = M_ax_1_HPC * calcSOS(M_ax_1_HPC, 3)  # Assume no swirl
+U_t1_HPC = np.sqrt(C_t1_HPC_rel ** 2 - C_ax1_HPC ** 2)
+
 omega_HPC = U_t1_HPC / r_t1_HPC
 
 U_m1_HPC = r_m1_HPC * omega_HPC
