@@ -585,6 +585,7 @@ for i in range(2, 8):
     idealres.append(np.abs(calcStageLoad(dH_HPC, U_m1_HPC, i, r_m1_HPC, r_m3_HPC) - psi_HPC))
 
 N_stages_HPC = N_list[np.argmin(idealres)]
+psi_HPC = calcStageLoad(dH_HPC, U_m1_HPC, N_stages_HPC, r_m1_HPC, r_m3_HPC)
 
 # aspect ratios IPC
 AR_1_HPC = 31.40 - 0.0147*EIS
@@ -960,6 +961,15 @@ else:
     print(f'AN2_1_LPT = {AN2_1_LPT:.3g} m^2 / s^2')
     print(f'AN2_3_LPT = {AN2_3_LPT:.3g} m^2 / s^2')
 
+# DT3 --------------------------------------------
+
+# Calculate velocity and sos at HPC entry
+a_1_HPC = calcSOS(M_ax_1_HPC, 3)
+v_1_HPC = a_1_HPC * M_ax_1_HPC  # Assume no swirl here
+
+# Calculate velocity and SOS at HPC first stage exit
+lenFracHPC = (2 + 0.3) * h_1_HPC / AR_1_HPC / l_ax_HPC
+M_ax_2_HPC = M_ax_1_HPC * (1 + lenFracHPC * (M_ax_3_HPC / M_ax_1_HPC - 1))
 
 a = 10
 plt.show()
