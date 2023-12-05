@@ -1013,5 +1013,16 @@ h_mean_HPC = np.sqrt(h_1_HPC * h_2_HPC)
 l_ax_HPC_rotor_1 = ARInterpToLax(h_mean_HPC, AR_1_HPC, AR_3_HPC, l_ax_HPC)
 l_ax_HPC_stator_1 = ARInterpToLax(h_mean_HPC, AR_1_HPC, AR_3_HPC, l_ax_HPC, l_ax_HPC_rotor_1 * 1.3)
 
+# Assemble coordinates for sending to SC90C
+x_rot_le = 0
+x_rot_te = x_rot_le + l_ax_HPC_rotor_1
+x_stat_le = x_rot_te + l_ax_HPC_rotor_1 * 0.3
+x_stat_te = x_stat_le + l_ax_HPC_stator_1
+
+r_rot_tle = r_t1_HPC
+r_rot_hle = r_h1_HPC
+r_stat_tle = r_t2_HPC
+r_stat_hle = r_h2_HPC
+
 a = 10
 plt.show()
