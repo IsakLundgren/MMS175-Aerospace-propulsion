@@ -453,6 +453,11 @@ def calcSOS(M, station):
     return np.sqrt(gamma[station] * R[station] * T)
 
 
+def calcSOSspecial(M, T0, gamma, R):
+    T = T0 / (1 + (gamma-1) / 2 * M**2)
+    return np.sqrt(gamma * R * T)
+
+
 def calcHubTip(r_mean, area):
     r_tip = area / (4 * np.pi * r_mean) + r_mean
     r_hub = 2 * r_mean - r_tip
@@ -970,6 +975,12 @@ v_1_HPC = a_1_HPC * M_ax_1_HPC  # Assume no swirl here
 # Calculate velocity and SOS at HPC first stage exit
 lenFracHPC = (2 + 0.3) * h_1_HPC / AR_1_HPC / l_ax_HPC
 M_ax_2_HPC = M_ax_1_HPC * (1 + lenFracHPC * (M_ax_3_HPC / M_ax_1_HPC - 1))
+dH_1_2_HPC = psi_HPC * U_m1_HPC ** 2 / 2
+T0_2_HPC = T0[3] + dH_1_2_HPC / cp[3]
+p0_2_HPC = p0[3] * (T0_2_HPC / T0[3]) ** (gamma[3] * HPC_polytropic_efficiency / (gamma[3] - 1))
+
+a_2_HPC = calcSOSspecial(M_ax_2_HPC, T0_2_HPC, gamma[3], R[3])
+V_2_HPC = a_2_HPC * M_ax_2_HPC
 
 a = 10
 plt.show()
