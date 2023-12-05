@@ -977,5 +977,5 @@ v_1_HPC = a_1_HPC * M_ax_1_HPC  # Assume no swirl here
 lenFracHPC = (2 + 0.3) * h_1_HPC / AR_1_HPC / l_ax_HPC
 M_ax_2_HPC = M_ax_1_HPC * (1 + lenFracHPC * (M_ax_3_HPC / M_ax_1_HPC - 1))
 
-a = 10
+a = 11
 plt.show()
