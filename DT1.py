@@ -519,7 +519,7 @@ r_t3_IPC, r_h3_IPC, r_m3_IPC = getRadius(A_3_IPC, htr_3_IPC)
 dH_IPC = cp[2] * (T0[3] - T0[2])
 
 # Interpolate to get requested blade tip speed
-U_t1_IPC = M_t_IPC * calcSOS(M_ax_1_IPC, 2)
+U_t1_IPC = M_t_IPC * calcSOS(M_t_IPC, 2)
 omega_IPC = U_t1_IPC / r_t1_IPC
 
 U_m1_IPC = r_m1_IPC * omega_IPC
@@ -569,7 +569,7 @@ r_t3_HPC, r_h3_HPC, r_m3_HPC = getRadius(A_3_HPC, htr_3_HPC)
 dH_HPC = cp[3] * (T0[4] - T0[3])
 
 # Interpolate to get requested blade tip speed
-U_t1_HPC = M_t_HPC * calcSOS(M_ax_1_HPC, 3)
+U_t1_HPC = M_t_HPC * calcSOS(M_t_HPC, 3)
 omega_HPC = U_t1_HPC / r_t1_HPC
 
 U_m1_HPC = r_m1_HPC * omega_HPC
