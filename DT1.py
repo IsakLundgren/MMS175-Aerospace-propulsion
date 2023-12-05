@@ -424,6 +424,11 @@ def qAreaFunction(M, station):
         (np.sqrt(gamma[station]) * M * (1 + (gamma[station]-1)/2 * M**2)**(-(gamma[station]+1)/(2*(gamma[station]-1))))
 
 
+def qAreaFunctionCustom(M, dmdt, R, gamma, T0, p0):
+    return dmdt * np.sqrt(R * T0) / p0 / \
+        (np.sqrt(gamma) * M * (1 + (gamma-1)/2 * M**2)**(-(gamma+1)/(2*(gamma-1))))
+
+
 def getRadius(A, htr):
     r_t = np.sqrt(A / np.pi * (1 / (1 - htr ** 2)))
 
@@ -453,7 +458,7 @@ def calcSOS(M, station):
     return np.sqrt(gamma[station] * R[station] * T)
 
 
-def calcSOSspecial(M, T0, gamma, R):
+def calcSOSCustom(M, T0, gamma, R):
     T = T0 / (1 + (gamma-1) / 2 * M**2)
     return np.sqrt(gamma * R * T)
 
@@ -979,8 +984,14 @@ dH_1_2_HPC = psi_HPC * U_m1_HPC ** 2 / 2
 T0_2_HPC = T0[3] + dH_1_2_HPC / cp[3]
 p0_2_HPC = p0[3] * (T0_2_HPC / T0[3]) ** (gamma[3] * HPC_polytropic_efficiency / (gamma[3] - 1))
 
-a_2_HPC = calcSOSspecial(M_ax_2_HPC, T0_2_HPC, gamma[3], R[3])
+a_2_HPC = calcSOSCustom(M_ax_2_HPC, T0_2_HPC, gamma[3], R[3])
 V_2_HPC = a_2_HPC * M_ax_2_HPC
+
+A_2_HPC = qAreaFunctionCustom(M_ax_2_HPC, dmdt[3], R[3], gamma[3], T0_2_HPC, p0_2_HPC)
+r_m2_HPC = r_m1_HPC * (1 + lenFracHPC * (r_m3_HPC / r_m1_HPC - 1))
+
+r_h2_HPC, r_t2_HPC = calcHubTip(r_m2_HPC, A_2_HPC)
+htr_2_HPC = r_h2_HPC / r_t2_HPC
 
 a = 10
 plt.show()
