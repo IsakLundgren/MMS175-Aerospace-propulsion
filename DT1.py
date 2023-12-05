@@ -964,3 +964,4 @@ else:
 a = 10
 plt.show()
 
+a=70
