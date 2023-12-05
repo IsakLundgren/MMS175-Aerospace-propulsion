@@ -993,5 +993,25 @@ r_m2_HPC = r_m1_HPC * (1 + lenFracHPC * (r_m3_HPC / r_m1_HPC - 1))
 r_h2_HPC, r_t2_HPC = calcHubTip(r_m2_HPC, A_2_HPC)
 htr_2_HPC = r_h2_HPC / r_t2_HPC
 
+
+# Calculate quantities between rotor and stator (station 12)
+def ARInterpToLax(h, AR_1, AR_3, l_ax_tot, sh=0):
+    # Original formulation of the problem is:
+    # l_ax_part * AR_1 * (1 + (l_ax_part / 2 + sh) / l_ax_tot * (AR_3 / AR_1 - 1) = h
+    # https://www.wolframalpha.com/input?i=x+*+a+*+%281+%2B+%28x+%2F+2+%2B+d%29+%2F+e+*+%28b+%2F+a+-+1%29%29+%3D+c+
+    # TODO Look this over with Carlos, seems overly complicated
+    rootExpr = np.sqrt((2 * AR_1 * sh - 2 * AR_1 * l_ax_tot - 2 * AR_3 * sh) ** 2 - 8 * h * l_ax_tot * (AR_1 - AR_3))
+    termExpr = - AR_1 * sh + AR_1 * l_ax_tot + AR_3 * sh
+    denomExpr = AR_1 - AR_3
+    l_ax_part = (- 1 / 2 * rootExpr + termExpr) / denomExpr
+
+    return l_ax_part
+
+
+h_2_HPC = r_t2_HPC - r_h2_HPC
+h_mean_HPC = np.sqrt(h_1_HPC * h_2_HPC)
+l_ax_HPC_rotor_1 = ARInterpToLax(h_mean_HPC, AR_1_HPC, AR_3_HPC, l_ax_HPC)
+l_ax_HPC_stator_1 = ARInterpToLax(h_mean_HPC, AR_1_HPC, AR_3_HPC, l_ax_HPC, l_ax_HPC_rotor_1 * 1.3)
+
 a = 10
 plt.show()
