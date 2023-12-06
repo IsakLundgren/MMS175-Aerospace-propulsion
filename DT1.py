@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import saveCompressorForSmooth as scfs
 
 
 # Given parameters
@@ -157,6 +158,22 @@ def massFlowToThrust(dmdt_0, coolingFraction=0.0, coolSplitFrac=0.0, hasPrinting
 
     F_net = F_GH + F_GC - F_D
     SFC = dmdt_f / F_net
+
+    m_nominal = 7000
+    m_engine = dmdt_0 / 560 * m_nominal
+    LoD = 20
+    D_engine = m_engine * 9.82 / LoD
+
+    D_fan = 3.42
+    l_nac = D_fan / 0.6
+    rho_a = R_a * T_1 / p_1
+    mu_a = 15 * 10**-6
+    Cf = 0.455 / ((np.log10(C_a * l_nac * rho_a / mu_a))**2.58 * (1 + 0.144 * Flight_Mach_number**2)**0.65)
+    Cd = 1.25 * Cf
+    A_wet = np.pi * l_nac * 1.2 * D_fan
+    D_nacelle = Cd * A_wet * rho_a * C_a**2 / 2
+
+    SFC_installed = dmdt_f / (F_net - D_engine - D_nacelle)
 
     deltaW_kin = dmdt_cold * C_10_eta ** 2 / 2 + dmdt_g * C_9_eta ** 2 / 2 - dmdt_0 * C_a**2 / 2
 
@@ -343,13 +360,13 @@ plt.legend()
 # Save figure
 figureDPI = 200
 fig.set_size_inches(8, 6)
-fig.savefig('img/MassFlowToThrust.png', dpi=figureDPI)
+# fig.savefig('img/MassFlowToThrust.png', dpi=figureDPI)
 
-# DT1b
+# # DT1b
 #
 # BPR_min = 8
-# BPR_max = 50
-# FPR_min = 1.1
+# BPR_max = 20
+# FPR_min = 1.2
 # FPR_max = 1.65
 #
 # BPR = np.linspace(BPR_min, BPR_max, 100)
@@ -856,11 +873,11 @@ ax.legend()
 # Save figure
 figureDPI = 200
 fig.set_size_inches(8, 6)
-fig.savefig('img/EngineLayout.png', dpi=figureDPI)
+# fig.savefig('img/EngineLayout.png', dpi=figureDPI)
 
 # prints for table
 print('\n--Engine sizing---')
-printLatex = True
+printLatex = False
 if printLatex:
     component_lengths_table = "\\begin{table}[ht]\n"
     component_lengths_table += "\\centering\n"
@@ -1012,17 +1029,50 @@ h_2_HPC = r_t2_HPC - r_h2_HPC
 h_mean_HPC = np.sqrt(h_1_HPC * h_2_HPC)
 l_ax_HPC_rotor_1 = ARInterpToLax(h_mean_HPC, AR_1_HPC, AR_3_HPC, l_ax_HPC)
 l_ax_HPC_stator_1 = ARInterpToLax(h_mean_HPC, AR_1_HPC, AR_3_HPC, l_ax_HPC, l_ax_HPC_rotor_1 * 1.3)
+l_ax_IGV = l_ax_HPC_rotor_1 * 0.8
 
 # Assemble coordinates for sending to SC90C
-x_rot_le = 0
+x_igv_le = 0
+x_igv_te = x_igv_le + l_ax_IGV
+x_rot_le = x_igv_te + 0.3 * l_ax_IGV
 x_rot_te = x_rot_le + l_ax_HPC_rotor_1
 x_stat_le = x_rot_te + l_ax_HPC_rotor_1 * 0.3
 x_stat_te = x_stat_le + l_ax_HPC_stator_1
-
+# TODO add radial coordinates for trailing edges using linear interpolation
 r_rot_tle = r_t1_HPC
 r_rot_hle = r_h1_HPC
+r_rot_tte = r_rot_tle
+r_rot_hte = r_rot_hle
+
 r_stat_tle = r_t2_HPC
 r_stat_hle = r_h2_HPC
+r_stat_tte = r_stat_tle
+r_stat_hte = r_stat_hle
+
+r_igv_tle = r_rot_tle
+r_igv_hle = r_rot_hle
+r_igv_tte = r_igv_tle
+r_igv_hte = r_igv_hle
+
+
+NH = omega_HPC
+mf = dmdt[3]
+T01 = T0[3]
+P01 = p0[3]
+P02 = p0_2_HPC
+
+scfs.saveCompressorForSmooth(NH, mf, T01, P01, P02, x_igv_le, x_igv_te, x_rot_le, x_rot_te, x_stat_le, x_stat_te,
+                             r_igv_tle, r_igv_tte, r_rot_tle, r_rot_tte, r_stat_tle, r_stat_tte, r_igv_hle, r_igv_hte,
+                             r_rot_hle, r_rot_hte, r_stat_hle,r_stat_hte)
+
+
+
+
+
+
+
+
+
 
 a = 10
 plt.show()
