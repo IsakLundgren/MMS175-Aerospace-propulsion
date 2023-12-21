@@ -1068,14 +1068,5 @@ scfs.saveCompressorForSmooth(sc90SavePath, NH, mf, T01, P01, P02, x_igv_le, x_ig
                              r_igv_tle, r_igv_tte, r_rot_tle, r_rot_tte, r_stat_tle, r_stat_tte, r_igv_hle, r_igv_hte,
                              r_rot_hle, r_rot_hte, r_stat_hle,r_stat_hte)
 
-
-
-
-
-
-
-
-
-
 a = 10
 plt.show()

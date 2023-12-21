@@ -149,5 +149,5 @@ def saveCompressorForSmooth(path, NH, m, tin, pin, pout,x_igv_le, x_igv_te, x_ro
         logVec(f, "xTip: ", 6, [x_igv_le, x_igv_te,x_rot_le, x_rot_te, x_stat_le, x_stat_te])
 
         f.close()
-        shutil.copy2(os.path.join(path, "smoothInput.txt"), os.path.join(path, "smoothInput.txt"))
+        shutil.copy2(os.path.join(path, "smoothInput.txt"), os.path.join(path, "smoothInputOriginal.txt"))
 
