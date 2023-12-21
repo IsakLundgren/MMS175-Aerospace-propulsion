@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import DT3_files.saveCompressorForSmooth as scfs
+import os
 
 
 # Given parameters
@@ -1061,7 +1062,9 @@ T01 = T0[3]
 P01 = p0[3]
 P02 = p0_2_HPC
 
-scfs.saveCompressorForSmooth(NH, mf, T01, P01, P02, x_igv_le, x_igv_te, x_rot_le, x_rot_te, x_stat_le, x_stat_te,
+sc90SavePath = 'txt'
+
+scfs.saveCompressorForSmooth(sc90SavePath, NH, mf, T01, P01, P02, x_igv_le, x_igv_te, x_rot_le, x_rot_te, x_stat_le, x_stat_te,
                              r_igv_tle, r_igv_tte, r_rot_tle, r_rot_tte, r_stat_tle, r_stat_tte, r_igv_hle, r_igv_hte,
                              r_rot_hle, r_rot_hte, r_stat_hle,r_stat_hte)
 

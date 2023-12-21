@@ -79,7 +79,7 @@ def getBezierData(n_bezier_pts, x_igv_le, x_igv_te, x_rot_le, x_stat_le, x_stat_
 
     return xbezHub, rbezHub, xbezShroud, rbezShroud
 
-def saveCompressorForSmooth(NH, m, tin, pin, pout,x_igv_le, x_igv_te, x_rot_le, x_rot_te, x_stat_le, x_stat_te,
+def saveCompressorForSmooth(path, NH, m, tin, pin, pout,x_igv_le, x_igv_te, x_rot_le, x_rot_te, x_stat_le, x_stat_te,
                             r_igv_tle, r_igv_tte, r_rot_tle, r_rot_tte, r_stat_tle, r_stat_tte, r_igv_hle, r_igv_hte,r_rot_hle, r_rot_hte, r_stat_hle, r_stat_hte):
 
     #============================================
@@ -102,7 +102,7 @@ def saveCompressorForSmooth(NH, m, tin, pin, pout,x_igv_le, x_igv_te, x_rot_le, 
  
     prat = pout/pin
 
-    with open(os.path.join(CWD, "sc90c_files/smoothInput.txt"), "w") as f:
+    with open(os.path.join(path, "smoothInput.txt"), "w") as f:
         f.write("%s %4.4f \n" % ("prat:", prat))
         f.write("%s %4.4f \n" % ("NH:", 60.0*NH))
         f.write("%s %4.4f \n" % ("mdot:", m))
@@ -149,5 +149,5 @@ def saveCompressorForSmooth(NH, m, tin, pin, pout,x_igv_le, x_igv_te, x_rot_le, 
         logVec(f, "xTip: ", 6, [x_igv_le, x_igv_te,x_rot_le, x_rot_te, x_stat_le, x_stat_te])
 
         f.close()
-        shutil.copy2(os.path.join(CWD, "sc90c_files/smoothInput.txt"), os.path.join(CWD, "sc90c_files/smoothInputOriginal.txt"))
+        shutil.copy2(os.path.join(path, "smoothInput.txt"), os.path.join(path, "smoothInput.txt"))
 

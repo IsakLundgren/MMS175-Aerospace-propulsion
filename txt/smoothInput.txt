@@ -1,0 +1,29 @@
+prat: 1.6579 
+NH: 97252.6057 
+mdot: 52.1772 
+T0: 541.6384 
+P0: 388890.6206 
+reDistFact: 1.0000 
+n_stages: 1 
+n_span: 11 
+fl_igv: 1 
+n_bezier: 4 
+n_duct_inlet: 2 
+n_duct_outlet: 2 
+n_blade_intermediate_stations: 0 
+hubStretch:   1.0000  1.0000  1.0000
+tipStretch:   1.0000  1.0000  1.0000
+stretch:   1.0000  1.0000  1.0000
+spacing:   1.0000  1.0000  1.0000
+hubSpacing:   1.0000  1.0000  1.0000
+tipSpacing:   1.0000  1.0000  1.0000
+blades:  70 100 150 
+xbezHub:  -0.0118  0.0308  0.0693  0.1163
+rbezHub:   0.2661  0.2660  0.2654  0.2635
+xbezShroud:  -0.0118  0.0308  0.0693  0.1163
+rbezShroud:   0.3235  0.3228  0.3188  0.3062
+alpha_TE_S1:   0.0000  0.0000  0.0000
+alpha_TE_IGV:   0.0000  0.0000  0.0000
+workFact_R1:  1.0000 1.0000 1.0000  
+xHub:   0.0000  0.0237  0.0308  0.0604  0.0693  0.1006
+xTip:   0.0000  0.0237  0.0308  0.0604  0.0693  0.1006
