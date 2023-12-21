@@ -1,0 +1,609 @@
+# encoding: utf-8
+# 2019 R2
+SetScriptVersion(Version="19.4.159")
+system1 = GetSystem(Name="TS")
+turboMesh1 = system1.GetContainer(ComponentName="Turbo Mesh")
+turboMesh1.Edit()
+turboMesh1.SendCommand(Command="""VIEW:View 4
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0, 0, 0
+    Scale = 1.025
+    Pan = 0, 0
+    Rotation Quaternion = 0.279848, -0.364705, -0.115917, 0.880476
+    
+  END
+
+END
+
+> update
+> um object=/GEOMETRY/MACHINE DATA, mode=suspend
+>readinf filename=C:/Users/olisjo/Projects/mms175-dt3/design_task_3_2021/bladegeny_folder/blade_out_data/turbogrid/r1.inf
+> forceupdate /GEOMETRY/MACHINE DATA
+> um object=/GEOMETRY/MACHINE DATA, mode=normal""")
+turboMesh1.SendCommand(Command="> um mode=suspend, object=/TOPOLOGY SET")
+turboMesh1.SendCommand(Command="""GEOMETRY:
+  INLET:
+Generate Intermediate Points = On
+Hub Angle = -42.746 [deg]
+Input Filename =  
+Opening Mode = Fully extend
+Override Automatic Angles = Off
+Parametric Hub Location = 0.5
+Parametric Shroud Location = 0.5
+Shroud Angle = -42.953 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 1.7789 [m], 0.276 [m]
+Trim Intersection Point 1 = 1.7789 [m], 0.276 [m]
+Trim Intersection Point 2 = 1.7789 [m], 0.3261 [m]
+Trim Shroud Position = 1.7789 [m], 0.3261 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 181.555, 0, 0
+    Scale = 0.0308667
+    Pan = 0, 0
+    Rotation Quaternion = 0.411547, 0.0456605, 0.0137867, 0.910139
+    
+  END
+
+END
+
+> update
+> um object=/GEOMETRY/MACHINE DATA, mode=suspend
+>readinf filename=C:/Users/olisjo/Projects/mms175-dt3/design_task_3_2021/bladegeny_folder/blade_out_data/turbogrid/r1.inf
+> forceupdate /GEOMETRY/MACHINE DATA
+> um object=/GEOMETRY/MACHINE DATA, mode=normal""")
+turboMesh1.SendCommand(Command="""GEOMETRY:
+ BLADE SET:
+  BLADE:Blade 1
+Blade Number = 0
+Blade Surface Creation Method = Loft Spanwise
+Coordinate Frame Type = Cartesian
+Curve Representation = Bspline
+Geometric Representation = BladeModeler
+Input Angle Units = degree
+Input Filename =  
+Input Length Units = m
+Leading Edge Type = Single
+Show Curve = Off
+Show Surface = On
+Surface Representation = Bspline
+Trailing Edge Type = Single
+COMBINED TRANSFORM:Blade Transform
+Simple Transform List = 
+END
+COMBINED TRANSFORM:Blade Transform
+ SIMPLE TRANSFORM:Axial Rotation
+Rotation Angle = 0 [degree]
+ END
+END
+COMBINED TRANSFORM:Blade Transform
+ SIMPLE TRANSFORM:General Rotation
+Rotation Angle = 0 [degree]
+Rotation Axis From = 0 [m], 0 [m], 0 [m]
+Rotation Axis To = 0 [m], 0 [m], 1 [m]
+ END
+END
+COMBINED TRANSFORM:Blade Transform
+ SIMPLE TRANSFORM:Translation
+Translation Distance = 0 [m]
+Translation Option = Machine Axis
+Translation Vector = 0 [m], 0 [m], 0 [m]
+ END
+END
+  END
+ END
+END""")
+turboMesh1.SendCommand(Command="""> um object=/GEOMETRY/MACHINE DATA, mode=suspend
+>readinf filename=C:/Users/olisjo/Projects/mms175-dt3/design_task_3_2021/bladegeny_folder/blade_out_data/turbogrid/r1.inf
+> forceupdate /GEOMETRY/MACHINE DATA
+> um object=/GEOMETRY/MACHINE DATA, mode=normal""")
+Save(Overwrite=True)
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 181.523, 30.0479, 1.80802
+    Scale = 0.190052
+    Pan = 0, 0
+    Rotation Quaternion = 0.169736, 0.150278, 0.0536793, 0.972471
+    
+  END
+
+END
+
+> update
+    GEOMETRY:
+  OUTLET:
+Curve Representation = Piece-wise linear
+Generate Intermediate Points = On
+Hub Angle = 40.7989 [deg]
+Input Filename = C:/Users/olisjo/Projects/mms175-dt3/design_task_3_2021/bladegeny_folder/blade_out_data/turbogrid/s1.curve
+Meridional Splitter Filename =  
+Meridional Splitter Interface Hub Parametric Location = 0.5
+Meridional Splitter Interface Shroud Parametric Location = 0.5
+Opening Mode = Adjacent blade
+Override Automatic Angles = Off
+Parametric Hub Location = 0.170446
+Parametric Shroud Location = 0.168387
+Shroud Angle = 47.1682 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 1.8522 [m], 0.287 [m]
+Trim Intersection Point 1 = 1.8522 [m], 0.287 [m]
+Trim Intersection Point 2 = 1.8522 [m], 0.3261 [m]
+Trim Shroud Position = 1.8522 [m], 0.3261 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 181.523, 30.0479, 1.80802
+    Scale = 0.190052
+    Pan = 0, 0
+    Rotation Quaternion = 0.295256, 0.404814, 0.0961077, 0.86005
+    
+  END
+
+END
+
+> update
+> um mode=normal, object=/TOPOLOGY SET""")
+turboMesh1.SendCommand(Command="""MESH DATA:
+  ATM Five Star Vertex Mesh Size Factor = 1.0
+  ATM Proportional BL Factor Base = 0.0
+  ATM Proportional BL Factor Ratio = 1.5
+  ATM Spanwise To B2B Count Factor = 1.0
+  Between Boundary Layers Distribution Option = End Ratio
+  Between Boundary Layers End Ratio = 2
+  Between Boundary Layers Number Of Const Elements = 1
+  Between Boundary Layers Number Of Elements = 4
+  Boundary Layer Specification Method = Proportional
+  Global Size Factor = 1
+  HGrid At Inlet = on
+  HGrid At Outlet = on
+  HGrid in Parametric Space at Inlet = Off
+  HGrid in Parametric Space at Outlet = Off
+  Hub Boundary Layer Distribution Option = Element Count and Size
+  Hub Boundary Layer Expansion Rate = 3.0312
+  Hub Boundary Layer Number Of Elements = 5
+  Hub Boundary Layer Offset = 0.1
+  Hub End Ratio = 200
+  Hub Tip Distribution Option = End Ratio
+  Hub Tip End Ratio = 15
+  Hub Tip Vertex Distance = 0.01 [m]
+  Hub Tip Vertex Offset = 0.1
+  Hub Tip Vertex YPlus = 1
+  Hub Vertex Distance = 0.00448396 [cm]
+  Hub Vertex Offset = 0.000981656
+  Hub Vertex YPlus = 42.1541
+  Inlet Default Growth Ratio = 1.15
+  Inlet Defining Parameter Type = Target Expansion Rate
+  Inlet Domain = Off
+  Inlet Max Aspect Ratio = 900
+  Inlet Multi Segment Enabled = On
+  Inlet Multi Segment First Element Factor = 0.1
+  LE Cutoff Edge Split Factor = 1.0
+  Meridional Splitter Boundary Layer Factor = 1.0
+  Mesh Size Specification Mode = Target Total Node Count
+  Number Of Constant Hub Tip Elements = 0
+  Number Of Constant Shroud Tip Elements = 0
+  Number Of Constant Spanwise Blade Elements = 3
+  Number Of Elements Per Block Edge = 2
+  Number Of Hub Tip Elements = 4
+  Number Of Inlet Elements = 5
+  Number Of Outlet Elements = 5
+  Number Of Shroud Tip Elements = 4
+  Number Of Spanwise Blade Elements = 13
+  Outlet Default Growth Ratio = 1.15
+  Outlet Defining Parameter Type = Target Expansion Rate
+  Outlet Domain = Off
+  Outlet Max Aspect Ratio = 900
+  Outlet Multi Segment Enabled = On
+  Outlet Multi Segment First Element Factor = 0.1
+  Override Inlet Distribution = Off
+  Override Outlet Distribution = Off
+  Reynolds Number = 1.0e6
+  Shroud Boundary Layer Distribution Option = Element Count and Size
+  Shroud Boundary Layer Expansion Rate = 2.42824
+  Shroud Boundary Layer Number Of Elements = 5
+  Shroud Boundary Layer Offset = 0.1
+  Shroud Tip Distribution Option = End Ratio
+  Shroud Tip End Ratio = 15
+  Shroud Tip Vertex Distance = 0.01 [m]
+  Shroud Tip Vertex Offset = 0.1
+  Shroud Tip Vertex YPlus = 1
+  Shroud Vertex Distance = 0.00448396 [cm]
+  Shroud Vertex Offset = 0.000981656
+  Shroud Vertex YPlus = 42.1541
+  Spanwise Blade Distribution Option = End Ratio
+  TE Cutoff Edge Split Factor = 1.0
+  Target Maximum Expansion Rate Enabled = Off
+  Target Mesh Granularity = Coarse
+  Target Mesh Node Count = 50000
+  Vertex Offset Specification Mode = Absolute
+  BLADE MESH DATA: Blade 1
+    ATM Hub Tip Maximum Expansion Rate = 1.3
+    ATM Hub Tip Maximum Expansion Rate Enabled = Off
+    ATM Shroud Tip Maximum Expansion Rate = 1.3
+    ATM Shroud Tip Maximum Expansion Rate Enabled = Off
+    Cutoff Blade Edge Expansion Factor = 0.5
+    GGI Tip Hub Le Cut Off MeanLine Method = Auto
+    GGI Tip Hub Te Cut Off MeanLine Method = Auto
+    GGI Tip Shroud Le Cut Off MeanLine Method = Auto
+    GGI Tip Shroud Te Cut Off MeanLine Method = Auto
+    Number Of Elements Across Hub Tip = 0
+    Number Of Elements Across Shroud Tip = 0
+    Number Of Leading Edge Hub Tip Elements = 2
+    Number Of Leading Edge Shroud Tip Elements = 2
+    Number Of Trailing Edge Hub Tip Elements = 2
+    Number Of Trailing Edge Shroud Tip Elements = 2
+    Override Hub Tip Element Count Calculation = Off
+    Override Shroud Tip Element Count Calculation = Off
+  END
+  EDGE SPLIT CONTROL: Blade 1 Boundary Layer Control
+    Split Factor = 1.5395
+    Target First Element Offset = 0.00445913 [cm]
+    Target First Element YPlus = 41.9206
+  END
+END
+MESH DATA:
+  Override Outlet Element Count Calculation = 0
+  Outlet Default Growth Ratio = 1.15
+  Outlet Multi Segment Enabled = On
+END
+MESH DATA:
+  Override Inlet Element Count Calculation = 0
+  Inlet Default Growth Ratio = 1.15
+  Inlet Multi Segment Enabled = On
+END
+TOPOLOGY SET:
+  Lock Down ATM Mesh Size = Off
+END
+PARAMETERIZATION:
+END""")
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 181.523, 30.0479, 1.80802
+    Scale = 0.190052
+    Pan = 0, 0
+    Rotation Quaternion = 0.185344, 0.199675, -0.00741068, 0.962131
+    
+  END
+
+END
+
+> update
+GEOMETRY:
+  SEGMENT HIGHLIGHT:
+    Requested Block = 
+    Requested Index = 0
+  END
+END""")
+turboMesh1.SendCommand(Command="""GEOMETRY:
+  SEGMENT HIGHLIGHT:
+    Requested Block = 
+    Requested Index = 0
+  END
+END""")
+turboMesh1.SendCommand(Command="""> forceupdate /MESH GENERATOR
+> um mode=update, object=/MESH GENERATOR""")
+Save(Overwrite=True)
+turboMesh1.Exit()
+turboMesh1.Edit()
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 181.523, 30.0479, 1.80802
+    Scale = 0.123329
+    Pan = 0, 0
+    Rotation Quaternion = -0.0117852, 0.00819172, 0.0599363, 0.998082
+    
+  END
+
+END
+
+> update
+# Setting Single View: /VIEW:Imported Geometry
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Imported Geometry, viewport=1""")
+turboMesh1.SendCommand(Command="""# Setting Layout Style to: No Split
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+END""")
+turboMesh1.SendCommand(Command=">setViewportView cmd=set, view=/VIEW:View 1, viewport=1")
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 181.523, 30.0542, 1.75685
+    Scale = 0.0831068
+    Pan = 0, 0
+    Rotation Quaternion = 0.193476, 0.400967, 0.152573, 0.882294
+    
+  END
+
+END
+
+> update
+> um object=/GEOMETRY/MACHINE DATA, mode=suspend
+>readinf filename=C:/Users/olisjo/Projects/mms175-dt3/design_task_3_2021/bladegeny_folder/blade_out_data/turbogrid/r1.inf
+> forceupdate /GEOMETRY/MACHINE DATA
+> um object=/GEOMETRY/MACHINE DATA, mode=normal""")
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 181.523, 30.0542, 1.75685
+    Scale = 0.0990729
+    Pan = 0, 0
+    Rotation Quaternion = -0.0415189, -0.0106354, 0.0554334, 0.997505
+    
+  END
+
+END
+
+> update
+    GEOMETRY:
+  INLET:
+Generate Intermediate Points = On
+Hub Angle = -42.746 [deg]
+Input Filename =  
+Opening Mode = Fully extend
+Override Automatic Angles = Off
+Parametric Hub Location = 1
+Parametric Shroud Location = 1
+Shroud Angle = -42.953 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 1.7789 [m], 0.276 [m]
+Trim Intersection Point 1 = 1.7789 [m], 0.276 [m]
+Trim Intersection Point 2 = 1.7789 [m], 0.3261 [m]
+Trim Shroud Position = 1.7789 [m], 0.3261 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+Save(Overwrite=True)
+turboMesh1.Exit()
+system2 = GetSystem(Name="TS 1")
+turboMesh2 = system2.GetContainer(ComponentName="Turbo Mesh")
+turboMesh2.Edit()
+turboMesh2.Edit()
+turboMesh2.SendCommand(Command="""> um object=/GEOMETRY/MACHINE DATA, mode=suspend
+>readinf filename=C:/Users/olisjo/Projects/mms175-dt3/design_task_3_2021/bladegeny_folder/blade_out_data/turbogrid/s1.inf
+> forceupdate /GEOMETRY/MACHINE DATA
+> um object=/GEOMETRY/MACHINE DATA, mode=normal""")
+turboMesh2.SendCommand(Command="> um mode=suspend, object=/TOPOLOGY SET")
+turboMesh2.SendCommand(Command="""GEOMETRY:
+  INLET:
+Generate Intermediate Points = On
+Hub Angle = 32.2399 [deg]
+Input Filename =  
+Opening Mode = Fully extend
+Override Automatic Angles = Off
+Parametric Hub Location = 0.5
+Parametric Shroud Location = 0.5
+Shroud Angle = 31.2741 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 1.7789 [m], 0.276 [m]
+Trim Intersection Point 1 = 1.7789 [m], 0.276 [m]
+Trim Intersection Point 2 = 1.7789 [m], 0.3261 [m]
+Trim Shroud Position = 1.7789 [m], 0.3261 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+turboMesh2.SendCommand(Command="""GEOMETRY:
+ BLADE SET:
+  BLADE:Blade 1
+Blade Number = 0
+Blade Surface Creation Method = Loft Spanwise
+Coordinate Frame Type = Cartesian
+Curve Representation = Bspline
+Geometric Representation = BladeModeler
+Input Angle Units = degree
+Input Filename =  
+Input Length Units = m
+Leading Edge Type = Single
+Show Curve = Off
+Show Surface = On
+Surface Representation = Bspline
+Trailing Edge Type = Single
+COMBINED TRANSFORM:Blade Transform
+Simple Transform List = 
+END
+COMBINED TRANSFORM:Blade Transform
+ SIMPLE TRANSFORM:Axial Rotation
+Rotation Angle = 0 [degree]
+ END
+END
+COMBINED TRANSFORM:Blade Transform
+ SIMPLE TRANSFORM:General Rotation
+Rotation Angle = 0 [degree]
+Rotation Axis From = 0 [m], 0 [m], 0 [m]
+Rotation Axis To = 0 [m], 0 [m], 1 [m]
+ END
+END
+COMBINED TRANSFORM:Blade Transform
+ SIMPLE TRANSFORM:Translation
+Translation Distance = 0 [m]
+Translation Option = Machine Axis
+Translation Vector = 0 [m], 0 [m], 0 [m]
+ END
+END
+  END
+ END
+END""")
+turboMesh2.SendCommand(Command="""> um object=/GEOMETRY/MACHINE DATA, mode=suspend
+>readinf filename=C:/Users/olisjo/Projects/mms175-dt3/design_task_3_2021/bladegeny_folder/blade_out_data/turbogrid/s1.inf
+> forceupdate /GEOMETRY/MACHINE DATA
+> um object=/GEOMETRY/MACHINE DATA, mode=normal""")
+turboMesh2.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 181.555, 29.9765, 1.03114
+    Scale = 0.168489
+    Pan = 0, 0
+    Rotation Quaternion = 0.488192, -0.0423047, -4.30725e-06, 0.871706
+    
+  END
+
+END
+
+> update
+    GEOMETRY:
+  INLET:
+Generate Intermediate Points = On
+Hub Angle = 32.2399 [deg]
+Input Filename = C:/Users/olisjo/Projects/mms175-dt3/design_task_3_2021/bladegeny_folder/blade_out_data/turbogrid/r1.curve
+Opening Mode = Adjacent blade
+Override Automatic Angles = Off
+Parametric Hub Location = 1
+Parametric Shroud Location = 1
+Shroud Angle = 31.2741 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 1.7789 [m], 0.276 [m]
+Trim Intersection Point 1 = 1.7789 [m], 0.276 [m]
+Trim Intersection Point 2 = 1.7789 [m], 0.3261 [m]
+Trim Shroud Position = 1.7789 [m], 0.3261 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+turboMesh2.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 181.555, 29.9765, 1.03114
+    Scale = 0.168489
+    Pan = 0, 0
+    Rotation Quaternion = 0.154079, -0.0828559, 0.0147335, 0.984463
+    
+  END
+
+END
+
+> update
+    GEOMETRY:
+  OUTLET:
+Curve Representation = Piece-wise linear
+Generate Intermediate Points = On
+Hub Angle = -34.6406 [deg]
+Input Filename =  
+Meridional Splitter Filename =  
+Meridional Splitter Interface Hub Parametric Location = 0.5
+Meridional Splitter Interface Shroud Parametric Location = 0.5
+Opening Mode = Fully extend
+Override Automatic Angles = Off
+Parametric Hub Location = 1
+Parametric Shroud Location = 1
+Shroud Angle = -32.2137 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 1.8522 [m], 0.287 [m]
+Trim Intersection Point 1 = 1.8522 [m], 0.287 [m]
+Trim Intersection Point 2 = 1.8522 [m], 0.3261 [m]
+Trim Shroud Position = 1.8522 [m], 0.3261 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+turboMesh2.SendCommand(Command="> um mode=normal, object=/TOPOLOGY SET")
+turboMesh2.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 181.555, 29.9765, 1.03114
+    Scale = 0.152171
+    Pan = -3.37754, -0.856745
+    Rotation Quaternion = 0.0467521, -0.241223, -0.0520014, 0.967938
+    
+  END
+
+END
+
+> update
+GEOMETRY:
+  MACHINE DATA:
+    Visibility = On
+  END
+END""")
+turboMesh2.SendCommand(Command="""GEOMETRY:
+  MACHINE DATA:
+    Visibility = Off
+  END
+END""")
+turboMesh2.SendCommand(Command="""GEOMETRY:
+  MACHINE DATA:
+    Visibility = On
+  END
+END""")
+turboMesh2.SendCommand(Command="""GEOMETRY:
+  MACHINE DATA:
+    Visibility = Off
+  END
+END""")
+turboMesh2.SendCommand(Command="""GEOMETRY:
+  SEGMENT HIGHLIGHT:
+    Requested Block = 
+    Requested Index = 0
+  END
+END""")
+turboMesh2.SendCommand(Command="""GEOMETRY:
+  SEGMENT HIGHLIGHT:
+    Requested Block = 
+    Requested Index = 0
+  END
+END""")
+Save(Overwrite=True)

@@ -1,0 +1,3004 @@
+# encoding: utf-8
+# 2021 R1
+SetScriptVersion(Version="21.1.216")
+system1 = GetSystem(Name="TS 1")
+system2 = system1.Duplicate(
+    ComponentsToShare=[],
+    RelativeTo=system1)
+turboMesh1 = system2.GetContainer(ComponentName="Turbo Mesh")
+turboMesh1.Edit()
+turboMesh1.Exit()
+turboMeshComponent1 = system2.GetComponent(Name="Turbo Mesh")
+turboMeshComponent1.DisplayText = "IGV Mesh"
+system2.DisplayText = "IGV"
+system3 = GetSystem(Name="CFX")
+setupComponent1 = system3.GetComponent(Name="Setup")
+turboMeshComponent1.TransferData(TargetComponent=setupComponent1)
+system4 = GetSystem(Name="TS")
+system5 = system4.Duplicate(
+    ComponentsToShare=[],
+    RelativeTo=system4)
+turboMeshComponent2 = system5.GetComponent(Name="Turbo Mesh")
+turboMeshComponent2.TransferData(TargetComponent=setupComponent1)
+system4.Delete()
+system6 = system1.Duplicate(
+    ComponentsToShare=[],
+    RelativeTo=system1)
+turboMeshComponent3 = system6.GetComponent(Name="Turbo Mesh")
+turboMeshComponent3.TransferData(TargetComponent=setupComponent1)
+system1.Delete()
+system5.Move(
+    Position="Right",
+    RelativeTo=system2)
+system6.Move(
+    Position="Right",
+    RelativeTo=system5)
+system5.DisplayText = "Rotor"
+system6.DisplayText = "Stator"
+turboMesh1.Edit()
+turboMesh1.SendCommand(Command="""> um object=/GEOMETRY/MACHINE DATA, mode=suspend
+>readinf filename=C:/Users/xisto/OneDrive - Chalmers/MyFiles/Chalmers/Teaching/Aerospace Propulsion/Design Tasks/solution/DT3/cfd/turbogrid_files/igv0.inf
+> forceupdate /GEOMETRY/MACHINE DATA
+> um object=/GEOMETRY/MACHINE DATA, mode=normal""")
+turboMesh1.SendCommand(Command="""GEOMETRY:
+  OUTLET:
+Generate Intermediate Points = On
+Hub Angle = 1.197 [deg]
+Input Filename = C:/Users/xisto/OneDrive - Chalmers/MyFiles/Chalmers/Teaching/Aerospace Propulsion/Design Tasks/DT3/Files_fromCanvas/cfd/turbogrid_files/r1.curve
+Meridional Splitter Curve Type = Bspline
+Meridional Splitter Filename =  
+Meridional Splitter Interface Hub Parametric Location = 0.5
+Meridional Splitter Interface Shroud Parametric Location = 0.5
+Opening Mode = Adjacent blade
+Override Automatic Angles = Off
+Parametric Hub Location = 0.805689
+Parametric Shroud Location = 0.819584
+Shroud Angle = 1.83679 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 2.0662 [m], 0.2807 [m]
+Trim Intersection Point 1 = 2.0662 [m], 0.2807 [m]
+Trim Intersection Point 2 = 2.0662 [m], 0.3139 [m]
+Trim Shroud Position = 2.0662 [m], 0.3139 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 5.75072, 29.3121, -2.29858
+    Scale = 0.128439
+    Pan = 0, 0
+    Rotation Quaternion = 0.47892, -0.50869, -0.113622, 0.70637
+    
+  END
+
+END
+
+> update
+    GEOMETRY:
+  INLET:
+Generate Intermediate Points = On
+Hub Angle = 27.8707 [deg]
+Input Filename = C:/Users/xisto/OneDrive - Chalmers/MyFiles/Chalmers/Teaching/Aerospace Propulsion/Design Tasks/solution/DT3/cfd/turbogrid_files/r1.curve
+Opening Mode = Parametric
+Override Automatic Angles = Off
+Parametric Hub Location = 0.0541518
+Parametric Shroud Location = 0.05723
+Shroud Angle = 29.921 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 1.9835 [m], 0.264 [m]
+Trim Intersection Point 1 = 1.9835 [m], 0.264 [m]
+Trim Intersection Point 2 = 1.9835 [m], 0.3224 [m]
+Trim Shroud Position = 1.9835 [m], 0.3224 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 100.56, 29.5017, -0.415525
+    Scale = 0.0272019
+    Pan = 49.1042, -58.005
+    Rotation Quaternion = 0.373346, -0.500206, -0.0421448, 0.780148
+    
+  END
+
+END
+
+> update
+    GEOMETRY:
+  INLET:
+Generate Intermediate Points = On
+Hub Angle = 27.8707 [deg]
+Input Filename = C:/Users/xisto/OneDrive - Chalmers/MyFiles/Chalmers/Teaching/Aerospace Propulsion/Design Tasks/solution/DT3/cfd/turbogrid_files/r1.curve
+Opening Mode = Fully extend
+Override Automatic Angles = Off
+Parametric Hub Location = 0.0541518
+Parametric Shroud Location = 0.05723
+Shroud Angle = 29.921 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 1.9835 [m], 0.264 [m]
+Trim Intersection Point 1 = 1.9835 [m], 0.264 [m]
+Trim Intersection Point 2 = 1.9835 [m], 0.3224 [m]
+Trim Shroud Position = 1.9835 [m], 0.3224 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 100.56, 29.5017, -0.415525
+    Scale = 0.054276
+    Pan = 49.1042, -58.005
+    Rotation Quaternion = 0.38398, -0.514416, -0.0416491, 0.765638
+    
+  END
+
+END
+
+> update
+VIEWPORT MANAGER:
+Viewport Layout = No Split
+Maximized Viewport = -1
+END""")
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 100.56, 29.5017, -0.415525
+    Scale = 0.0053694
+    Pan = 49.1042, -58.005
+    Rotation Quaternion = 0.0380215, 0.0351975, 0.0605784, 0.996819
+    
+  END
+
+END
+
+> update
+    GEOMETRY:
+  OUTLET:
+Generate Intermediate Points = On
+Hub Angle = 1.197 [deg]
+Input Filename = C:/Users/xisto/OneDrive - Chalmers/MyFiles/Chalmers/Teaching/Aerospace Propulsion/Design Tasks/solution/DT3/cfd/turbogrid_files/r1.curve
+Meridional Splitter Curve Type = Bspline
+Meridional Splitter Filename =  
+Meridional Splitter Interface Hub Parametric Location = 0.5
+Meridional Splitter Interface Shroud Parametric Location = 0.5
+Opening Mode = Adjacent blade
+Override Automatic Angles = Off
+Parametric Hub Location = 0.5
+Parametric Shroud Location = 0.5
+Shroud Angle = 1.83679 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 2.0662 [m], 0.2807 [m]
+Trim Intersection Point 1 = 2.0662 [m], 0.2807 [m]
+Trim Intersection Point 2 = 2.0662 [m], 0.3139 [m]
+Trim Shroud Position = 2.0662 [m], 0.3139 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 100.56, 29.5017, -0.415525
+    Scale = 0.0266651
+    Pan = 83.204, 6.12279
+    Rotation Quaternion = 0.0456786, -0.0540691, -0.0129857, 0.997409
+    
+  END
+
+END
+
+> update
+    GEOMETRY:
+  OUTLET:
+Generate Intermediate Points = On
+Hub Angle = 1.197 [deg]
+Input Filename = C:/Users/xisto/OneDrive - Chalmers/MyFiles/Chalmers/Teaching/Aerospace Propulsion/Design Tasks/solution/DT3/cfd/turbogrid_files/r1.curve
+Meridional Splitter Curve Type = Bspline
+Meridional Splitter Filename =  
+Meridional Splitter Interface Hub Parametric Location = 0.5
+Meridional Splitter Interface Shroud Parametric Location = 0.5
+Opening Mode = Adjacent blade
+Override Automatic Angles = Off
+Parametric Hub Location = 0.0431878
+Parametric Shroud Location = 0.0380052
+Shroud Angle = 1.83679 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 2.0662 [m], 0.2807 [m]
+Trim Intersection Point 1 = 2.0662 [m], 0.2807 [m]
+Trim Intersection Point 2 = 2.0662 [m], 0.3139 [m]
+Trim Shroud Position = 2.0662 [m], 0.3139 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+turboMesh1.Exit()
+turboMesh2 = system5.GetContainer(ComponentName="Turbo Mesh")
+turboMesh2.Edit()
+turboMesh2.SendCommand(Command=">centerview 1")
+turboMesh2.Exit()
+turboMesh3 = system6.GetContainer(ComponentName="Turbo Mesh")
+turboMesh3.Edit()
+turboMesh3.SendCommand(Command=">centerview 1")
+turboMesh3.Exit()
+setup1 = system3.GetContainer(ComponentName="Setup")
+setup1.Edit()
+setup1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.0543575, 0.29534, 0.0124745
+    Scale = 13.7723
+    Pan = 0, 0
+    Rotation Quaternion = 0.353179, -0.173897, -0.0361412, 0.918535
+    
+  END
+
+END
+
+> update
+ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""AXIS: TurboPre
+  Option = Coord Frame
+  Visibility = true
+  Reference Coord Frame = Coord 0
+  Axis of Rotation = X
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command=""">delete /FLOW:Flow Analysis 1/DOMAIN:Default Domain,/FLOW:Flow Analysis 1/DOMAIN:R1,/FLOW:Flow Analysis 1/DOMAIN:S1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:R1 to R1 Periodic 1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:S1 to R1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:S1 to S1 Periodic 1,/FLOW:Flow Analysis 1/ANALYSIS TYPE,/FLOW:Flow Analysis 1/OUTPUT CONTROL/MONITOR OBJECTS/EFFICIENCY OUTPUT,/FLOW:Flow Analysis 1/OUTPUT CONTROL/EFFICIENCY OUTPUT,/TURBO POST DATA,/FLOW:Flow Analysis 1/TRANSIENT BLADE ROW MODELS,/FLOW:Flow Analysis 1/OUTPUT CONTROL/TRANSIENT BLADE ROW OUTPUT
+FLOW: Flow Analysis 1
+  &replace SOLUTION UNITS:
+    Angle Units = [rad]
+    Length Units = [m]
+    Mass Units = [kg]
+    Solid Angle Units = [sr]
+    Temperature Units = [K]
+    Time Units = [s]
+  END
+  &replace SOLVER CONTROL:
+    Turbulence Numerics = First Order
+    ADVECTION SCHEME:
+      Option = High Resolution
+    END
+    CONVERGENCE CONTROL:
+      Length Scale Option = Conservative
+      Maximum Number of Iterations = 100000
+      Minimum Number of Iterations = 1
+      Timescale Control = Auto Timescale
+      Timescale Factor = 1.0
+    END
+    CONVERGENCE CRITERIA:
+      Residual Target = 0.000001
+      Residual Type = RMS
+    END
+    DYNAMIC MODEL CONTROL:
+      Global Dynamic Model Control = On
+    END
+    INTERRUPT CONTROL:
+      Option = Any Interrupt
+      CONVERGENCE CONDITIONS:
+        Option = Default Conditions
+      END
+    END
+  END
+  &replace ANALYSIS TYPE:
+    Option = Steady State
+    EXTERNAL SOLVER COUPLING:
+      Option = None
+    END
+  END
+  &replace OUTPUT CONTROL:
+    MONITOR OBJECTS:
+      MONITOR BALANCES:
+        Option = Full
+      END
+      MONITOR FORCES:
+        Option = Full
+      END
+      MONITOR PARTICLES:
+        Option = Full
+      END
+      MONITOR RESIDUALS:
+        Option = Full
+      END
+      MONITOR TOTALS:
+        Option = Full
+      END
+      EFFICIENCY OUTPUT:
+        Inflow Boundary = IGV Inlet
+        Option = Output To Solver Monitor
+        Outflow Boundary = S1 Outlet
+      END
+    END
+    RESULTS:
+      File Compression Level = Default
+      Option = Standard
+    END
+  END
+  &replace DOMAIN: R1
+    Coord Frame = Coord 0
+    Domain Type = Fluid
+    Location = Passage Main 3
+    Number of Passages in 360 = 44
+    Number of Passages in Component = 1
+    BOUNDARY: R1 Hub
+      Boundary Type = WALL
+      Coord Frame = Coord 0
+      Create Other Side = Off
+      Frame Type = Rotating
+      Interface Boundary = Off
+      Location = HUB 3
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: R1 Shroud
+      Boundary Type = WALL
+      Coord Frame = Coord 0
+      Create Other Side = Off
+      Frame Type = Rotating
+      Interface Boundary = Off
+      Location = SHROUD 3
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+          WALL VELOCITY:
+            Option = Counter Rotating Wall
+          END
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    DOMAIN MODELS:
+      BUOYANCY MODEL:
+        Option = Non Buoyant
+      END
+      DOMAIN MOTION:
+        Alternate Rotation Model = true
+        Angular Velocity = -269 [rev s^-1]
+        Option = Rotating
+        AXIS DEFINITION:
+          Option = Coordinate Axis
+          Rotation Axis = Coord 0.1
+        END
+      END
+      MESH DEFORMATION:
+        Option = None
+      END
+      REFERENCE PRESSURE:
+        Reference Pressure = 0 [atm]
+      END
+    END
+    FLUID DEFINITION: Air Ideal Gas
+      Material = Air Ideal Gas
+      Option = Material Library
+      MORPHOLOGY:
+        Option = Continuous Fluid
+      END
+    END
+    FLUID MODELS:
+      COMBUSTION MODEL:
+        Option = None
+      END
+      HEAT TRANSFER MODEL:
+        Include Viscous Work Term = On
+        Option = Total Energy
+      END
+      THERMAL RADIATION MODEL:
+        Option = None
+      END
+      TURBULENCE MODEL:
+        Option = k epsilon
+      END
+      TURBULENT WALL FUNCTIONS:
+        High Speed Model = Off
+        Option = Scalable
+      END
+    END
+    BOUNDARY: R1 Blade
+      Boundary Type = WALL
+      Create Other Side = Off
+      Frame Type = Rotating
+      Interface Boundary = Off
+      Location = BLADE 3
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+  END
+  &replace DOMAIN: S1
+    Coord Frame = Coord 0
+    Domain Type = Fluid
+    Location = Passage Main
+    Number of Passages in 360 = 82
+    Number of Passages in Component = 1
+    DOMAIN MODELS:
+      BUOYANCY MODEL:
+        Option = Non Buoyant
+      END
+      DOMAIN MOTION:
+        Option = Stationary
+      END
+      MESH DEFORMATION:
+        Option = None
+      END
+      REFERENCE PRESSURE:
+        Reference Pressure = 0 [atm]
+      END
+    END
+    FLUID DEFINITION: Air Ideal Gas
+      Material = Air Ideal Gas
+      Option = Material Library
+      MORPHOLOGY:
+        Option = Continuous Fluid
+      END
+    END
+    FLUID MODELS:
+      COMBUSTION MODEL:
+        Option = None
+      END
+      HEAT TRANSFER MODEL:
+        Include Viscous Work Term = On
+        Option = Total Energy
+      END
+      THERMAL RADIATION MODEL:
+        Option = None
+      END
+      TURBULENCE MODEL:
+        Option = k epsilon
+      END
+      TURBULENT WALL FUNCTIONS:
+        High Speed Model = Off
+        Option = Scalable
+      END
+    END
+    BOUNDARY: S1 Blade
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = BLADE
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: S1 Hub
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = HUB
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: S1 Outlet
+      Boundary Type = OUTLET
+      Interface Boundary = Off
+      Location = OUTFLOW
+      BOUNDARY CONDITIONS:
+        FLOW REGIME:
+          Option = Subsonic
+        END
+        MASS AND MOMENTUM:
+          Option = Average Static Pressure
+          Pressure Profile Blend = 0.05
+          Relative Pressure = 5 [bar]
+        END
+        PRESSURE AVERAGING:
+          Option = Average Over Whole Outlet
+        END
+      END
+    END
+    BOUNDARY: S1 Shroud
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = SHROUD
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+  END
+  &replace DOMAIN: IGV
+    Coord Frame = Coord 0
+    Domain Type = Fluid
+    Location = Passage 2
+    Number of Passages in 360 = 70
+    Number of Passages in Component = 1
+    DOMAIN MODELS:
+      BUOYANCY MODEL:
+        Option = Non Buoyant
+      END
+      DOMAIN MOTION:
+        Option = Stationary
+      END
+      MESH DEFORMATION:
+        Option = None
+      END
+      REFERENCE PRESSURE:
+        Reference Pressure = 0 [atm]
+      END
+    END
+    FLUID DEFINITION: Air Ideal Gas
+      Material = Air Ideal Gas
+      Option = Material Library
+      MORPHOLOGY:
+        Option = Continuous Fluid
+      END
+    END
+    FLUID MODELS:
+      COMBUSTION MODEL:
+        Option = None
+      END
+      HEAT TRANSFER MODEL:
+        Include Viscous Work Term = True
+        Option = Total Energy
+      END
+      THERMAL RADIATION MODEL:
+        Option = None
+      END
+      TURBULENCE MODEL:
+        Option = k epsilon
+      END
+      TURBULENT WALL FUNCTIONS:
+        High Speed Model = Off
+        Option = Scalable
+      END
+    END
+    BOUNDARY: IGV Blade
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = BLADE 2
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: IGV Hub
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = HUB 2
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: IGV Inlet
+      Boundary Type = INLET
+      Interface Boundary = Off
+      Location = INFLOW 2
+      BOUNDARY CONDITIONS:
+        FLOW DIRECTION:
+          Option = Normal to Boundary Condition
+        END
+        FLOW REGIME:
+          Option = Subsonic
+        END
+        HEAT TRANSFER:
+          Option = Total Temperature
+          Total Temperature = 541 [K]
+        END
+        MASS AND MOMENTUM:
+          Option = Total Pressure
+          Relative Pressure = 3.8776 [bar]
+        END
+        TURBULENCE:
+          Option = Medium Intensity and Eddy Viscosity Ratio
+        END
+      END
+    END
+    BOUNDARY: IGV Shroud
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = SHROUD 2
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+  END
+  &replace DOMAIN INTERFACE: IGV to IGV Periodic 1
+    Filter Domain List1 = IGV
+    Filter Domain List2 = IGV
+    Interface Region List1 = PER1 2
+    Interface Region List2 = PER2 2
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = Rotational Periodicity
+      AXIS DEFINITION:
+        Option = Coordinate Axis
+        Rotation Axis = Coord 0.1
+      END
+    END
+    MESH CONNECTION:
+      Option = Automatic
+    END
+  END
+  &replace DOMAIN INTERFACE: R1 to R1 Periodic 1
+    Filter Domain List1 = R1
+    Filter Domain List2 = R1
+    Interface Region List1 = PER1 3
+    Interface Region List2 = PER2 3
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = Rotational Periodicity
+      AXIS DEFINITION:
+        Option = Coordinate Axis
+        Rotation Axis = Coord 0.1
+      END
+    END
+    MESH CONNECTION:
+      Option = Automatic
+    END
+  END
+  &replace DOMAIN INTERFACE: S1 to S1 Periodic 1
+    Filter Domain List1 = S1
+    Filter Domain List2 = S1
+    Interface Region List1 = PER1
+    Interface Region List2 = PER2
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = Rotational Periodicity
+      AXIS DEFINITION:
+        Option = Coordinate Axis
+        Rotation Axis = Coord 0.1
+      END
+    END
+    MESH CONNECTION:
+      Option = Automatic
+    END
+  END
+  &replace DOMAIN INTERFACE: R1 to IGV
+    Filter Domain List1 = R1
+    Filter Domain List2 = IGV
+    Interface Region List1 = INFLOW 3
+    Interface Region List2 = OUTFLOW 2
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = General Connection
+      FRAME CHANGE:
+        Option = Stage
+        DOWNSTREAM VELOCITY CONSTRAINT:
+          Frame Type = Rotating
+          Option = Constant Total Pressure
+        END
+      END
+      PITCH CHANGE:
+        Option = Automatic
+      END
+    END
+    MESH CONNECTION:
+      Option = GGI
+    END
+  END
+  &replace DOMAIN INTERFACE: S1 to R1
+    Filter Domain List1 = S1
+    Filter Domain List2 = R1
+    Interface Region List1 = INFLOW
+    Interface Region List2 = OUTFLOW 3
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = General Connection
+      FRAME CHANGE:
+        Option = Stage
+        DOWNSTREAM VELOCITY CONSTRAINT:
+          Frame Type = Rotating
+          Option = Constant Total Pressure
+        END
+      END
+      PITCH CHANGE:
+        Option = Automatic
+      END
+    END
+    MESH CONNECTION:
+      Option = GGI
+    END
+  END
+END
+
+>physicsupdate
+TURBO POST DATA:
+  Machine Type = Axial Compressor
+  Component Order = IGV, R1, S1
+  Flow Type = Compressible
+  Reference Pressure = 0 [atm]
+  Rotation Axis From = 0 [m], 0 [m], 0 [m]
+  Rotation Axis To = 1 [m], 0 [m], 0 [m]
+  TURBO POST COMPONENT: IGV
+    Domain Name = IGV
+    Domain Motion = Stationary
+    Number of Components in 360 = 70
+    Number of Passages in 360 = 70
+    Number of Passages in Component = 1
+    Complete Component = False
+    Blade Region = BLADE 2
+    Hub Region = HUB 2
+    Inlet Region = INFLOW 2
+    Shroud Region = SHROUD 2
+    Outlet Region = OUTFLOW 2
+    Periodic 1 Region = PER1 2
+    Periodic 2 Region = PER2 2
+  END
+  TURBO POST COMPONENT: R1
+    Domain Name = R1
+    Domain Motion = Rotating
+    Number of Components in 360 = 44
+    Number of Passages in 360 = 44
+    Number of Passages in Component = 1
+    Complete Component = False
+    Hub Region = HUB 3
+    Shroud Region = SHROUD 3
+    Blade Region = BLADE 3
+    Inlet Region = INFLOW 3
+    Outlet Region = OUTFLOW 3
+    Periodic 1 Region = PER1 3
+    Periodic 2 Region = PER2 3
+  END
+  TURBO POST COMPONENT: S1
+    Domain Name = S1
+    Domain Motion = Stationary
+    Number of Components in 360 = 82
+    Number of Passages in 360 = 82
+    Number of Passages in Component = 1
+    Complete Component = False
+    Blade Region = BLADE
+    Hub Region = HUB
+    Outlet Region = OUTFLOW
+    Shroud Region = SHROUD
+    Inlet Region = INFLOW
+    Periodic 1 Region = PER1
+    Periodic 2 Region = PER2
+  END
+END""")
+setup1.SendCommand(Command=">delete /AXIS:TurboPre")
+setup1.SendCommand(Command=">delete /ROTATION MARKER:Marker R1")
+Save(Overwrite=True)
+setup1.Exit()
+solution1 = system3.GetContainer(ComponentName="Solution")
+solution1.SetExecutionControl(CCL=r"""&replace SIMULATION CONTROL:
+  EXECUTION CONTROL:
+    EXECUTABLE SELECTION:
+      Double Precision = Off
+      Large Problem = Off
+    END
+    INTERPOLATOR STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+    END
+    PARTITIONER STEP CONTROL:
+      Multidomain Option = Automatic
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARTITION SMOOTHING:
+        Maximum Partition Smoothing Sweeps = 100
+        Option = Smooth
+      END
+      PARTITIONING TYPE:
+        MeTiS Type = k-way
+        Option = MeTiS
+        Partition Size Rule = Automatic
+      END
+    END
+    RUN DEFINITION:
+      Run Mode = Full
+      Solver Input File = C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\cfdrun_files\dp0\CFX\CFX\CFX.def
+    END
+    SOLVER STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARALLEL ENVIRONMENT:
+        Number of Processes = 4
+        Start Method = Intel MPI Local Parallel
+      END
+    END
+  END
+END
+""")
+solutionComponent1 = system3.GetComponent(Name="Solution")
+solutionComponent1.Update(Force=True)
+solution1.Exit()
+solutionComponent1.Reset()
+solutionComponent1.Clean()
+solution1.SetExecutionControl(CCL=r"""&replace SIMULATION CONTROL:
+  EXECUTION CONTROL:
+    EXECUTABLE SELECTION:
+      Double Precision = Off
+      Large Problem = Off
+    END
+    INTERPOLATOR STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+    END
+    PARTITIONER STEP CONTROL:
+      Multidomain Option = Automatic
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARTITION SMOOTHING:
+        Maximum Partition Smoothing Sweeps = 100
+        Option = Smooth
+      END
+      PARTITIONING TYPE:
+        MeTiS Type = k-way
+        Option = MeTiS
+        Partition Size Rule = Automatic
+      END
+    END
+    RUN DEFINITION:
+      Run Mode = Full
+      Solver Input File = C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\cfdrun_files\dp0\CFX\CFX\CFX.def
+    END
+    SOLVER STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARALLEL ENVIRONMENT:
+        Number of Processes = 4
+        Start Method = Intel MPI Local Parallel
+      END
+    END
+  END
+END
+""")
+solutionComponent1.Update(Force=True)
+solution1.Exit()
+results1 = system3.GetContainer(ComponentName="Results")
+results1.Edit()
+results1.SendCommand(Command="""VIEW:View 1
+  Light Angle = 50, 110
+END
+
+VIEW:View 2
+  Light Angle = 50, 110
+END
+
+VIEW:View 3
+  Light Angle = 50, 110
+END
+
+VIEW:View 4
+  Light Angle = 50, 110
+END
+
+> update
+
+VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Initialisation View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Initialisation View, viewport=1""")
+results1.SendCommand(Command="""VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Initialisation View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Initialisation View, viewport=1""")
+results1.SendCommand(Command="""VIEWPORT MANAGER:
+  Synchronize Visibility = false
+END""")
+results1.SendCommand(Command="> turbo init")
+results1.SendCommand(Command="""VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPBGMESH:Component 1, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Initialisation View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Initialisation View, viewport=1""")
+results1.SendCommand(Command="""VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPBGMESH:Component 1, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Initialisation View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Initialisation View, viewport=1""")
+results1.SendCommand(Command="""VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPBGMESH:Component 1, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Initialisation View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Initialisation View, viewport=1""")
+results1.SendCommand(Command="""VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPBGMESH:Component 1, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Initialisation View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Initialisation View, viewport=1""")
+results1.SendCommand(Command=">highlight regionlist=/DATA READER/CASE:Case CFX/COMPOSITE:HUB, domainlist=/DATA READER/CASE:Case CFX/DOMAIN:R1")
+results1.SendCommand(Command=">highlight regionlist=/DATA READER/CASE:Case CFX/COMPOSITE:SHROUD, domainlist=/DATA READER/CASE:Case CFX/DOMAIN:R1")
+results1.SendCommand(Command=">highlight regionlist=/DATA READER/CASE:Case CFX/COMPOSITE:INFLOW, domainlist=/DATA READER/CASE:Case CFX/DOMAIN:R1")
+results1.SendCommand(Command=">highlight regionlist=/DATA READER/CASE:Case CFX/COMPOSITE:INFLOW, domainlist=/DATA READER/CASE:Case CFX/DOMAIN:R1")
+results1.SendCommand(Command="""VIEWPORT MANAGER:
+  Maximized Viewport = -1
+  Synchronize Camera = false
+  Synchronize Visibility = true
+  View Length Units = m
+  Viewer Camera Z = -5
+  Viewer Eye Point = Normal
+  Viewer Eye Separation = 5
+  Viewport 1 View = Stage 1 Geometry Meridional View
+  Viewport 2 View = View 2
+  Viewport 3 View = View 3
+  Viewport 4 View = View 4
+  Viewport Layout = No Split
+  X Split = 0.5
+  Y Split = 0.5
+END""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case CFX/BOUNDARY:IGV Blade, view=/VIEW:Stage 1 Geometry Meridional View""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case CFX/BOUNDARY:R1 Blade, view=/VIEW:Stage 1 Geometry Meridional View""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case CFX/BOUNDARY:IGV Hub, view=/VIEW:Stage 1 Geometry Meridional View""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case CFX/BOUNDARY:IGV Inlet, view=/VIEW:Stage 1 Geometry Meridional View""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case CFX/BOUNDARY:IGV Shroud, view=/VIEW:Stage 1 Geometry Meridional View""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case CFX/BOUNDARY:IGV to IGV Periodic 1 Side 1, view=/VIEW:Stage 1 Geometry Meridional View""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case CFX/BOUNDARY:IGV to IGV Periodic 1 Side 2, view=/VIEW:Stage 1 Geometry Meridional View""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case CFX/BOUNDARY:R1 to IGV Side 2, view=/VIEW:Stage 1 Geometry Meridional View""")
+results1.SendCommand(Command="""VIEW:Stage 1 Geometry Meridional View
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 2.02412, -0.005, 0.293173
+    Scale = 27.6764
+    Pan = 0, 0
+    Rotation Quaternion = -0.707107, 0, 0, 0.707107
+    
+  END
+
+END
+
+> update
+>setViewportView cmd=set, view=/VIEW:View 1, viewport=1""")
+results1.SendCommand(Command=">setViewportView cmd=set, view=/VIEW:View 3, viewport=1")
+results1.Exit()
+resultsComponent1 = system3.GetComponent(Name="Results")
+resultsComponent1.Reset()
+results1.Edit()
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.0543575, 0.295062, 0.0133776
+    Scale = 12.8019
+    Pan = 0, 0
+    Rotation Quaternion = 0.279848, -0.364705, -0.115917, 0.880476
+    
+  END
+
+END
+
+> update
+
+VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Initialisation View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Initialisation View, viewport=1""")
+results1.SendCommand(Command="""VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Initialisation View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Initialisation View, viewport=1""")
+results1.SendCommand(Command="""VIEWPORT MANAGER:
+  Synchronize Visibility = false
+END""")
+results1.SendCommand(Command="> turbo init")
+results1.SendCommand(Command="""DEFAULT INSTANCE TRANSFORM:Default Transform
+ Instancing Info From Domain = On
+END""")
+results1.SendCommand(Command="""# CCL from Turbo 3D Views Macro begins (initialize)
+VIEW:Turbo Regions View
+ Coord Transform = Cartesian
+ Is A Figure = false
+END
+>show /WIREFRAME:Wireframe, view=/VIEW:Turbo Regions View
+# CCL from Turbo 3D Views Macro ends (initialize)""")
+results1.SendCommand(Command="""# CCL from Blade to Blade Macro begins (initialize)
+
+VIEW:Blade to Blade View
+ Coord Transform = 2D Blade-to-blade
+ Is A Figure = false
+END
+
+>show /INTERNAL LEGEND:Blade to Blade Legend,/INTERNAL TURBO SURFACE:Blade to Blade Surface,/INTERNAL VECTOR:Blade to Blade Vector,/INTERNAL CONTOUR:Blade to Blade Contour,/INTERNAL STREAMLINE:Blade to Blade Stream, view=/VIEW:Blade to Blade View
+# CCL from Blade to Blade Macro ends (initialize)""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Blade to Blade View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Blade to Blade View, viewport=1""")
+results1.SendCommand(Command="""# CCL from Blade to Blade Macro begins (execute)
+VIEW:Blade to Blade View
+ Angular Coord Shift = 0.0 [degree]
+
+END
+INTERNAL TURBO SURFACE:Blade to Blade Surface
+ Turbo Domain List = /DOMAIN GROUP:All Domains
+ Option = Constant Span
+ Surface Type = Slice
+ Span = 0.5
+ Turbo View Plot Type = Colour
+ Colour Mode = Variable
+Colour Variable = Pressure
+Colour Variable Boundary Values = Hybrid
+Max = 0.0 [Pa]
+Min = 0.0 [Pa]
+Range = Global
+
+ Circumferential Average Mode = None
+ Draw Faces = On
+ Draw Lines = Off
+END
+LEGEND:Blade to Blade Legend
+ Legend Title Mode = Variable
+ Legend X Justification = Left
+ Legend Plot = Blade to Blade Surface
+END
+>show /INTERNAL TURBO SURFACE:Blade to Blade Surface,/LEGEND:Blade to Blade Legend, view=/VIEW:Blade to Blade View
+> centerview 1
+# CCL from Blade to Blade Macro ends (execute)""")
+results1.SendCommand(Command="""# CCL from Blade to Blade Macro begins (execute)
+INTERNAL TURBO SURFACE:Blade to Blade Surface
+ Turbo Domain List = /DOMAIN GROUP:All Domains
+ Option = Constant Span
+ Surface Type = Slice
+ Span = 0.5
+ Turbo View Plot Type = Colour
+ Colour Mode = Variable
+Colour Variable = Mach Number
+Colour Variable Boundary Values = Hybrid
+Max = 0.0
+Min = 0.0
+Range = Global
+
+ Circumferential Average Mode = None
+ Draw Faces = On
+ Draw Lines = Off
+END
+LEGEND:Blade to Blade Legend
+ Legend Title Mode = Variable
+ Legend X Justification = Left
+ Legend Plot = Blade to Blade Surface
+END
+>show /INTERNAL TURBO SURFACE:Blade to Blade Surface,/LEGEND:Blade to Blade Legend, view=/VIEW:Blade to Blade View
+# CCL from Blade to Blade Macro ends (execute)""")
+results1.Exit()
+turboMeshComponent1.Update(AllDependencies=True)
+setupComponent1.UpdateUpstreamComponents()
+turboMeshComponent1.UpdateUpstreamComponents()
+turboMeshComponent1.Clean()
+turboMeshComponent2.Clean()
+turboMeshComponent3.Clean()
+setupComponent1.UpdateUpstreamComponents()
+setup1.Edit()
+setup1.Exit()
+solutionComponent1.Clean()
+solution1.SetExecutionControl(CCL=r"""&replace SIMULATION CONTROL:
+  EXECUTION CONTROL:
+    EXECUTABLE SELECTION:
+      Double Precision = Off
+      Large Problem = Off
+    END
+    INTERPOLATOR STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+    END
+    PARTITIONER STEP CONTROL:
+      Multidomain Option = Automatic
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARTITION SMOOTHING:
+        Maximum Partition Smoothing Sweeps = 100
+        Option = Smooth
+      END
+      PARTITIONING TYPE:
+        MeTiS Type = k-way
+        Option = MeTiS
+        Partition Size Rule = Automatic
+      END
+    END
+    RUN DEFINITION:
+      Run Mode = Full
+      Solver Input File = C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\cfdrun_files\dp0\CFX\CFX\CFX.def
+    END
+    SOLVER STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARALLEL ENVIRONMENT:
+        Number of Processes = 4
+        Start Method = Intel MPI Local Parallel
+      END
+    END
+  END
+END
+""")
+solutionComponent1.Update(Force=True)
+solution1.Exit()
+solutionComponent1.Clean()
+solutionComponent1.Clean()
+solution1.SetExecutionControl(CCL=r"""&replace SIMULATION CONTROL:
+  EXECUTION CONTROL:
+    EXECUTABLE SELECTION:
+      Double Precision = Off
+      Large Problem = Off
+    END
+    INTERPOLATOR STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+    END
+    PARTITIONER STEP CONTROL:
+      Multidomain Option = Automatic
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARTITION SMOOTHING:
+        Maximum Partition Smoothing Sweeps = 100
+        Option = Smooth
+      END
+      PARTITIONING TYPE:
+        MeTiS Type = k-way
+        Option = MeTiS
+        Partition Size Rule = Automatic
+      END
+    END
+    RUN DEFINITION:
+      Run Mode = Full
+      Solver Input File = C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\cfdrun_files\dp0\CFX\CFX\CFX.def
+    END
+    SOLVER STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARALLEL ENVIRONMENT:
+        Number of Processes = 4
+        Start Method = Intel MPI Local Parallel
+      END
+    END
+  END
+END
+""")
+solutionComponent1.Update(Force=True)
+solution1.Exit()
+results1.Edit()
+results1.SendCommand(Command="""VIEW:View 1
+  Light Angle = 50, 110
+END
+
+VIEW:View 2
+  Light Angle = 50, 110
+END
+
+VIEW:View 3
+  Light Angle = 50, 110
+END
+
+VIEW:View 4
+  Light Angle = 50, 110
+END
+
+> update
+
+VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Initialisation View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Initialisation View, viewport=1""")
+results1.SendCommand(Command="""VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Initialisation View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Initialisation View, viewport=1""")
+results1.SendCommand(Command="""VIEWPORT MANAGER:
+  Synchronize Visibility = false
+END""")
+results1.SendCommand(Command="""DEFAULT INSTANCE TRANSFORM:Default Transform
+ Instancing Info From Domain = On
+END""")
+results1.SendCommand(Command="""# CCL from Turbo 3D Views Macro begins (initialize)
+VIEW:Turbo Regions View
+ Coord Transform = Cartesian
+ Is A Figure = false
+END
+>show /WIREFRAME:Wireframe, view=/VIEW:Turbo Regions View
+# CCL from Turbo 3D Views Macro ends (initialize)""")
+results1.SendCommand(Command="""# CCL from Meridional Macro begins (initialize)
+VIEW:Meridional View
+ Coord Transform = 2D Meridional
+ Is A Figure = false
+ Hide Difference Case = true
+END
+>show /INTERNAL LEGEND:Meridional Legend,/INTERNAL TURBO SURFACE:Meridional Surface, view=/VIEW:Meridional View
+# CCL from Meridional Macro ends (initialize)""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Meridional View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Meridional View, viewport=1""")
+results1.SendCommand(Command="""# CCL from Meridional Macro begins (execute)
+INTERNAL TURBO SURFACE:Meridional Surface
+ Turbo Domain List = /DOMAIN GROUP:All Domains
+ Option = Constant Theta
+ Surface Type = Sample
+ Span Points = 15
+ Streamwise Points = 50
+ Turbo View Plot Type = Colour
+ Colour Mode = Variable
+Circumferential Average Mode = Area
+Maximum Number of Sampling Points = 20
+
+Colour Variable = Pressure
+Colour Variable Boundary Values = Hybrid
+Max = 0.0 [Pa]
+Min = 0.0 [Pa]
+Range = Global
+
+ Colour Variable = Pressure
+ Draw Faces = On
+ Render Edge Angle = 0
+ Draw Lines = On
+END
+LEGEND:Meridional Legend
+ Legend Title Mode = User Specified
+ Legend Title = Pressure
+ Legend X Justification = Left
+ Legend Plot = Meridional Surface
+END
+>hide /INTERNAL SURFACE GROUP:Meridional Blade Wireframe, view=/VIEW:Meridional View
+>show /INTERNAL TURBO SURFACE:Meridional Surface,/LEGEND:Meridional Legend, view=/VIEW:Meridional View
+# CCL from Meridional Macro ends (execute)
+
+
+> centerview 1""")
+results1.SendCommand(Command=">report generatemode=APPEND, loadtemplate=Axial Compressor Report")
+results1.SendCommand(Command="""VIEWPORT MANAGER:
+  Maximized Viewport = -1
+  Synchronize Camera = false
+  Synchronize Visibility = false
+  View Length Units = m
+  Viewer Camera Z = -5
+  Viewer Eye Point = Normal
+  Viewer Eye Separation = 5
+  Viewport 1 View = Blade to Blade View
+  Viewport 2 View = View 2
+  Viewport 3 View = View 3
+  Viewport 4 View = View 4
+  Viewport Layout = No Split
+  X Split = 0.5
+  Y Split = 0.5
+END""")
+results1.SendCommand(Command=">report save, format=preview")
+results1.Exit()
+solution1.SetExecutionControl(CCL=r"""&replace SIMULATION CONTROL:
+  EXECUTION CONTROL:
+    EXECUTABLE SELECTION:
+      Double Precision = Off
+      Large Problem = Off
+    END
+    INTERPOLATOR STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+    END
+    PARTITIONER STEP CONTROL:
+      Multidomain Option = Automatic
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARTITION SMOOTHING:
+        Maximum Partition Smoothing Sweeps = 100
+        Option = Smooth
+      END
+      PARTITIONING TYPE:
+        MeTiS Type = k-way
+        Option = MeTiS
+        Partition Size Rule = Automatic
+      END
+    END
+    RUN DEFINITION:
+      Run Mode = Full
+      Solver Input File = C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\cfdrun_files\dp0\CFX\CFX\CFX_001.res
+    END
+    SOLVER STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARALLEL ENVIRONMENT:
+        Number of Processes = 4
+        Start Method = Intel MPI Local Parallel
+      END
+    END
+  END
+END
+""")
+solutionComponent1.Update(Force=True)
+solution1.Exit()
+setup1.Edit()
+setup1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.0538376, 0.296524, 0.00808197
+    Scale = 14.8302
+    Pan = 0, 0
+    Rotation Quaternion = 0.227451, -0.565803, 0.161812, 0.775878
+    
+  END
+
+END
+
+VIEW:View 1
+  Light Angle = 50, 110
+END
+
+> update
+ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""AXIS: TurboPre
+  Option = Coord Frame
+  Visibility = true
+  Reference Coord Frame = Coord 0
+  Axis of Rotation = X
+END""")
+setup1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.0538376, 0.296524, 0.00808197
+    Scale = 14.8302
+    Pan = 0, 0
+    Rotation Quaternion = 0.672639, -0.0688217, 0.0462195, 0.735347
+    
+  END
+
+END
+
+> update
+ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command=""">delete /FLOW:Flow Analysis 1/DOMAIN:IGV,/FLOW:Flow Analysis 1/DOMAIN:R1,/FLOW:Flow Analysis 1/DOMAIN:S1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:IGV to IGV Periodic 1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:R1 to IGV,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:R1 to R1 Periodic 1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:S1 to R1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:S1 to S1 Periodic 1,/FLOW:Flow Analysis 1/ANALYSIS TYPE,/FLOW:Flow Analysis 1/OUTPUT CONTROL/MONITOR OBJECTS/EFFICIENCY OUTPUT,/FLOW:Flow Analysis 1/OUTPUT CONTROL/EFFICIENCY OUTPUT,/TURBO POST DATA,/FLOW:Flow Analysis 1/TRANSIENT BLADE ROW MODELS,/FLOW:Flow Analysis 1/OUTPUT CONTROL/TRANSIENT BLADE ROW OUTPUT
+FLOW: Flow Analysis 1
+  &replace DOMAIN INTERFACE: IGV to IGV Periodic 1
+    Filter Domain List1 = IGV
+    Filter Domain List2 = IGV
+    Interface Region List1 = PER1 2
+    Interface Region List2 = PER2 2
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = Rotational Periodicity
+      AXIS DEFINITION:
+        Option = Coordinate Axis
+        Rotation Axis = Coord 0.1
+      END
+    END
+    MESH CONNECTION:
+      Option = Automatic
+    END
+  END
+  &replace DOMAIN INTERFACE: R1 to IGV
+    Filter Domain List1 = R1
+    Filter Domain List2 = IGV
+    Interface Region List1 = INFLOW 3
+    Interface Region List2 = OUTFLOW 2
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = General Connection
+      FRAME CHANGE:
+        Option = Stage
+        DOWNSTREAM VELOCITY CONSTRAINT:
+          Frame Type = Rotating
+          Option = Constant Total Pressure
+        END
+      END
+      PITCH CHANGE:
+        Option = Automatic
+      END
+    END
+    MESH CONNECTION:
+      Option = GGI
+    END
+  END
+  &replace DOMAIN INTERFACE: R1 to R1 Periodic 1
+    Filter Domain List1 = R1
+    Filter Domain List2 = R1
+    Interface Region List1 = PER1 3
+    Interface Region List2 = PER2 3
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = Rotational Periodicity
+      AXIS DEFINITION:
+        Option = Coordinate Axis
+        Rotation Axis = Coord 0.1
+      END
+    END
+    MESH CONNECTION:
+      Option = Automatic
+    END
+  END
+  &replace DOMAIN INTERFACE: S1 to R1
+    Filter Domain List1 = S1
+    Filter Domain List2 = R1
+    Interface Region List1 = INFLOW
+    Interface Region List2 = OUTFLOW 3
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = General Connection
+      FRAME CHANGE:
+        Option = Stage
+        DOWNSTREAM VELOCITY CONSTRAINT:
+          Frame Type = Rotating
+          Option = Constant Total Pressure
+        END
+      END
+      PITCH CHANGE:
+        Option = Automatic
+      END
+    END
+    MESH CONNECTION:
+      Option = GGI
+    END
+  END
+  &replace DOMAIN INTERFACE: S1 to S1 Periodic 1
+    Filter Domain List1 = S1
+    Filter Domain List2 = S1
+    Interface Region List1 = PER1
+    Interface Region List2 = PER2
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = Rotational Periodicity
+      AXIS DEFINITION:
+        Option = Coordinate Axis
+        Rotation Axis = Coord 0.1
+      END
+    END
+    MESH CONNECTION:
+      Option = Automatic
+    END
+  END
+  &replace SOLUTION UNITS:
+    Angle Units = [rad]
+    Length Units = [m]
+    Mass Units = [kg]
+    Solid Angle Units = [sr]
+    Temperature Units = [K]
+    Time Units = [s]
+  END
+  &replace SOLVER CONTROL:
+    Turbulence Numerics = First Order
+    ADVECTION SCHEME:
+      Option = High Resolution
+    END
+    CONVERGENCE CONTROL:
+      Length Scale Option = Conservative
+      Maximum Number of Iterations = 100000
+      Minimum Number of Iterations = 1
+      Timescale Control = Auto Timescale
+      Timescale Factor = 1.0
+    END
+    CONVERGENCE CRITERIA:
+      Residual Target = 0.000001
+      Residual Type = RMS
+    END
+    DYNAMIC MODEL CONTROL:
+      Global Dynamic Model Control = On
+    END
+    INTERRUPT CONTROL:
+      Option = Any Interrupt
+      CONVERGENCE CONDITIONS:
+        Option = Default Conditions
+      END
+    END
+  END
+  &replace ANALYSIS TYPE:
+    Option = Steady State
+    EXTERNAL SOLVER COUPLING:
+      Option = None
+    END
+  END
+  &replace OUTPUT CONTROL:
+    MONITOR OBJECTS:
+      MONITOR BALANCES:
+        Option = Full
+      END
+      MONITOR FORCES:
+        Option = Full
+      END
+      MONITOR PARTICLES:
+        Option = Full
+      END
+      MONITOR RESIDUALS:
+        Option = Full
+      END
+      MONITOR TOTALS:
+        Option = Full
+      END
+      EFFICIENCY OUTPUT:
+        Inflow Boundary = IGV Inlet
+        Option = Output To Solver Monitor
+        Outflow Boundary = S1 Outlet
+      END
+    END
+    RESULTS:
+      File Compression Level = Default
+      Option = Standard
+    END
+  END
+  &replace DOMAIN: IGV
+    Coord Frame = Coord 0
+    Domain Type = Fluid
+    Location = Passage 2
+    Number of Passages in 360 = 70
+    Number of Passages in Component = 1
+    BOUNDARY: IGV Blade
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = BLADE 2
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: IGV Hub
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = HUB 2
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: IGV Shroud
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = SHROUD 2
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    DOMAIN MODELS:
+      BUOYANCY MODEL:
+        Option = Non Buoyant
+      END
+      DOMAIN MOTION:
+        Option = Stationary
+      END
+      MESH DEFORMATION:
+        Option = None
+      END
+      REFERENCE PRESSURE:
+        Reference Pressure = 0 [atm]
+      END
+    END
+    FLUID DEFINITION: Air Ideal Gas
+      Material = Air Ideal Gas
+      Option = Material Library
+      MORPHOLOGY:
+        Option = Continuous Fluid
+      END
+    END
+    FLUID MODELS:
+      COMBUSTION MODEL:
+        Option = None
+      END
+      HEAT TRANSFER MODEL:
+        Include Viscous Work Term = On
+        Option = Total Energy
+      END
+      THERMAL RADIATION MODEL:
+        Option = None
+      END
+      TURBULENCE MODEL:
+        Option = k epsilon
+      END
+      TURBULENT WALL FUNCTIONS:
+        High Speed Model = Off
+        Option = Scalable
+      END
+    END
+    BOUNDARY: IGV Inlet
+      Boundary Type = INLET
+      Interface Boundary = Off
+      Location = INFLOW 2
+      BOUNDARY CONDITIONS:
+        FLOW DIRECTION:
+          Option = Normal to Boundary Condition
+        END
+        FLOW REGIME:
+          Option = Subsonic
+        END
+        HEAT TRANSFER:
+          Option = Total Temperature
+          Total Temperature = 541 [K]
+        END
+        MASS AND MOMENTUM:
+          Option = Total Pressure
+          Relative Pressure = 3.8776 [bar]
+        END
+        TURBULENCE:
+          Option = Medium Intensity and Eddy Viscosity Ratio
+        END
+      END
+    END
+  END
+  &replace DOMAIN: R1
+    Coord Frame = Coord 0
+    Domain Type = Fluid
+    Location = Passage Main 3
+    Number of Passages in 360 = 44
+    Number of Passages in Component = 1
+    BOUNDARY: R1 Blade
+      Boundary Type = WALL
+      Create Other Side = Off
+      Frame Type = Rotating
+      Interface Boundary = Off
+      Location = BLADE 3
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: R1 Hub
+      Boundary Type = WALL
+      Coord Frame = Coord 0
+      Create Other Side = Off
+      Frame Type = Rotating
+      Interface Boundary = Off
+      Location = HUB 3
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: R1 Shroud
+      Boundary Type = WALL
+      Coord Frame = Coord 0
+      Create Other Side = Off
+      Frame Type = Rotating
+      Interface Boundary = Off
+      Location = SHROUD 3
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    DOMAIN MODELS:
+      BUOYANCY MODEL:
+        Option = Non Buoyant
+      END
+      DOMAIN MOTION:
+        Alternate Rotation Model = true
+        Angular Velocity = -269 [rev s^-1]
+        Option = Rotating
+        AXIS DEFINITION:
+          Option = Coordinate Axis
+          Rotation Axis = Coord 0.1
+        END
+      END
+      MESH DEFORMATION:
+        Option = None
+      END
+      REFERENCE PRESSURE:
+        Reference Pressure = 0 [atm]
+      END
+    END
+    FLUID DEFINITION: Air Ideal Gas
+      Material = Air Ideal Gas
+      Option = Material Library
+      MORPHOLOGY:
+        Option = Continuous Fluid
+      END
+    END
+    FLUID MODELS:
+      COMBUSTION MODEL:
+        Option = None
+      END
+      HEAT TRANSFER MODEL:
+        Include Viscous Work Term = On
+        Option = Total Energy
+      END
+      THERMAL RADIATION MODEL:
+        Option = None
+      END
+      TURBULENCE MODEL:
+        Option = k epsilon
+      END
+      TURBULENT WALL FUNCTIONS:
+        High Speed Model = Off
+        Option = Scalable
+      END
+    END
+  END
+  &replace DOMAIN: S1
+    Coord Frame = Coord 0
+    Domain Type = Fluid
+    Location = Passage Main
+    Number of Passages in 360 = 82
+    Number of Passages in Component = 1
+    BOUNDARY: S1 Blade
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = BLADE
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: S1 Hub
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = HUB
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: S1 Shroud
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = SHROUD
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    DOMAIN MODELS:
+      BUOYANCY MODEL:
+        Option = Non Buoyant
+      END
+      DOMAIN MOTION:
+        Option = Stationary
+      END
+      MESH DEFORMATION:
+        Option = None
+      END
+      REFERENCE PRESSURE:
+        Reference Pressure = 0 [atm]
+      END
+    END
+    FLUID DEFINITION: Air Ideal Gas
+      Material = Air Ideal Gas
+      Option = Material Library
+      MORPHOLOGY:
+        Option = Continuous Fluid
+      END
+    END
+    FLUID MODELS:
+      COMBUSTION MODEL:
+        Option = None
+      END
+      HEAT TRANSFER MODEL:
+        Include Viscous Work Term = On
+        Option = Total Energy
+      END
+      THERMAL RADIATION MODEL:
+        Option = None
+      END
+      TURBULENCE MODEL:
+        Option = k epsilon
+      END
+      TURBULENT WALL FUNCTIONS:
+        High Speed Model = Off
+        Option = Scalable
+      END
+    END
+    BOUNDARY: S1 Outlet
+      Boundary Type = OUTLET
+      Interface Boundary = Off
+      Location = OUTFLOW
+      BOUNDARY CONDITIONS:
+        FLOW REGIME:
+          Option = Subsonic
+        END
+        MASS AND MOMENTUM:
+          Option = Average Static Pressure
+          Pressure Profile Blend = 0.05
+          Relative Pressure = 5 [bar]
+        END
+        PRESSURE AVERAGING:
+          Option = Average Over Whole Outlet
+        END
+      END
+    END
+  END
+END
+
+>physicsupdate
+TURBO POST DATA:
+  Machine Type = Axial Compressor
+  Component Order = IGV, R1, S1
+  Flow Type = Compressible
+  Reference Pressure = 0 [atm]
+  Rotation Axis From = 0 [m], 0 [m], 0 [m]
+  Rotation Axis To = 1 [m], 0 [m], 0 [m]
+  TURBO POST COMPONENT: IGV
+    Domain Name = IGV
+    Domain Motion = Stationary
+    Number of Components in 360 = 70
+    Number of Passages in 360 = 70
+    Number of Passages in Component = 1
+    Complete Component = False
+    Blade Region = BLADE 2
+    Hub Region = HUB 2
+    Shroud Region = SHROUD 2
+    Inlet Region = INFLOW 2
+    Outlet Region = OUTFLOW 2
+    Periodic 1 Region = PER1 2
+    Periodic 2 Region = PER2 2
+  END
+  TURBO POST COMPONENT: R1
+    Domain Name = R1
+    Domain Motion = Rotating
+    Number of Components in 360 = 44
+    Number of Passages in 360 = 44
+    Number of Passages in Component = 1
+    Complete Component = False
+    Blade Region = BLADE 3
+    Hub Region = HUB 3
+    Shroud Region = SHROUD 3
+    Inlet Region = INFLOW 3
+    Outlet Region = OUTFLOW 3
+    Periodic 1 Region = PER1 3
+    Periodic 2 Region = PER2 3
+  END
+  TURBO POST COMPONENT: S1
+    Domain Name = S1
+    Domain Motion = Stationary
+    Number of Components in 360 = 82
+    Number of Passages in 360 = 82
+    Number of Passages in Component = 1
+    Complete Component = False
+    Blade Region = BLADE
+    Hub Region = HUB
+    Shroud Region = SHROUD
+    Outlet Region = OUTFLOW
+    Inlet Region = INFLOW
+    Periodic 1 Region = PER1
+    Periodic 2 Region = PER2
+  END
+END""")
+setup1.SendCommand(Command=">delete /AXIS:TurboPre")
+setup1.SendCommand(Command=">delete /ROTATION MARKER:Marker R1")
+setup1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.0538376, 0.296524, 0.00808197
+    Scale = 14.8302
+    Pan = 0, 0
+    Rotation Quaternion = 0.51634, -0.0467979, -0.322198, 0.792122
+    
+  END
+
+END
+
+> update
+ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""AXIS: TurboPre
+  Option = Coord Frame
+  Visibility = true
+  Reference Coord Frame = Coord 0
+  Axis of Rotation = X
+END""")
+setup1.SendCommand(Command=""">delete /FLOW:Flow Analysis 1/DOMAIN:IGV,/FLOW:Flow Analysis 1/DOMAIN:R1,/FLOW:Flow Analysis 1/DOMAIN:S1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:IGV to IGV Periodic 1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:R1 to IGV,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:R1 to R1 Periodic 1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:S1 to R1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:S1 to S1 Periodic 1,/FLOW:Flow Analysis 1/ANALYSIS TYPE,/FLOW:Flow Analysis 1/OUTPUT CONTROL/MONITOR OBJECTS/EFFICIENCY OUTPUT,/FLOW:Flow Analysis 1/OUTPUT CONTROL/EFFICIENCY OUTPUT,/TURBO POST DATA,/FLOW:Flow Analysis 1/TRANSIENT BLADE ROW MODELS,/FLOW:Flow Analysis 1/OUTPUT CONTROL/TRANSIENT BLADE ROW OUTPUT
+FLOW: Flow Analysis 1
+  &replace DOMAIN INTERFACE: IGV to IGV Periodic 1
+    Filter Domain List1 = IGV
+    Filter Domain List2 = IGV
+    Interface Region List1 = PER1 2
+    Interface Region List2 = PER2 2
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = Rotational Periodicity
+      AXIS DEFINITION:
+        Option = Coordinate Axis
+        Rotation Axis = Coord 0.1
+      END
+    END
+    MESH CONNECTION:
+      Option = Automatic
+    END
+  END
+  &replace DOMAIN INTERFACE: R1 to IGV
+    Filter Domain List1 = R1
+    Filter Domain List2 = IGV
+    Interface Region List1 = INFLOW 3
+    Interface Region List2 = OUTFLOW 2
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = General Connection
+      FRAME CHANGE:
+        Option = Stage
+        DOWNSTREAM VELOCITY CONSTRAINT:
+          Frame Type = Rotating
+          Option = Constant Total Pressure
+        END
+      END
+      PITCH CHANGE:
+        Option = Automatic
+      END
+    END
+    MESH CONNECTION:
+      Option = GGI
+    END
+  END
+  &replace DOMAIN INTERFACE: R1 to R1 Periodic 1
+    Filter Domain List1 = R1
+    Filter Domain List2 = R1
+    Interface Region List1 = PER1 3
+    Interface Region List2 = PER2 3
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = Rotational Periodicity
+      AXIS DEFINITION:
+        Option = Coordinate Axis
+        Rotation Axis = Coord 0.1
+      END
+    END
+    MESH CONNECTION:
+      Option = Automatic
+    END
+  END
+  &replace DOMAIN INTERFACE: S1 to R1
+    Filter Domain List1 = S1
+    Filter Domain List2 = R1
+    Interface Region List1 = INFLOW
+    Interface Region List2 = OUTFLOW 3
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = General Connection
+      FRAME CHANGE:
+        Option = Stage
+        DOWNSTREAM VELOCITY CONSTRAINT:
+          Frame Type = Rotating
+          Option = Constant Total Pressure
+        END
+      END
+      PITCH CHANGE:
+        Option = Automatic
+      END
+    END
+    MESH CONNECTION:
+      Option = GGI
+    END
+  END
+  &replace DOMAIN INTERFACE: S1 to S1 Periodic 1
+    Filter Domain List1 = S1
+    Filter Domain List2 = S1
+    Interface Region List1 = PER1
+    Interface Region List2 = PER2
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = Rotational Periodicity
+      AXIS DEFINITION:
+        Option = Coordinate Axis
+        Rotation Axis = Coord 0.1
+      END
+    END
+    MESH CONNECTION:
+      Option = Automatic
+    END
+  END
+  &replace SOLUTION UNITS:
+    Angle Units = [rad]
+    Length Units = [m]
+    Mass Units = [kg]
+    Solid Angle Units = [sr]
+    Temperature Units = [K]
+    Time Units = [s]
+  END
+  &replace SOLVER CONTROL:
+    Turbulence Numerics = First Order
+    ADVECTION SCHEME:
+      Option = High Resolution
+    END
+    CONVERGENCE CONTROL:
+      Length Scale Option = Conservative
+      Maximum Number of Iterations = 100000
+      Minimum Number of Iterations = 1
+      Timescale Control = Auto Timescale
+      Timescale Factor = 1.0
+    END
+    CONVERGENCE CRITERIA:
+      Residual Target = 0.000001
+      Residual Type = RMS
+    END
+    DYNAMIC MODEL CONTROL:
+      Global Dynamic Model Control = On
+    END
+    INTERRUPT CONTROL:
+      Option = Any Interrupt
+      CONVERGENCE CONDITIONS:
+        Option = Default Conditions
+      END
+    END
+  END
+  &replace ANALYSIS TYPE:
+    Option = Steady State
+    EXTERNAL SOLVER COUPLING:
+      Option = None
+    END
+  END
+  &replace OUTPUT CONTROL:
+    MONITOR OBJECTS:
+      MONITOR BALANCES:
+        Option = Full
+      END
+      MONITOR FORCES:
+        Option = Full
+      END
+      MONITOR PARTICLES:
+        Option = Full
+      END
+      MONITOR RESIDUALS:
+        Option = Full
+      END
+      MONITOR TOTALS:
+        Option = Full
+      END
+      EFFICIENCY OUTPUT:
+        Inflow Boundary = IGV Inlet
+        Option = Output To Solver Monitor
+        Outflow Boundary = S1 Outlet
+      END
+    END
+    RESULTS:
+      File Compression Level = Default
+      Option = Standard
+    END
+  END
+  &replace DOMAIN: IGV
+    Coord Frame = Coord 0
+    Domain Type = Fluid
+    Location = Passage 2
+    Number of Passages in 360 = 70
+    Number of Passages in Component = 1
+    BOUNDARY: IGV Blade
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = BLADE 2
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: IGV Hub
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = HUB 2
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: IGV Shroud
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = SHROUD 2
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    DOMAIN MODELS:
+      BUOYANCY MODEL:
+        Option = Non Buoyant
+      END
+      DOMAIN MOTION:
+        Option = Stationary
+      END
+      MESH DEFORMATION:
+        Option = None
+      END
+      REFERENCE PRESSURE:
+        Reference Pressure = 0 [atm]
+      END
+    END
+    FLUID DEFINITION: Air Ideal Gas
+      Material = Air Ideal Gas
+      Option = Material Library
+      MORPHOLOGY:
+        Option = Continuous Fluid
+      END
+    END
+    FLUID MODELS:
+      COMBUSTION MODEL:
+        Option = None
+      END
+      HEAT TRANSFER MODEL:
+        Include Viscous Work Term = On
+        Option = Total Energy
+      END
+      THERMAL RADIATION MODEL:
+        Option = None
+      END
+      TURBULENCE MODEL:
+        Option = k epsilon
+      END
+      TURBULENT WALL FUNCTIONS:
+        High Speed Model = Off
+        Option = Scalable
+      END
+    END
+    BOUNDARY: IGV Inlet
+      Boundary Type = INLET
+      Interface Boundary = Off
+      Location = INFLOW 2
+      BOUNDARY CONDITIONS:
+        FLOW DIRECTION:
+          Option = Normal to Boundary Condition
+        END
+        FLOW REGIME:
+          Option = Subsonic
+        END
+        HEAT TRANSFER:
+          Option = Total Temperature
+          Total Temperature = 541 [K]
+        END
+        MASS AND MOMENTUM:
+          Option = Total Pressure
+          Relative Pressure = 3.8776 [bar]
+        END
+        TURBULENCE:
+          Option = Medium Intensity and Eddy Viscosity Ratio
+        END
+      END
+    END
+  END
+  &replace DOMAIN: R1
+    Coord Frame = Coord 0
+    Domain Type = Fluid
+    Location = Passage Main 3
+    Number of Passages in 360 = 44
+    Number of Passages in Component = 1
+    BOUNDARY: R1 Blade
+      Boundary Type = WALL
+      Create Other Side = Off
+      Frame Type = Rotating
+      Interface Boundary = Off
+      Location = BLADE 3
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: R1 Hub
+      Boundary Type = WALL
+      Coord Frame = Coord 0
+      Create Other Side = Off
+      Frame Type = Rotating
+      Interface Boundary = Off
+      Location = HUB 3
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: R1 Shroud
+      Boundary Type = WALL
+      Coord Frame = Coord 0
+      Create Other Side = Off
+      Frame Type = Rotating
+      Interface Boundary = Off
+      Location = SHROUD 3
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    DOMAIN MODELS:
+      BUOYANCY MODEL:
+        Option = Non Buoyant
+      END
+      DOMAIN MOTION:
+        Alternate Rotation Model = true
+        Angular Velocity = -269 [rev s^-1]
+        Option = Rotating
+        AXIS DEFINITION:
+          Option = Coordinate Axis
+          Rotation Axis = Coord 0.1
+        END
+      END
+      MESH DEFORMATION:
+        Option = None
+      END
+      REFERENCE PRESSURE:
+        Reference Pressure = 0 [atm]
+      END
+    END
+    FLUID DEFINITION: Air Ideal Gas
+      Material = Air Ideal Gas
+      Option = Material Library
+      MORPHOLOGY:
+        Option = Continuous Fluid
+      END
+    END
+    FLUID MODELS:
+      COMBUSTION MODEL:
+        Option = None
+      END
+      HEAT TRANSFER MODEL:
+        Include Viscous Work Term = On
+        Option = Total Energy
+      END
+      THERMAL RADIATION MODEL:
+        Option = None
+      END
+      TURBULENCE MODEL:
+        Option = k epsilon
+      END
+      TURBULENT WALL FUNCTIONS:
+        High Speed Model = Off
+        Option = Scalable
+      END
+    END
+  END
+  &replace DOMAIN: S1
+    Coord Frame = Coord 0
+    Domain Type = Fluid
+    Location = Passage Main
+    Number of Passages in 360 = 82
+    Number of Passages in Component = 1
+    BOUNDARY: S1 Blade
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = BLADE
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: S1 Hub
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = HUB
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: S1 Shroud
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = SHROUD
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    DOMAIN MODELS:
+      BUOYANCY MODEL:
+        Option = Non Buoyant
+      END
+      DOMAIN MOTION:
+        Option = Stationary
+      END
+      MESH DEFORMATION:
+        Option = None
+      END
+      REFERENCE PRESSURE:
+        Reference Pressure = 0 [atm]
+      END
+    END
+    FLUID DEFINITION: Air Ideal Gas
+      Material = Air Ideal Gas
+      Option = Material Library
+      MORPHOLOGY:
+        Option = Continuous Fluid
+      END
+    END
+    FLUID MODELS:
+      COMBUSTION MODEL:
+        Option = None
+      END
+      HEAT TRANSFER MODEL:
+        Include Viscous Work Term = On
+        Option = Total Energy
+      END
+      THERMAL RADIATION MODEL:
+        Option = None
+      END
+      TURBULENCE MODEL:
+        Option = k epsilon
+      END
+      TURBULENT WALL FUNCTIONS:
+        High Speed Model = Off
+        Option = Scalable
+      END
+    END
+    BOUNDARY: S1 Outlet
+      Boundary Type = OUTLET
+      Interface Boundary = Off
+      Location = OUTFLOW
+      BOUNDARY CONDITIONS:
+        FLOW REGIME:
+          Option = Subsonic
+        END
+        MASS AND MOMENTUM:
+          Option = Average Static Pressure
+          Pressure Profile Blend = 0.05
+          Relative Pressure = 5 [bar]
+        END
+        PRESSURE AVERAGING:
+          Option = Average Over Whole Outlet
+        END
+      END
+    END
+  END
+END
+
+>physicsupdate
+TURBO POST DATA:
+  Machine Type = Axial Compressor
+  Component Order = IGV, R1, S1
+  Flow Type = Compressible
+  Reference Pressure = 0 [atm]
+  Rotation Axis From = 0 [m], 0 [m], 0 [m]
+  Rotation Axis To = 1 [m], 0 [m], 0 [m]
+  TURBO POST COMPONENT: IGV
+    Domain Name = IGV
+    Domain Motion = Stationary
+    Number of Components in 360 = 70
+    Number of Passages in 360 = 70
+    Number of Passages in Component = 1
+    Complete Component = False
+    Blade Region = BLADE 2
+    Hub Region = HUB 2
+    Shroud Region = SHROUD 2
+    Inlet Region = INFLOW 2
+    Outlet Region = OUTFLOW 2
+    Periodic 1 Region = PER1 2
+    Periodic 2 Region = PER2 2
+  END
+  TURBO POST COMPONENT: R1
+    Domain Name = R1
+    Domain Motion = Rotating
+    Number of Components in 360 = 44
+    Number of Passages in 360 = 44
+    Number of Passages in Component = 1
+    Complete Component = False
+    Blade Region = BLADE 3
+    Hub Region = HUB 3
+    Shroud Region = SHROUD 3
+    Inlet Region = INFLOW 3
+    Outlet Region = OUTFLOW 3
+    Periodic 1 Region = PER1 3
+    Periodic 2 Region = PER2 3
+  END
+  TURBO POST COMPONENT: S1
+    Domain Name = S1
+    Domain Motion = Stationary
+    Number of Components in 360 = 82
+    Number of Passages in 360 = 82
+    Number of Passages in Component = 1
+    Complete Component = False
+    Blade Region = BLADE
+    Hub Region = HUB
+    Shroud Region = SHROUD
+    Outlet Region = OUTFLOW
+    Inlet Region = INFLOW
+    Periodic 1 Region = PER1
+    Periodic 2 Region = PER2
+  END
+END""")
+setup1.SendCommand(Command=">delete /AXIS:TurboPre")
+setup1.SendCommand(Command=">delete /ROTATION MARKER:Marker R1")
+setup1.SendCommand(Command="""FLOW: Flow Analysis 1
+  DOMAIN: S1
+&replace     BOUNDARY: S1 Outlet
+      Boundary Type = OUTLET
+      Interface Boundary = Off
+      Location = OUTFLOW
+      BOUNDARY CONDITIONS: 
+        FLOW REGIME: 
+          Option = Subsonic
+        END # FLOW REGIME:
+        MASS AND MOMENTUM: 
+          Option = Average Static Pressure
+          Pressure Profile Blend = 0.05
+          Relative Pressure = 3 [bar]
+        END # MASS AND MOMENTUM:
+        PRESSURE AVERAGING: 
+          Option = Average Over Whole Outlet
+        END # PRESSURE AVERAGING:
+      END # BOUNDARY CONDITIONS:
+    END # BOUNDARY:S1 Outlet
+  END # DOMAIN:S1
+END # FLOW:Flow Analysis 1
+
+
+PARAMETERIZATION:
+END""")
+setup1.SendCommand(Command="""FLOW: Flow Analysis 1
+  DOMAIN: S1
+&replace     BOUNDARY: S1 Outlet
+      Boundary Type = OUTLET
+      Interface Boundary = Off
+      Location = OUTFLOW
+      BOUNDARY CONDITIONS: 
+        FLOW REGIME: 
+          Option = Subsonic
+        END # FLOW REGIME:
+        MASS AND MOMENTUM: 
+          Option = Average Static Pressure
+          Pressure Profile Blend = 0.05
+          Relative Pressure = 3 [bar]
+        END # MASS AND MOMENTUM:
+        PRESSURE AVERAGING: 
+          Option = Average Over Whole Outlet
+        END # PRESSURE AVERAGING:
+      END # BOUNDARY CONDITIONS:
+    END # BOUNDARY:S1 Outlet
+  END # DOMAIN:S1
+END # FLOW:Flow Analysis 1
+
+
+PARAMETERIZATION:
+END""")
+setup1.Exit()
+solutionComponent1.Clean()
+setup1.Edit()
+solution1.SetExecutionControl(CCL=r"""&replace SIMULATION CONTROL:
+  EXECUTION CONTROL:
+    EXECUTABLE SELECTION:
+      Double Precision = Off
+      Large Problem = Off
+    END
+    INTERPOLATOR STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+    END
+    PARTITIONER STEP CONTROL:
+      Multidomain Option = Automatic
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARTITION SMOOTHING:
+        Maximum Partition Smoothing Sweeps = 100
+        Option = Smooth
+      END
+      PARTITIONING TYPE:
+        MeTiS Type = k-way
+        Option = MeTiS
+        Partition Size Rule = Automatic
+      END
+    END
+    RUN DEFINITION:
+      Run Mode = Full
+      Solver Input File = C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\cfdrun_files\dp0\CFX\CFX\CFX.def
+    END
+    SOLVER STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARALLEL ENVIRONMENT:
+        Number of Processes = 5
+        Start Method = Intel MPI Local Parallel
+      END
+    END
+  END
+END
+""")
+solutionComponent1.Update(Force=True)
+Save(Overwrite=True)

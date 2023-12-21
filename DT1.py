@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import saveCompressorForSmooth as scfs
+import DT3_files.saveCompressorForSmooth as scfs
 
 
 # Given parameters

@@ -1,0 +1,8 @@
+Component: s1
+n_blades: 63
+Parameter file: s1_parameters.csv
+Stack file: s1_stack.csv
+Curve file: cdata_s_in.csv
+Hub file: hub.csv
+Shroud file: shroud.csv
+Method: LE

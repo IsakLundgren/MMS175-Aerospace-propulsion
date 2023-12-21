@@ -1,0 +1,193 @@
+# encoding: utf-8
+# 2019 R2
+SetScriptVersion(Version="19.4.159")
+system1 = GetSystem(Name="TS")
+turboMesh1 = system1.GetContainer(ComponentName="Turbo Mesh")
+turboMesh1.Edit()
+turboMesh1.SendCommand(Command="""> um object=/GEOMETRY/MACHINE DATA, mode=suspend
+>readinf filename=C:/Users/olisjo/Projects/mms175-dt3/design_task_3_2021_clean/cfd/turbogrid_files/r1.inf
+> forceupdate /GEOMETRY/MACHINE DATA
+> um object=/GEOMETRY/MACHINE DATA, mode=normal""")
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 182.01, 30.0895, 1.82403
+    Scale = 0.174784
+    Pan = 0, 0
+    Rotation Quaternion = 0.215497, 0.20876, 0.0154014, 0.953804
+    
+  END
+
+END
+
+> update
+    GEOMETRY:
+  INLET:
+Generate Intermediate Points = On
+Hub Angle = -38.7186 [deg]
+Input Filename =  
+Opening Mode = Fully extend
+Override Automatic Angles = Off
+Parametric Hub Location = 0.695725
+Parametric Shroud Location = 0.735378
+Shroud Angle = -39.5492 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 1.7778 [m], 0.2757 [m]
+Trim Intersection Point 1 = 1.7778 [m], 0.2757 [m]
+Trim Intersection Point 2 = 1.7778 [m], 0.3261 [m]
+Trim Shroud Position = 1.7778 [m], 0.3261 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 182.01, 30.0895, 1.82403
+    Scale = 0.174784
+    Pan = 0, 0
+    Rotation Quaternion = 0.201372, 0.0805476, 0.0232236, 0.975921
+    
+  END
+
+END
+
+> update
+    GEOMETRY:
+  OUTLET:
+Curve Representation = Piece-wise linear
+Generate Intermediate Points = On
+Hub Angle = 36.3455 [deg]
+Input Filename = C:/Users/olisjo/Projects/mms175-dt3/design_task_3_2021_clean/cfd/turbogrid_files/s1.curve
+Meridional Splitter Filename =  
+Meridional Splitter Interface Hub Parametric Location = 0.5
+Meridional Splitter Interface Shroud Parametric Location = 0.5
+Opening Mode = Adjacent blade
+Override Automatic Angles = Off
+Parametric Hub Location = 0.145905
+Parametric Shroud Location = 0.13071
+Shroud Angle = 42.2746 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 1.8624 [m], 0.2868 [m]
+Trim Intersection Point 1 = 1.8624 [m], 0.2868 [m]
+Trim Intersection Point 2 = 1.8624 [m], 0.3261 [m]
+Trim Shroud Position = 1.8624 [m], 0.3261 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+turboMesh1.SendCommand(Command="""GEOMETRY:
+  OUTLET:
+Curve Representation = Piece-wise linear
+Generate Intermediate Points = On
+Hub Angle = 36.3455 [deg]
+Input Filename = C:/Users/olisjo/Projects/mms175-dt3/design_task_3_2021_clean/cfd/turbogrid_files/s1.curve
+Meridional Splitter Filename =  
+Meridional Splitter Interface Hub Parametric Location = 0.5
+Meridional Splitter Interface Shroud Parametric Location = 0.5
+Opening Mode = Adjacent blade
+Override Automatic Angles = Off
+Parametric Hub Location = 0.0874366
+Parametric Shroud Location = 0.0835073
+Shroud Angle = 42.2746 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 1.8624 [m], 0.2868 [m]
+Trim Intersection Point 1 = 1.8624 [m], 0.2868 [m]
+Trim Intersection Point 2 = 1.8624 [m], 0.3261 [m]
+Trim Shroud Position = 1.8624 [m], 0.3261 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+turboMesh1.SendCommand(Command="> um mode=normal, object=/TOPOLOGY SET")
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 182.01, 30.0895, 1.82403
+    Scale = 0.183633
+    Pan = 0, 0
+    Rotation Quaternion = 0.408696, 0.286208, 0.250046, 0.829777
+    
+  END
+
+END
+
+> update
+GEOMETRY:
+  SEGMENT HIGHLIGHT:
+    Requested Block = 
+    Requested Index = 0
+  END
+END""")
+turboMesh1.SendCommand(Command="""GEOMETRY:
+  SEGMENT HIGHLIGHT:
+    Requested Block = 
+    Requested Index = 0
+  END
+END""")
+turboMesh1.SendCommand(Command="""GEOMETRY:
+  SEGMENT HIGHLIGHT:
+    Requested Block = 
+    Requested Index = 0
+  END
+END""")
+turboMesh1.SendCommand(Command="""GEOMETRY:
+  SEGMENT HIGHLIGHT:
+    Requested Block = 
+    Requested Index = 0
+  END
+END""")
+Save(Overwrite=True)
+turboMesh1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 182.01, 30.0895, 1.82403
+    Scale = 0.0819726
+    Pan = 0, 0
+    Rotation Quaternion = 0.174272, 0.636025, 0.118888, 0.742273
+    
+  END
+
+END
+
+> update
+GEOMETRY:
+  SEGMENT HIGHLIGHT:
+    Requested Block = 
+    Requested Index = 0
+  END
+END""")
+turboMesh1.SendCommand(Command="""GEOMETRY:
+  SEGMENT HIGHLIGHT:
+    Requested Block = 
+    Requested Index = 0
+  END
+END""")
+turboMesh1.Exit()
+system2 = GetSystem(Name="CFX")
+setup1 = system2.GetContainer(ComponentName="Setup")
+setup1.Edit()
+setup1.Exit()
+Save(Overwrite=True)

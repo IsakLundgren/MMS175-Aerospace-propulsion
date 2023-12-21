@@ -1,0 +1,640 @@
+# encoding: utf-8
+# 2021 R1
+SetScriptVersion(Version="21.1.216")
+system1 = GetSystem(Name="CFX")
+setup1 = system1.GetContainer(ComponentName="Setup")
+setup1.Edit()
+setup1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.053979, 0.296419, 0.0117749
+    Scale = 18.5319
+    Pan = 0, 0
+    Rotation Quaternion = -0.0125913, 0.0447992, -0.120737, 0.991665
+    
+  END
+
+END
+
+> update
+>setViewportView cmd=set, view=/VIEW:View 2, viewport=1""")
+setup1.SendCommand(Command=">setViewportView cmd=set, view=/VIEW:View 1, viewport=1")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""AXIS: TurboPre
+  Option = Coord Frame
+  Visibility = true
+  Reference Coord Frame = Coord 0
+  Axis of Rotation = X
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+setup1.SendCommand(Command="""ROTATION MARKER: Marker R1
+  Visibility = true
+  Location = SHROUD 3
+  Rotation Speed = -269 [rev s^-1]
+  AXIS DEFINITION:
+    Option = Coordinate Axis
+    Rotation Axis = Coord 0.1
+  END
+END""")
+Save(Overwrite=True)
+setup1.SendCommand(Command=""">delete /FLOW:Flow Analysis 1/DOMAIN:IGV,/FLOW:Flow Analysis 1/DOMAIN:R1,/FLOW:Flow Analysis 1/DOMAIN:S1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:IGV to IGV Periodic 1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:R1 to IGV,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:R1 to R1 Periodic 1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:S1 to R1,/FLOW:Flow Analysis 1/DOMAIN INTERFACE:S1 to S1 Periodic 1,/FLOW:Flow Analysis 1/ANALYSIS TYPE,/FLOW:Flow Analysis 1/OUTPUT CONTROL/MONITOR OBJECTS/EFFICIENCY OUTPUT,/FLOW:Flow Analysis 1/OUTPUT CONTROL/EFFICIENCY OUTPUT,/TURBO POST DATA,/FLOW:Flow Analysis 1/TRANSIENT BLADE ROW MODELS,/FLOW:Flow Analysis 1/OUTPUT CONTROL/TRANSIENT BLADE ROW OUTPUT
+FLOW: Flow Analysis 1
+  &replace SOLUTION UNITS:
+    Angle Units = [rad]
+    Length Units = [m]
+    Mass Units = [kg]
+    Solid Angle Units = [sr]
+    Temperature Units = [K]
+    Time Units = [s]
+  END
+  &replace SOLVER CONTROL:
+    Turbulence Numerics = First Order
+    ADVECTION SCHEME:
+      Option = High Resolution
+    END
+    CONVERGENCE CONTROL:
+      Length Scale Option = Conservative
+      Maximum Number of Iterations = 100000
+      Minimum Number of Iterations = 1
+      Timescale Control = Auto Timescale
+      Timescale Factor = 1.0
+    END
+    CONVERGENCE CRITERIA:
+      Residual Target = 0.000001
+      Residual Type = RMS
+    END
+    DYNAMIC MODEL CONTROL:
+      Global Dynamic Model Control = On
+    END
+    INTERRUPT CONTROL:
+      Option = Any Interrupt
+      CONVERGENCE CONDITIONS:
+        Option = Default Conditions
+      END
+    END
+  END
+  &replace ANALYSIS TYPE:
+    Option = Steady State
+    EXTERNAL SOLVER COUPLING:
+      Option = None
+    END
+  END
+  &replace OUTPUT CONTROL:
+    MONITOR OBJECTS:
+      MONITOR BALANCES:
+        Option = Full
+      END
+      MONITOR FORCES:
+        Option = Full
+      END
+      MONITOR PARTICLES:
+        Option = Full
+      END
+      MONITOR RESIDUALS:
+        Option = Full
+      END
+      MONITOR TOTALS:
+        Option = Full
+      END
+      EFFICIENCY OUTPUT:
+        Inflow Boundary = IGV Inlet
+        Option = Output To Solver Monitor
+        Outflow Boundary = S1 Outlet
+      END
+    END
+    RESULTS:
+      File Compression Level = Default
+      Option = Standard
+    END
+  END
+  &replace DOMAIN: IGV
+    Coord Frame = Coord 0
+    Domain Type = Fluid
+    Location = Passage 2
+    Number of Passages in 360 = 70
+    Number of Passages in Component = 1
+    BOUNDARY: IGV Blade
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = BLADE 2
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: IGV Hub
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = HUB 2
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: IGV Shroud
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = SHROUD 2
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    DOMAIN MODELS:
+      BUOYANCY MODEL:
+        Option = Non Buoyant
+      END
+      DOMAIN MOTION:
+        Option = Stationary
+      END
+      MESH DEFORMATION:
+        Option = None
+      END
+      REFERENCE PRESSURE:
+        Reference Pressure = 0 [atm]
+      END
+    END
+    FLUID DEFINITION: Air Ideal Gas
+      Material = Air Ideal Gas
+      Option = Material Library
+      MORPHOLOGY:
+        Option = Continuous Fluid
+      END
+    END
+    FLUID MODELS:
+      COMBUSTION MODEL:
+        Option = None
+      END
+      HEAT TRANSFER MODEL:
+        Include Viscous Work Term = On
+        Option = Total Energy
+      END
+      THERMAL RADIATION MODEL:
+        Option = None
+      END
+      TURBULENCE MODEL:
+        Option = k epsilon
+      END
+      TURBULENT WALL FUNCTIONS:
+        High Speed Model = Off
+        Option = Scalable
+      END
+    END
+    BOUNDARY: IGV Inlet
+      Boundary Type = INLET
+      Interface Boundary = Off
+      Location = INFLOW 2
+      BOUNDARY CONDITIONS:
+        FLOW DIRECTION:
+          Option = Normal to Boundary Condition
+        END
+        FLOW REGIME:
+          Option = Subsonic
+        END
+        HEAT TRANSFER:
+          Option = Total Temperature
+          Total Temperature = 541 [K]
+        END
+        MASS AND MOMENTUM:
+          Option = Total Pressure
+          Relative Pressure = 3.8776 [bar]
+        END
+        TURBULENCE:
+          Option = Medium Intensity and Eddy Viscosity Ratio
+        END
+      END
+    END
+  END
+  &replace DOMAIN: R1
+    Coord Frame = Coord 0
+    Domain Type = Fluid
+    Location = Passage Main 3
+    Number of Passages in 360 = 44
+    Number of Passages in Component = 1
+    DOMAIN MODELS:
+      BUOYANCY MODEL:
+        Option = Non Buoyant
+      END
+      DOMAIN MOTION:
+        Alternate Rotation Model = true
+        Angular Velocity = -269 [rev s^-1]
+        Option = Rotating
+        AXIS DEFINITION:
+          Option = Coordinate Axis
+          Rotation Axis = Coord 0.1
+        END
+      END
+      MESH DEFORMATION:
+        Option = None
+      END
+      REFERENCE PRESSURE:
+        Reference Pressure = 0 [atm]
+      END
+    END
+    FLUID DEFINITION: Air Ideal Gas
+      Material = Air Ideal Gas
+      Option = Material Library
+      MORPHOLOGY:
+        Option = Continuous Fluid
+      END
+    END
+    FLUID MODELS:
+      COMBUSTION MODEL:
+        Option = None
+      END
+      HEAT TRANSFER MODEL:
+        Include Viscous Work Term = On
+        Option = Total Energy
+      END
+      THERMAL RADIATION MODEL:
+        Option = None
+      END
+      TURBULENCE MODEL:
+        Option = k epsilon
+      END
+      TURBULENT WALL FUNCTIONS:
+        High Speed Model = Off
+        Option = Scalable
+      END
+    END
+    BOUNDARY: R1 Blade
+      Boundary Type = WALL
+      Create Other Side = Off
+      Frame Type = Rotating
+      Interface Boundary = Off
+      Location = BLADE 3
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: R1 Hub
+      Boundary Type = WALL
+      Create Other Side = Off
+      Frame Type = Rotating
+      Interface Boundary = Off
+      Location = HUB 3
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: R1 Shroud
+      Boundary Type = WALL
+      Create Other Side = Off
+      Frame Type = Rotating
+      Interface Boundary = Off
+      Location = SHROUD 3
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+          WALL VELOCITY:
+            Option = Counter Rotating Wall
+          END
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+  END
+  &replace DOMAIN: S1
+    Coord Frame = Coord 0
+    Domain Type = Fluid
+    Location = Passage Main
+    Number of Passages in 360 = 82
+    Number of Passages in Component = 1
+    BOUNDARY: S1 Blade
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = BLADE
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: S1 Hub
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = HUB
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    BOUNDARY: S1 Shroud
+      Boundary Type = WALL
+      Create Other Side = Off
+      Interface Boundary = Off
+      Location = SHROUD
+      BOUNDARY CONDITIONS:
+        HEAT TRANSFER:
+          Option = Adiabatic
+        END
+        MASS AND MOMENTUM:
+          Option = No Slip Wall
+        END
+        WALL ROUGHNESS:
+          Option = Smooth Wall
+        END
+      END
+    END
+    DOMAIN MODELS:
+      BUOYANCY MODEL:
+        Option = Non Buoyant
+      END
+      DOMAIN MOTION:
+        Option = Stationary
+      END
+      MESH DEFORMATION:
+        Option = None
+      END
+      REFERENCE PRESSURE:
+        Reference Pressure = 0 [atm]
+      END
+    END
+    FLUID DEFINITION: Air Ideal Gas
+      Material = Air Ideal Gas
+      Option = Material Library
+      MORPHOLOGY:
+        Option = Continuous Fluid
+      END
+    END
+    FLUID MODELS:
+      COMBUSTION MODEL:
+        Option = None
+      END
+      HEAT TRANSFER MODEL:
+        Include Viscous Work Term = On
+        Option = Total Energy
+      END
+      THERMAL RADIATION MODEL:
+        Option = None
+      END
+      TURBULENCE MODEL:
+        Option = k epsilon
+      END
+      TURBULENT WALL FUNCTIONS:
+        High Speed Model = Off
+        Option = Scalable
+      END
+    END
+    BOUNDARY: S1 Outlet
+      Boundary Type = OUTLET
+      Interface Boundary = Off
+      Location = OUTFLOW
+      BOUNDARY CONDITIONS:
+        FLOW REGIME:
+          Option = Subsonic
+        END
+        MASS AND MOMENTUM:
+          Option = Average Static Pressure
+          Pressure Profile Blend = 0.05
+          Relative Pressure = 3 [bar]
+        END
+        PRESSURE AVERAGING:
+          Option = Average Over Whole Outlet
+        END
+      END
+    END
+  END
+  &replace DOMAIN INTERFACE: IGV to IGV Periodic 1
+    Boundary List1 = 
+    Boundary List2 = 
+    Filter Domain List1 = IGV
+    Filter Domain List2 = IGV
+    Interface Region List1 = PER1 2
+    Interface Region List2 = PER2 2
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = Rotational Periodicity
+      AXIS DEFINITION:
+        Option = Coordinate Axis
+        Rotation Axis = Coord 0.1
+      END
+    END
+    MESH CONNECTION:
+      Option = Automatic
+    END
+  END
+  &replace DOMAIN INTERFACE: R1 to IGV
+    Boundary List1 = 
+    Boundary List2 = 
+    Filter Domain List1 = R1
+    Filter Domain List2 = IGV
+    Interface Region List1 = INFLOW 3
+    Interface Region List2 = OUTFLOW 2
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = General Connection
+      FRAME CHANGE:
+        Option = Stage
+        DOWNSTREAM VELOCITY CONSTRAINT:
+          Frame Type = Rotating
+          Option = Constant Total Pressure
+        END
+      END
+      PITCH CHANGE:
+        Option = Automatic
+      END
+    END
+    MESH CONNECTION:
+      Option = GGI
+    END
+  END
+  &replace DOMAIN INTERFACE: R1 to R1 Periodic 1
+    Boundary List1 = 
+    Boundary List2 = 
+    Filter Domain List1 = R1
+    Filter Domain List2 = R1
+    Interface Region List1 = PER1 3
+    Interface Region List2 = PER2 3
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = Rotational Periodicity
+      AXIS DEFINITION:
+        Option = Coordinate Axis
+        Rotation Axis = Coord 0.1
+      END
+    END
+    MESH CONNECTION:
+      Option = Automatic
+    END
+  END
+  &replace DOMAIN INTERFACE: S1 to R1
+    Boundary List1 = 
+    Boundary List2 = 
+    Filter Domain List1 = S1
+    Filter Domain List2 = R1
+    Interface Region List1 = INFLOW
+    Interface Region List2 = OUTFLOW 3
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = General Connection
+      FRAME CHANGE:
+        Option = Stage
+        DOWNSTREAM VELOCITY CONSTRAINT:
+          Frame Type = Rotating
+          Option = Constant Total Pressure
+        END
+      END
+      PITCH CHANGE:
+        Option = Automatic
+      END
+    END
+    MESH CONNECTION:
+      Option = GGI
+    END
+  END
+  &replace DOMAIN INTERFACE: S1 to S1 Periodic 1
+    Boundary List1 = 
+    Boundary List2 = 
+    Filter Domain List1 = S1
+    Filter Domain List2 = S1
+    Interface Region List1 = PER1
+    Interface Region List2 = PER2
+    Interface Type = Fluid Fluid
+    INTERFACE MODELS:
+      Option = Rotational Periodicity
+      AXIS DEFINITION:
+        Option = Coordinate Axis
+        Rotation Axis = Coord 0.1
+      END
+    END
+    MESH CONNECTION:
+      Option = Automatic
+    END
+  END
+END
+
+>physicsupdate
+TURBO POST DATA:
+  Machine Type = Axial Compressor
+  Component Order = IGV, R1, S1
+  Flow Type = Compressible
+  Reference Pressure = 0 [atm]
+  Rotation Axis From = 0 [m], 0 [m], 0 [m]
+  Rotation Axis To = 1 [m], 0 [m], 0 [m]
+  TURBO POST COMPONENT: IGV
+    Domain Name = IGV
+    Domain Motion = Stationary
+    Number of Components in 360 = 70
+    Number of Passages in 360 = 70
+    Number of Passages in Component = 1
+    Complete Component = False
+    Blade Region = BLADE 2
+    Hub Region = HUB 2
+    Shroud Region = SHROUD 2
+    Inlet Region = INFLOW 2
+    Outlet Region = OUTFLOW 2
+    Periodic 1 Region = PER1 2
+    Periodic 2 Region = PER2 2
+  END
+  TURBO POST COMPONENT: R1
+    Domain Name = R1
+    Domain Motion = Rotating
+    Number of Components in 360 = 44
+    Number of Passages in 360 = 44
+    Number of Passages in Component = 1
+    Complete Component = False
+    Blade Region = BLADE 3
+    Hub Region = HUB 3
+    Shroud Region = SHROUD 3
+    Inlet Region = INFLOW 3
+    Outlet Region = OUTFLOW 3
+    Periodic 1 Region = PER1 3
+    Periodic 2 Region = PER2 3
+  END
+  TURBO POST COMPONENT: S1
+    Domain Name = S1
+    Domain Motion = Stationary
+    Number of Components in 360 = 82
+    Number of Passages in 360 = 82
+    Number of Passages in Component = 1
+    Complete Component = False
+    Blade Region = BLADE
+    Hub Region = HUB
+    Shroud Region = SHROUD
+    Outlet Region = OUTFLOW
+    Inlet Region = INFLOW
+    Periodic 1 Region = PER1
+    Periodic 2 Region = PER2
+  END
+END""")
+setup1.SendCommand(Command=">delete /AXIS:TurboPre")
+setup1.SendCommand(Command=">delete /ROTATION MARKER:Marker R1")
+Save(Overwrite=True)

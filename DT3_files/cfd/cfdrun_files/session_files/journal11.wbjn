@@ -1,0 +1,457 @@
+# encoding: utf-8
+# 2021 R1
+SetScriptVersion(Version="21.1.216")
+system1 = GetSystem(Name="TS 2")
+turboMeshComponent1 = system1.GetComponent(Name="Turbo Mesh")
+turboMeshComponent1.Clean()
+system2 = GetSystem(Name="TS 3")
+turboMeshComponent2 = system2.GetComponent(Name="Turbo Mesh")
+turboMeshComponent2.Clean()
+system3 = GetSystem(Name="TS")
+turboMeshComponent3 = system3.GetComponent(Name="Turbo Mesh")
+turboMeshComponent3.Clean()
+system4 = GetSystem(Name="CFX")
+solutionComponent1 = system4.GetComponent(Name="Solution")
+solutionComponent1.Clean()
+resultsComponent1 = system4.GetComponent(Name="Results")
+resultsComponent1.Clean()
+setupComponent1 = system4.GetComponent(Name="Setup")
+setupComponent1.UpdateUpstreamComponents()
+solutionComponent1.UpdateUpstreamComponents()
+solution1 = system4.GetContainer(ComponentName="Solution")
+solution1.SetExecutionControl(CCL=r"""&replace SIMULATION CONTROL:
+  EXECUTION CONTROL:
+    EXECUTABLE SELECTION:
+      Double Precision = On
+      Large Problem = Off
+    END
+    INTERPOLATOR STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+    END
+    PARTITIONER STEP CONTROL:
+      Multidomain Option = Automatic
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARTITION SMOOTHING:
+        Maximum Partition Smoothing Sweeps = 100
+        Option = Smooth
+      END
+      PARTITIONING TYPE:
+        MeTiS Type = k-way
+        Option = MeTiS
+        Partition Size Rule = Automatic
+      END
+    END
+    RUN DEFINITION:
+      Run Mode = Full
+      Solver Input File = C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\cfdrun_files\dp0\CFX\CFX\CFX.def
+    END
+    SOLVER STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARALLEL ENVIRONMENT:
+        Number of Processes = 10
+        Start Method = Intel MPI Local Parallel
+      END
+    END
+  END
+END
+""")
+solutionComponent1.Update(Force=True)
+results1 = system4.GetContainer(ComponentName="Results")
+results1.Edit()
+results1.SendCommand(Command="""VIEW:View 1
+  Light Angle = 50, 110
+END
+
+VIEW:View 2
+  Light Angle = 50, 110
+END
+
+VIEW:View 3
+  Light Angle = 50, 110
+END
+
+VIEW:View 4
+  Light Angle = 50, 110
+END
+
+> update
+
+VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Initialisation View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Initialisation View, viewport=1""")
+results1.SendCommand(Command="""VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Initialisation View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Initialisation View, viewport=1""")
+results1.SendCommand(Command="""VIEWPORT MANAGER:
+  Synchronize Visibility = false
+END""")
+results1.SendCommand(Command="""DEFAULT INSTANCE TRANSFORM:Default Transform
+ Instancing Info From Domain = On
+END""")
+results1.SendCommand(Command="""# CCL from Turbo 3D Views Macro begins (initialize)
+VIEW:Turbo Regions View
+ Coord Transform = Cartesian
+ Is A Figure = false
+END
+>show /WIREFRAME:Wireframe, view=/VIEW:Turbo Regions View
+# CCL from Turbo 3D Views Macro ends (initialize)""")
+results1.SendCommand(Command="""# CCL from Blade to Blade Macro begins (initialize)
+
+VIEW:Blade to Blade View
+ Coord Transform = 2D Blade-to-blade
+ Is A Figure = false
+END
+
+>show /INTERNAL LEGEND:Blade to Blade Legend,/INTERNAL TURBO SURFACE:Blade to Blade Surface,/INTERNAL VECTOR:Blade to Blade Vector,/INTERNAL CONTOUR:Blade to Blade Contour,/INTERNAL STREAMLINE:Blade to Blade Stream, view=/VIEW:Blade to Blade View
+# CCL from Blade to Blade Macro ends (initialize)""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Blade to Blade View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Blade to Blade View, viewport=1""")
+results1.SendCommand(Command="""# CCL from Blade to Blade Macro begins (execute)
+INTERNAL TURBO SURFACE:Blade to Blade Surface
+ Turbo Domain List = /DOMAIN GROUP:All Domains
+ Option = Constant Span
+ Surface Type = Slice
+ Span = 0.9
+ Turbo View Plot Type = Colour
+ Colour Mode = Variable
+Colour Variable = Mach Number
+Colour Variable Boundary Values = Hybrid
+Max = 0.0
+Min = 0.0
+Range = Local
+
+ Circumferential Average Mode = None
+ Draw Faces = On
+ Draw Lines = Off
+END
+LEGEND:Blade to Blade Legend
+ Legend Title Mode = Variable
+ Legend X Justification = Left
+ Legend Plot = Blade to Blade Surface
+END
+>show /INTERNAL TURBO SURFACE:Blade to Blade Surface,/LEGEND:Blade to Blade Legend, view=/VIEW:Blade to Blade View
+# CCL from Blade to Blade Macro ends (execute)""")
+results1.SendCommand(Command="""# CCL from Blade to Blade Macro begins (execute)
+INTERNAL TURBO SURFACE:Blade to Blade Surface
+ Turbo Domain List = /DOMAIN GROUP:All Domains
+ Option = Constant Span
+ Surface Type = Slice
+ Span = 0.1
+ Turbo View Plot Type = Colour
+ Colour Mode = Variable
+Colour Variable = Mach Number
+Colour Variable Boundary Values = Hybrid
+Max = 0.0
+Min = 0.0
+Range = Local
+
+ Circumferential Average Mode = None
+ Draw Faces = On
+ Draw Lines = Off
+END
+LEGEND:Blade to Blade Legend
+ Legend Title Mode = Variable
+ Legend X Justification = Left
+ Legend Plot = Blade to Blade Surface
+END
+>show /INTERNAL TURBO SURFACE:Blade to Blade Surface,/LEGEND:Blade to Blade Legend, view=/VIEW:Blade to Blade View
+# CCL from Blade to Blade Macro ends (execute)""")
+results1.SendCommand(Command="""VIEWPORT MANAGER:
+  Maximized Viewport = -1
+  Synchronize Camera = false
+  Synchronize Visibility = false
+  View Length Units = m
+  Viewer Camera Z = -5
+  Viewer Eye Point = Normal
+  Viewer Eye Separation = 5
+  Viewport 1 View = Blade to Blade View
+  Viewport 2 View = View 2
+  Viewport 3 View = View 3
+  Viewport 4 View = View 4
+  Viewport Layout = No Split
+  X Split = 0.5
+  Y Split = 0.5
+END""")
+results1.SendCommand(Command="""VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Blade to Blade View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Blade to Blade View, viewport=1""")
+results1.SendCommand(Command="""VIEWPORT MANAGER:
+  Synchronize Visibility = false
+END""")
+results1.SendCommand(Command="""DEFAULT INSTANCE TRANSFORM:Default Transform
+ Instancing Info From Domain = On
+END""")
+results1.SendCommand(Command="""# CCL from Turbo 3D Views Macro begins (initialize)
+VIEW:Turbo Regions View
+ Coord Transform = Cartesian
+ Is A Figure = false
+END
+# CCL from Turbo 3D Views Macro ends (initialize)""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Regions View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Regions View, viewport=1""")
+results1.Exit()
+solution1.Exit()
+solution1.SetExecutionControl(CCL=r"""&replace SIMULATION CONTROL:
+  EXECUTION CONTROL:
+    EXECUTABLE SELECTION:
+      Double Precision = On
+      Large Problem = Off
+    END
+    INTERPOLATOR STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+    END
+    PARTITIONER STEP CONTROL:
+      Multidomain Option = Automatic
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARTITION SMOOTHING:
+        Maximum Partition Smoothing Sweeps = 100
+        Option = Smooth
+      END
+      PARTITIONING TYPE:
+        MeTiS Type = k-way
+        Option = MeTiS
+        Partition Size Rule = Automatic
+      END
+    END
+    RUN DEFINITION:
+      Run Mode = Full
+      Solver Input File = C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\cfdrun_files\dp0\CFX\CFX\CFX_001.res
+    END
+    SOLVER STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARALLEL ENVIRONMENT:
+        Number of Processes = 10
+        Start Method = Intel MPI Local Parallel
+      END
+    END
+  END
+END
+""")
+solutionComponent1.Update(Force=True)
+solution1.Exit()
+results1.Edit()
+results1.SendCommand(Command="""VIEW:View 1
+  Light Angle = 50, 110
+END
+
+VIEW:View 2
+  Light Angle = 50, 110
+END
+
+VIEW:View 3
+  Light Angle = 50, 110
+END
+
+VIEW:View 4
+  Light Angle = 50, 110
+END
+
+> update
+
+VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPBGMESH:Component 1, /COMPBGMESH:Component 2, /COMPBGMESH:Component 3, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Initialisation View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Initialisation View, viewport=1""")
+results1.SendCommand(Command="""VIEW:Turbo Initialisation View
+ Object Visibility List = /WIREFRAME:Wireframe, /COMPBGMESH:Component 1, /COMPBGMESH:Component 2, /COMPBGMESH:Component 3, /COMPHIGHLIGHT:Component 1, /COMPHIGHLIGHT:Component 2, /COMPHIGHLIGHT:Component 3
+ Is A Figure = false
+END""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Turbo Initialisation View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Turbo Initialisation View, viewport=1""")
+results1.SendCommand(Command="""VIEWPORT MANAGER:
+  Synchronize Visibility = false
+END""")
+results1.SendCommand(Command="""# CCL from Turbo 3D Views Macro begins (initialize)
+VIEW:Turbo Regions View
+ Coord Transform = Cartesian
+ Is A Figure = false
+END
+>show /WIREFRAME:Wireframe, view=/VIEW:Turbo Regions View
+# CCL from Turbo 3D Views Macro ends (initialize)""")
+results1.SendCommand(Command="""DEFAULT INSTANCE TRANSFORM:Default Transform
+ Instancing Info From Domain = On
+END""")
+results1.SendCommand(Command="""# CCL from Blade to Blade Macro begins (initialize)
+
+VIEW:Blade to Blade View
+ Coord Transform = 2D Blade-to-blade
+ Is A Figure = false
+END
+
+>show /INTERNAL LEGEND:Blade to Blade Legend,/INTERNAL TURBO SURFACE:Blade to Blade Surface,/INTERNAL VECTOR:Blade to Blade Vector,/INTERNAL CONTOUR:Blade to Blade Contour,/INTERNAL STREAMLINE:Blade to Blade Stream, view=/VIEW:Blade to Blade View
+# CCL from Blade to Blade Macro ends (initialize)""")
+results1.SendCommand(Command="""# Setting Single View: /VIEW:Blade to Blade View
+VIEWPORT MANAGER:
+  Viewport Layout = No Split
+  Maximized Viewport = -1
+END
+>setViewportView cmd=set, view=/VIEW:Blade to Blade View, viewport=1""")
+results1.SendCommand(Command="""# CCL from Blade to Blade Macro begins (execute)
+INTERNAL TURBO SURFACE:Blade to Blade Surface
+ Turbo Domain List = /DOMAIN GROUP:All Domains
+ Option = Constant Span
+ Surface Type = Slice
+ Span = 0.5
+ Turbo View Plot Type = Colour
+ Colour Mode = Variable
+Colour Variable = Mach Number
+Colour Variable Boundary Values = Hybrid
+Max = 0.0
+Min = 0.0
+Range = Local
+
+ Circumferential Average Mode = None
+ Draw Faces = On
+ Draw Lines = Off
+END
+LEGEND:Blade to Blade Legend
+ Legend Title Mode = Variable
+ Legend X Justification = Left
+ Legend Plot = Blade to Blade Surface
+END
+>show /INTERNAL TURBO SURFACE:Blade to Blade Surface,/LEGEND:Blade to Blade Legend, view=/VIEW:Blade to Blade View
+# CCL from Blade to Blade Macro ends (execute)""")
+results1.SendCommand(Command="""# CCL from Blade to Blade Macro begins (execute)
+INTERNAL TURBO SURFACE:Blade to Blade Surface
+ Turbo Domain List = /DOMAIN GROUP:All Domains
+ Option = Constant Span
+ Surface Type = Slice
+ Span = 0.9
+ Turbo View Plot Type = Colour
+ Colour Mode = Variable
+Colour Variable = Mach Number
+Colour Variable Boundary Values = Hybrid
+Max = 0.0
+Min = 0.0
+Range = Local
+
+ Circumferential Average Mode = None
+ Draw Faces = On
+ Draw Lines = Off
+END
+LEGEND:Blade to Blade Legend
+ Legend Title Mode = Variable
+ Legend X Justification = Left
+ Legend Plot = Blade to Blade Surface
+END
+>show /INTERNAL TURBO SURFACE:Blade to Blade Surface,/LEGEND:Blade to Blade Legend, view=/VIEW:Blade to Blade View
+# CCL from Blade to Blade Macro ends (execute)""")
+results1.Exit()
+resultsComponent1.Reset()
+solutionComponent1.Clean()
+turboMeshComponent1.Clean()
+turboMeshComponent2.Clean()
+turboMeshComponent3.Clean()
+solutionComponent1.UpdateUpstreamComponents()
+solution1.SetExecutionControl(CCL=r"""&replace SIMULATION CONTROL:
+  EXECUTION CONTROL:
+    EXECUTABLE SELECTION:
+      Double Precision = On
+      Large Problem = Off
+    END
+    INTERPOLATOR STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+    END
+    PARTITIONER STEP CONTROL:
+      Multidomain Option = Automatic
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARTITION SMOOTHING:
+        Maximum Partition Smoothing Sweeps = 100
+        Option = Smooth
+      END
+      PARTITIONING TYPE:
+        MeTiS Type = k-way
+        Option = MeTiS
+        Partition Size Rule = Automatic
+      END
+    END
+    RUN DEFINITION:
+      Run Mode = Full
+      Solver Input File = C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\cfdrun_files\dp0\CFX\CFX\CFX.def
+    END
+    SOLVER STEP CONTROL:
+      Runtime Priority = Standard
+      MEMORY CONTROL:
+        Memory Allocation Factor = 1.0
+      END
+      PARALLEL ENVIRONMENT:
+        Number of Processes = 10
+        Start Method = Intel MPI Local Parallel
+      END
+    END
+  END
+END
+""")
+solutionComponent1.Update(Force=True)
+solution1.Exit()
+solution1.SetExecutionControl(CCL="")
+solutionComponent1.Clean()
+setupComponent1.UpdateUpstreamComponents()
+turboMeshComponent1.Clean()
+turboMeshComponent2.Clean()
+turboMeshComponent3.Clean()
+solutionComponent1.UpdateUpstreamComponents()
+Save(Overwrite=True)

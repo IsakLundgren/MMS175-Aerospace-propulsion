@@ -1,0 +1,8 @@
+Component: igv0
+n_blades: 70
+Parameter file: igv0_parameters.csv
+Stack file: igv0_stack.csv
+Curve file: cdata_s_in.csv
+Hub file: hub.csv
+Shroud file: shroud.csv
+Method: LE

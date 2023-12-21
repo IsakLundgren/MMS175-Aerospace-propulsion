@@ -1,0 +1,56 @@
+# encoding: utf-8
+# 2021 R1
+SetScriptVersion(Version="21.1.216")
+system1 = GetSystem(Name="TS 2")
+turboMeshComponent1 = system1.GetComponent(Name="Turbo Mesh")
+turboMeshComponent1.Reset()
+system2 = GetSystem(Name="TS 3")
+turboMeshComponent2 = system2.GetComponent(Name="Turbo Mesh")
+turboMeshComponent2.Clean()
+system3 = GetSystem(Name="TS")
+turboMeshComponent3 = system3.GetComponent(Name="Turbo Mesh")
+turboMeshComponent3.Clean()
+system4 = GetSystem(Name="CFX")
+setupComponent1 = system4.GetComponent(Name="Setup")
+setupComponent1.UpdateUpstreamComponents()
+turboMeshComponent1.Clean()
+setupComponent1.UpdateUpstreamComponents()
+turboMesh1 = system1.GetContainer(ComponentName="Turbo Mesh")
+turboMesh1.Edit()
+turboMesh1.Exit()
+turboMesh1.Edit()
+turboMesh1.SendCommand(Command="> um mode=normal, object=/TOPOLOGY SET")
+turboMesh1.SendCommand(Command="""> um object=/GEOMETRY/MACHINE DATA, mode=suspend
+>readinf filename=C:/Users/xisto/OneDrive - Chalmers/MyFiles/Chalmers/Teaching/Aerospace Propulsion/Design Tasks/solution/DT3/cfd/turbogrid_files/igv0.inf
+> forceupdate /GEOMETRY/MACHINE DATA
+> um object=/GEOMETRY/MACHINE DATA, mode=normal""")
+turboMesh1.SendCommand(Command="""GEOMETRY:
+  OUTLET:
+Generate Intermediate Points = On
+Hub Angle = -20.841 [deg]
+Input Filename = C:/Users/xisto/OneDrive - Chalmers/MyFiles/Chalmers/Teaching/Aerospace Propulsion/Design Tasks/solution/DT3/cfd/turbogrid_files/r1.curve
+Meridional Splitter Curve Type = Bspline
+Meridional Splitter Filename =  
+Meridional Splitter Interface Hub Parametric Location = 0.5
+Meridional Splitter Interface Shroud Parametric Location = 0.5
+Opening Mode = Adjacent blade
+Override Automatic Angles = Off
+Parametric Hub Location = 0.0884647
+Parametric Shroud Location = 0.0904856
+Shroud Angle = -23.2718 [deg]
+Toggle Trim = Off
+Trim AR Location Method = Set A
+Trim Hub Position = 0.1135 [m], 0.2902 [m]
+Trim Intersection Point 1 = 0.1135 [m], 0.2902 [m]
+Trim Intersection Point 2 = 0.1135 [m], 0.3255 [m]
+Trim Shroud Position = 0.1135 [m], 0.3255 [m]
+Use Simple Conic Surface = Off
+    GEO POINT:Low Hub Point
+    Visibility = On
+    END
+    GEO POINT:Low Shroud Point
+      Visibility = On
+    END
+  END
+END""")
+turboMesh1.Exit()

@@ -1,0 +1,622 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Storage>
+  <Project Version="9.1">
+    <base-designpoint-name valType="String">0</base-designpoint-name>
+    <timestamp-max valType="Int64">7300</timestamp-max>
+    <framework-build-version valType="String">21.1.216.0</framework-build-version>
+    <external-version-string valType="String">2021 R1</external-version-string>
+    <last-saved-utc valType="String">11/24/2023 13:10:30</last-saved-utc>
+    <managed-categories valType="String">[report, misc, progress]</managed-categories>
+    <logHistory valType="StringArray">
+      <ArrayEntry Index="0">olivierp@TFD002:C:\Users\olivierp\AppData\Local\Temp\WorkbenchLogs\CoreEvents4036.log</ArrayEntry>
+      <ArrayEntry Index="1">olivierp@TFD075:C:\Users\olivierp\AppData\Local\Temp\WorkbenchLogs\CoreEvents12232.log</ArrayEntry>
+      <ArrayEntry Index="2">olisjo@C20KOND:C:\Users\olisjo\AppData\Local\Temp\WorkbenchLogs\CoreEvents24140.log</ArrayEntry>
+      <ArrayEntry Index="3">olisjo@C20KOND:C:\Users\olisjo\AppData\Local\Temp\WorkbenchLogs\CoreEvents3480.log</ArrayEntry>
+      <ArrayEntry Index="4">olisjo@C20KOND:C:\Users\olisjo\AppData\Local\Temp\WorkbenchLogs\CoreEvents17308.log</ArrayEntry>
+      <ArrayEntry Index="5">olisjo@C20KOND:C:\Users\olisjo\AppData\Local\Temp\WorkbenchLogs\CoreEvents12192.log</ArrayEntry>
+      <ArrayEntry Index="6">olisjo@C20KOND:C:\Users\olisjo\AppData\Local\Temp\WorkbenchLogs\CoreEvents6300.log</ArrayEntry>
+      <ArrayEntry Index="7">olisjo@C20KOND:C:\Users\olisjo\AppData\Local\Temp\WorkbenchLogs\CoreEvents18124.log</ArrayEntry>
+      <ArrayEntry Index="8">xisto@C22IKFS:C:\Users\xisto\AppData\Local\Temp\WorkbenchLogs\CoreEvents7472.log</ArrayEntry>
+      <ArrayEntry Index="9">xisto@C22IKFS:C:\Users\xisto\AppData\Local\Temp\WorkbenchLogs\CoreEvents20804.log</ArrayEntry>
+      <ArrayEntry Index="10">xisto@C22IKFS:C:\Users\xisto\AppData\Local\Temp\WorkbenchLogs\CoreEvents5084.log</ArrayEntry>
+      <ArrayEntry Index="11">xisto@C22IKFS:C:\Users\xisto\AppData\Local\Temp\WorkbenchLogs\CoreEvents24880.log</ArrayEntry>
+      <ArrayEntry Index="12">xisto@C22IKFS:C:\Users\xisto\AppData\Local\Temp\WorkbenchLogs\CoreEvents20096.log</ArrayEntry>
+      <ArrayEntry Index="13">xisto@C22IKFS:C:\Users\xisto\AppData\Local\Temp\WorkbenchLogs\CoreEvents13408.log</ArrayEntry>
+    </logHistory>
+    <expression-scope-container valType="String">Parameters</expression-scope-container>
+    <project-type valType="String">WB2</project-type>
+    <ReferenceCache>
+      <ProjectReferenceList>
+        <ReferenceList valType="String">{
+"996e64c9-db5f-44d8-a339-1f3fe23c5ff2": "/Schematic/System:TS",
+"eeb707cd-148e-4279-8ab2-68bcb51b1390": "/FileContainer/FileReference:F10",
+"58001a8b-57a4-427b-a4d2-c019e1f45cd0": "/FileTypesContainer/FileType:default",
+"0070985c-99b5-44c7-ac7f-8b34ab0475db": "/FileTypesContainer/FileType:CFXPreCase",
+"593043c9-d926-4e27-bcac-57bbffea075f": "/FileTypesContainer/FileType:CFXSolverInput",
+"093f70d5-3223-4033-ac84-f43d8c4ea6d3": "/FileTypesContainer/FileType:CFXSolverResults",
+"c6718b01-ba95-4c6c-9306-a7dd59f50df6": "/FileTypesContainer/FileType:CFXSolverOutput",
+"fbe3833b-6b61-4782-8caa-aa638b0f741a": "/FileTypesContainer/FileType:project",
+"beb55921-df82-4a19-b6e5-abb5ff6470f5": "/Schematic/Template:TurboGrid",
+"fb1e306c-fc32-4246-bf9a-1faaf5bfc950": "/Schematic/System:CFX",
+"7bd86156-5a55-44a9-a187-73fc45faab8b": "/Schematic/Component:Setup",
+"e868d106-a78c-45ff-ad1c-5b03a01f9415": "/Schematic/Component:Solution",
+"f48c5a0e-47e5-4829-8b62-04beeaef21c1": "/Schematic/Component:Results",
+"719d81b8-74c2-4bc6-8121-e5e8e05e6f2d": "/Schematic/Template:CFX",
+"55df70e5-d6d5-4ee9-8d47-86236df17d53": "/Schematic/Template:Fluid Flow (CFX)",
+"c41ae910-18a7-4f71-93b8-47b301b88dc4": "/Schematic/Template:Fluid Flow",
+"d5e60ddf-eef1-4b2b-abd5-e1b129878f98": "/FileContainer/FileReference:F33",
+"0b53de64-3b85-4f67-8924-2335cc755c27": "/Schematic/Component:Turbo Mesh 3",
+"9ed21fae-835f-4482-bf1e-dc80934661cf": "/Schematic/System:TS 3",
+"c2513cf3-9b35-415b-ba66-cae863513156": "/Schematic/Component:Turbo Mesh 2",
+"60db8174-1db8-4a26-98eb-cd731805c2fc": "/Schematic/ComponentTemplate:TSMeshTemplate",
+"30e6e1ac-6f2b-4f78-ac15-343918777e11": "/Schematic/ComponentTemplate:CFXPhysicsTemplate",
+"958748d2-547d-4eaa-bc8c-ca8588f9f8ea": "/Schematic/ComponentTemplate:CFXResultsTemplate",
+"77426b19-36c0-4242-9032-4b09c4011257": "/Schematic/ComponentTemplate:CFDPostTemplate",
+"65124026-84d0-49b8-b0f8-f51e926b2796": "/FileTypesContainer/FileType:CFDPostState",
+"100b5af6-df4e-4675-be54-7c133059b295": "/Parameters/DesignPointReportSetting:Design Points Report Setting 1",
+"8c31fb34-edef-407a-8f9c-f470408575fb": "/FileTypesContainer/FileType:ACTDatabase",
+"c0fe9ae8-f191-4919-9272-03c7f5723504": "/Schematic/Component:Turbo Mesh",
+"beb2fa66-289b-474d-a149-0011fcda0cc5": "/FileContainer/FileReference:F29",
+"586d0dc5-c900-4005-94ae-0f19a75823e6": "/FileContainer/FileReference:F30",
+"4e7194ee-f47c-40f9-9a4c-864d77ecab77": "/FileContainer/FileReference:F31",
+"b425bd7c-bd54-4bb9-8666-2f803af9bf03": "/FileContainer/FileReference:F41",
+"a5ad4585-0e64-469b-8ce2-cd2ca354ca51": "/Schematic/System:TS 2"
+}</ReferenceList>
+      </ProjectReferenceList>
+      <DesignPointReferenceListCollection>
+        <DesignPointReferenceList Name="0">
+          <ReferenceList valType="String">{
+"fda0f870-a75b-4554-8daf-0042c2863843": "/Setup/CFXSetupProperties:Setup Source",
+"c161ace8-d82e-4583-b4c7-f08e7074869f": "/Setup/CFXSetup:Setup Provider",
+"83451813-9e67-487e-a77c-fe07d8b63472": "/Solution/CFXSetupDataLink:Setup Provider",
+"6666e06e-7602-49a3-81e1-f730d15a52f8": "/Solution/CFXSolution:Solution Provider",
+"b553c895-6f0a-4959-9f4e-590196a2c8d2": "/Results/SolutionDataLink:Solution Provider",
+"a89e5d75-55e0-4453-ba03-c8566a1b17ac": "/Turbo Mesh/ExternalFileDataObjectType:External File",
+"007dcfa6-e160-44c7-b33d-a2d084541979": "/Turbo Mesh/ExternalFileDataObjectType:External File 1",
+"8f2a2d5c-3d4b-4608-8411-f36b0af40c94": "/Turbo Mesh/ExternalFileDataObjectType:External File 2",
+"b418dd67-f874-4b41-b51b-b44cbdcf592a": "/Turbo Mesh/TurboMeshProperties:Turbo Mesh 1 Source",
+"ab812ab5-50a6-4711-8f23-574626bdd610": "/Turbo Mesh/CFXMesh:Turbo Mesh 1 Provider",
+"ede1b7d1-57e1-4785-88e7-8470a82cd142": "/Setup/CFXMeshDataLink:Turbo Mesh 1 Provider 2",
+"89a3ffc5-778f-4f4f-8ecd-c7926a52a2d8": "/Turbo Mesh 2/CFXMesh:Turbo Mesh 1 Provider",
+"e6e1f04c-da5a-4f85-9870-87b7c3e361f4": "/Setup/CFXMeshDataLink:Turbo Mesh 1 Provider 1",
+"e83fe8eb-1312-4bd9-a7a1-eba498b79191": "/Turbo Mesh 3/CFXMesh:Turbo Mesh Provider",
+"8b3c5b20-b928-4d4f-94f4-ca6deaa55d09": "/Setup/CFXMeshDataLink:Turbo Mesh Provider 1",
+"2c53113d-2a1e-4a46-af72-76f7b415c5c6": "/Turbo Mesh 2/ExternalFileDataObjectType:External File",
+"7a439ca6-d54e-42ef-a9b6-f9858c58ac5b": "/Turbo Mesh 2/ExternalFileDataObjectType:External File 1",
+"fc4e5163-8212-48cb-9398-c861e42c00e2": "/Turbo Mesh 2/ExternalFileDataObjectType:External File 2",
+"fa1d258e-cf59-491a-86ac-30a1b9b983bf": "/Turbo Mesh 2/TurboMeshProperties:Turbo Mesh 1 Source",
+"df2d927c-62e5-4011-95d1-6ffc1a7e5ae2": "/Turbo Mesh 3/ExternalFileDataObjectType:External File",
+"9ace3d03-38e9-4c0b-a8d4-51efbc684d7c": "/Turbo Mesh 3/ExternalFileDataObjectType:External File 1",
+"543dd69f-c979-49a0-8dca-b18b75627947": "/Turbo Mesh 3/ExternalFileDataObjectType:External File 2",
+"9c5d234f-83f9-4169-a065-1b11a8dec091": "/Turbo Mesh 3/TurboMeshProperties:Turbo Mesh Source",
+"b8545834-dc43-44f9-a58a-f0865962a8e9": "/Solution/CFXSolutionProperties:Solution Source",
+"1bff92c9-6031-4cc4-9a81-10a417f20f3b": "/Results/CFDResults:Results Source"
+}</ReferenceList>
+        </DesignPointReferenceList>
+      </DesignPointReferenceListCollection>
+    </ReferenceCache>
+  </Project>
+  <Addins>
+    <addin-list valType="String">[Ansys.ParameterManager.ParameterManagerAddin, Ansys.ProjectSchematic.ProjectSchematicAddin, Ansys.ProjectReporting.Addin, Ansys.Graphics.GraphicsAddin, Ansys.Units.Commands.Addin, Ansys.ACT.WorkBench.Addin, Ansys.Dpdb.DpdbAddin]</addin-list>
+    <Addin Name="Ansys.ParameterManager.ParameterManagerAddin" Version="7.3" />
+    <Addin Name="Ansys.ProjectSchematic.ProjectSchematicAddin" Version="12.2" />
+    <Addin Name="Ansys.ProjectReporting.Addin" Version="6.0" />
+    <Addin Name="Ansys.Graphics.GraphicsAddin" Version="1.1" />
+    <Addin Name="Ansys.Units.Commands.Addin" Version="7.1" />
+    <Addin Name="Ansys.ACT.WorkBench.Addin" Version="4.2">
+      <ExtensionsLoaded valType="StringArray">
+        <ArrayEntry Index="0">1;LSDYNA;5f463412-bd3e-484b-87e7-cbc0a665e474;LSDYNA;wbex;2021;1</ArrayEntry>
+      </ExtensionsLoaded>
+    </Addin>
+    <Addin Name="Ansys.Dpdb.DpdbAddin" Version="4.1">
+      <is-optional-on-resume valType="Boolean">true</is-optional-on-resume>
+    </Addin>
+  </Addins>
+  <Containers>
+    <container-map valType="String">{"FileContainer": Project:FileContainer, "Messages": Project:Messages, "Parameters": Ansys.ParameterManager.ParameterManagerAddin:parameters, "Schematic": Ansys.ProjectSchematic.ProjectSchematicAddin:Default, "ReportDataContainer": Ansys.ProjectReporting.Addin:ReportDataContainer, "Graphics": Ansys.Graphics.GraphicsAddin:graphics, "Units": Ansys.Units.Commands.Addin:Units, "DpdbContainer": Ansys.Dpdb.DpdbAddin:DpdbContainer}</container-map>
+    <static-container-ids valType="String">{"FileContainer": FileManager, "Parameters": Parameters, "Schematic": Schematic, "ReportDataContainer": ReportDataContainer, "Graphics": Graphics, "Units": Units, "DpdbContainer": DpdbContainer}</static-container-ids>
+    <Container Name="FileContainer" Version="1.0">
+      <container-type valType="String">Project:FileContainer</container-type>
+      <static-id valType="String">FileManager</static-id>
+      <storage-scheme-id valType="String">version-1-format</storage-scheme-id>
+      <deleted-sources valType="String">[]</deleted-sources>
+      <last-updated valType="Int64">0</last-updated>
+      <last-modified-by-usage valType="String">{"Extrinsic": 7300, "Input": 1657, "Output": 1657}</last-modified-by-usage>
+      <outputs-generated-by-type valType="String">{}</outputs-generated-by-type>
+      <contains-significant-data valType="Boolean">false</contains-significant-data>
+      <Object Name="/FileContainer/FileReference:F10" Version="1.0">
+        <class-type valType="String">FileReference</class-type>
+        <object-name valType="String">F10</object-name>
+        <member-data valType="String">{"DisplayText": "CFX.cfx", "FileType": $$0070985c-99b5-44c7-ac7f-8b34ab0475db, "DependentFiles": [], "ContainerAssociations": ["Setup"], "SkipForDesignPointDuplication": False, "IsDeletable": True, "ExternalSource": None, "LastDownloadFromRepository": -1, "Location": r"$(ProjectName)_files\dp0\CFX\CFX\CFX.cfx", "ReferenceCount": 1}</member-data>
+      </Object>
+      <Object Name="/FileContainer/FileReference:F14" Version="1.0">
+        <class-type valType="String">FileReference</class-type>
+        <object-name valType="String">F14</object-name>
+        <member-data valType="String">{"DisplayText": "cfdrun.wbpj", "FileType": $$fbe3833b-6b61-4782-8caa-aa638b0f741a, "DependentFiles": [], "ContainerAssociations": [], "SkipForDesignPointDuplication": False, "IsDeletable": True, "ExternalSource": None, "LastDownloadFromRepository": -1, "Location": "$(ProjectName).wbpj", "ReferenceCount": 1}</member-data>
+      </Object>
+      <Object Name="/FileContainer/FileReference:F27" Version="1.0">
+        <class-type valType="String">FileReference</class-type>
+        <object-name valType="String">F27</object-name>
+        <member-data valType="String">{"DisplayText": "act.dat", "FileType": $$8c31fb34-edef-407a-8f9c-f470408575fb, "DependentFiles": [], "ContainerAssociations": [], "SkipForDesignPointDuplication": False, "IsDeletable": True, "ExternalSource": None, "LastDownloadFromRepository": -1, "Location": r"$(ProjectName)_files\dp0\act.dat", "ReferenceCount": 32}</member-data>
+      </Object>
+      <Object Name="/FileContainer/FileReference:F29" Version="1.0">
+        <class-type valType="String">FileReference</class-type>
+        <object-name valType="String">F29</object-name>
+        <member-data valType="String">{"DisplayText": "hub.curve", "FileType": $$58001a8b-57a4-427b-a4d2-c019e1f45cd0, "DependentFiles": [], "ContainerAssociations": ["Turbo Mesh 2", "Turbo Mesh 3", "Turbo Mesh"], "SkipForDesignPointDuplication": False, "IsDeletable": True, "ExternalSource": None, "LastDownloadFromRepository": -1, "Location": r"C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\turbogrid_files\hub.curve", "ReferenceCount": 3}</member-data>
+      </Object>
+      <Object Name="/FileContainer/FileReference:F30" Version="1.0">
+        <class-type valType="String">FileReference</class-type>
+        <object-name valType="String">F30</object-name>
+        <member-data valType="String">{"DisplayText": "shroud.curve", "FileType": $$58001a8b-57a4-427b-a4d2-c019e1f45cd0, "DependentFiles": [], "ContainerAssociations": ["Turbo Mesh 2", "Turbo Mesh 3", "Turbo Mesh"], "SkipForDesignPointDuplication": False, "IsDeletable": True, "ExternalSource": None, "LastDownloadFromRepository": -1, "Location": r"C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\turbogrid_files\shroud.curve", "ReferenceCount": 3}</member-data>
+      </Object>
+      <Object Name="/FileContainer/FileReference:F31" Version="1.0">
+        <class-type valType="String">FileReference</class-type>
+        <object-name valType="String">F31</object-name>
+        <member-data valType="String">{"DisplayText": "r1.curve", "FileType": $$58001a8b-57a4-427b-a4d2-c019e1f45cd0, "DependentFiles": [], "ContainerAssociations": ["Turbo Mesh 3"], "SkipForDesignPointDuplication": False, "IsDeletable": True, "ExternalSource": None, "LastDownloadFromRepository": -1, "Location": r"C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\turbogrid_files\r1.curve", "ReferenceCount": 1}</member-data>
+      </Object>
+      <Object Name="/FileContainer/FileReference:F33" Version="1.0">
+        <class-type valType="String">FileReference</class-type>
+        <object-name valType="String">F33</object-name>
+        <member-data valType="String">{"DisplayText": "s1.curve", "FileType": $$58001a8b-57a4-427b-a4d2-c019e1f45cd0, "DependentFiles": [], "ContainerAssociations": ["Turbo Mesh"], "SkipForDesignPointDuplication": False, "IsDeletable": True, "ExternalSource": None, "LastDownloadFromRepository": -1, "Location": r"C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\turbogrid_files\s1.curve", "ReferenceCount": 1}</member-data>
+      </Object>
+      <Object Name="/FileContainer/FileReference:F41" Version="1.0">
+        <class-type valType="String">FileReference</class-type>
+        <object-name valType="String">F41</object-name>
+        <member-data valType="String">{"DisplayText": "igv0.curve", "FileType": $$58001a8b-57a4-427b-a4d2-c019e1f45cd0, "DependentFiles": [], "ContainerAssociations": ["Turbo Mesh 2"], "SkipForDesignPointDuplication": False, "IsDeletable": True, "ExternalSource": None, "LastDownloadFromRepository": -1, "Location": r"C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\turbogrid_files\igv0.curve", "ReferenceCount": 1}</member-data>
+      </Object>
+    </Container>
+    <Container Name="Messages" Version="1.0">
+      <container-type valType="String">Project:Messages</container-type>
+      <storage-scheme-id valType="String">version-1-format</storage-scheme-id>
+      <deleted-sources valType="String">[]</deleted-sources>
+      <last-updated valType="Int64">0</last-updated>
+      <last-modified-by-usage valType="String">{"Extrinsic": 6619, "Input": 1658, "Output": 1658}</last-modified-by-usage>
+      <outputs-generated-by-type valType="String">{}</outputs-generated-by-type>
+      <contains-significant-data valType="Boolean">false</contains-significant-data>
+      <Object Name="/Messages/StoredMessage:Message" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Warning", "MessageCategory": "None", "Summary": """ Turbo Mesh: Traditional topologies are no longer supported.
+The topology will automatically be switched to ATM the next time the cell is updated.""", "Details": """TurboMesh
+
+""", "Association": "", "DateTimeStamp": 11/01/2021 12:05:59, "Visibility": "Warning", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 1" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 1</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Warning", "MessageCategory": "None", "Summary": """ Turbo Mesh: Traditional topologies are no longer supported.
+The topology will automatically be switched to ATM the next time the cell is updated.""", "Details": """TurboMesh
+
+""", "Association": "", "DateTimeStamp": 11/01/2021 12:05:59, "Visibility": "Warning", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 2" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 2</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Information", "MessageCategory": "None", "Summary": """Application Error in TurboGrid: WARNING
+ATM Topology optimizer does not make use of control points - they will be ignored.  If a script file is being played, it may need to be modified to explicitly set the topology placement to Traditional with Control Points.""", "Details": """TurboGrid Application Error
+
+WARNING
+ATM Topology optimizer does not make use of control points - they will be ignored.  If a script file is being played, it may need to be modified to explicitly set the topology placement to Traditional with Control Points.
+
+""", "Association": "", "DateTimeStamp": 11/01/2021 12:06:13, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 3" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 3</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Error", "MessageCategory": "None", "Summary": r"Error opening file, file not found: 'C:\Users\olivierp\Desktop\DT3_cleaned - Copy\shroud.dat.curve'.", "Details": None, "Association": "", "DateTimeStamp": 11/01/2021 12:06:13, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 4" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 4</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Error", "MessageCategory": "None", "Summary": r"Error opening file, file not found: 'C:\Users\olivierp\Desktop\DT3_cleaned - Copy\hub.dat.curve'.", "Details": None, "Association": "", "DateTimeStamp": 11/01/2021 12:06:13, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 5" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 5</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Warning", "MessageCategory": "None", "Summary": "ATM Topology optimizer does not make use of control points - they will be ignored.  If a script file is being played, it may need to be modified to explicitly set the topology placement to Traditional with Control Points.", "Details": None, "Association": "", "DateTimeStamp": 11/01/2021 12:06:13, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 6" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 6</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Error", "MessageCategory": "None", "Summary": "Application error(s) occurred in TurboGrid.  To view the full message please click 'Show Details' or review in the Messages window.", "Details": r"""TurboGrid Application Error
+
+ERROR
+Error opening file, file not found: 'C:\Users\olivierp\Desktop\DT3_cleaned - Copy\shroud.dat.curve'.
+
+ERROR
+Error opening file, file not found: 'C:\Users\olivierp\Desktop\DT3_cleaned - Copy\hub.dat.curve'.
+
+WARNING
+ATM Topology optimizer does not make use of control points - they will be ignored.  If a script file is being played, it may need to be modified to explicitly set the topology placement to Traditional with Control Points.""", "Association": "", "DateTimeStamp": 11/01/2021 12:06:13, "Visibility": "Error", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 7" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 7</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Information", "MessageCategory": "None", "Summary": """Application Error in TurboGrid: WARNING
+ATM Topology optimizer does not make use of control points - they will be ignored.  If a script file is being played, it may need to be modified to explicitly set the topology placement to Traditional with Control Points.""", "Details": """TurboGrid Application Error
+
+WARNING
+ATM Topology optimizer does not make use of control points - they will be ignored.  If a script file is being played, it may need to be modified to explicitly set the topology placement to Traditional with Control Points.
+
+""", "Association": "", "DateTimeStamp": 11/01/2021 12:06:13, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 8" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 8</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Information", "MessageCategory": "None", "Summary": """Application Error in TurboGrid: WARNING
+ATM Topology optimizer does not make use of control points - they will be ignored.  If a script file is being played, it may need to be modified to explicitly set the topology placement to Traditional with Control Points.""", "Details": """TurboGrid Application Error
+
+WARNING
+ATM Topology optimizer does not make use of control points - they will be ignored.  If a script file is being played, it may need to be modified to explicitly set the topology placement to Traditional with Control Points.
+
+""", "Association": "", "DateTimeStamp": 11/01/2021 13:28:59, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 9" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 9</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Error", "MessageCategory": "None", "Summary": r"Error opening file, file not found: 'C:\Users\olivierp\Desktop\DT3_cleaned - Copy\shroud.dat.curve'.", "Details": None, "Association": "", "DateTimeStamp": 11/01/2021 13:28:59, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 10" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 10</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Error", "MessageCategory": "None", "Summary": r"Error opening file, file not found: 'C:\Users\olivierp\Desktop\DT3_cleaned - Copy\hub.dat.curve'.", "Details": None, "Association": "", "DateTimeStamp": 11/01/2021 13:28:59, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 11" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 11</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Warning", "MessageCategory": "None", "Summary": "ATM Topology optimizer does not make use of control points - they will be ignored.  If a script file is being played, it may need to be modified to explicitly set the topology placement to Traditional with Control Points.", "Details": None, "Association": "", "DateTimeStamp": 11/01/2021 13:28:59, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 12" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 12</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Error", "MessageCategory": "None", "Summary": "Application error(s) occurred in TurboGrid.  To view the full message please click 'Show Details' or review in the Messages window.", "Details": r"""TurboGrid Application Error
+
+ERROR
+Error opening file, file not found: 'C:\Users\olivierp\Desktop\DT3_cleaned - Copy\shroud.dat.curve'.
+
+ERROR
+Error opening file, file not found: 'C:\Users\olivierp\Desktop\DT3_cleaned - Copy\hub.dat.curve'.
+
+WARNING
+ATM Topology optimizer does not make use of control points - they will be ignored.  If a script file is being played, it may need to be modified to explicitly set the topology placement to Traditional with Control Points.""", "Association": "", "DateTimeStamp": 11/01/2021 13:28:59, "Visibility": "Error", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 13" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 13</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Information", "MessageCategory": "None", "Summary": """Application Error in TurboGrid: WARNING
+ATM Topology optimizer does not make use of control points - they will be ignored.  If a script file is being played, it may need to be modified to explicitly set the topology placement to Traditional with Control Points.""", "Details": """TurboGrid Application Error
+
+WARNING
+ATM Topology optimizer does not make use of control points - they will be ignored.  If a script file is being played, it may need to be modified to explicitly set the topology placement to Traditional with Control Points.
+
+""", "Association": "", "DateTimeStamp": 11/01/2021 13:28:59, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 14" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 14</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Error", "MessageCategory": "None", "Summary": "TurboGrid does not have a valid mesh.", "Details": None, "Association": "", "DateTimeStamp": 11/02/2021 13:28:59, "Visibility": "Error", "MessageSourceContainer": "Turbo Mesh", "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 15" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 15</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Error", "MessageCategory": "None", "Summary": """Cannot find turbo variable 'Streamwise Location'.
+Turbo mode may not be initialized properly.
+
+DIAGNOSTIC
+'Vertex' values for Variable 'Velocity Meridional ACA on Stage 1 Cm Meridional Surface' do not exist on Geometries /TURBO SURFACE:Stage 1 Cm Meridional Surface.""", "Details": None, "Association": "", "DateTimeStamp": 11/22/2023 13:49:34, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 16" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 16</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Warning", "MessageCategory": "None", "Summary": """Could not find variable \"Velocity Meridional ACA on Stage 1 Cm Meridional Surface\" for colouring on Stage 1 Cm Meridional Surface.
+
+DIAGNOSTIC
+'Vertex' values for Variable 'Mach Number ACA on Stage 1 M rel Meridional Surface' do not exist on Geometries /TURBO SURFACE:Stage 1 M rel Meridional Surface.""", "Details": None, "Association": "", "DateTimeStamp": 11/22/2023 13:49:34, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 17" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 17</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Warning", "MessageCategory": "None", "Summary": """Could not find variable \"Mach Number ACA on Stage 1 M rel Meridional Surface\" for colouring on Stage 1 M rel Meridional Surface.
+
+DIAGNOSTIC
+'Vertex' values for Variable 'Pressure ACA on Stage 1 P Meridional Surface' do not exist on Geometries /TURBO SURFACE:Stage 1 P Meridional Surface.""", "Details": None, "Association": "", "DateTimeStamp": 11/22/2023 13:49:34, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 18" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 18</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Warning", "MessageCategory": "None", "Summary": 'Could not find variable "Pressure ACA on Stage 1 P Meridional Surface" for colouring on Stage 1 P Meridional Surface.', "Details": None, "Association": "", "DateTimeStamp": 11/22/2023 13:49:34, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 19" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 19</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Warning", "MessageCategory": "None", "Summary": "Can't find locator(s) R1 Inlet for Vector 1.", "Details": None, "Association": "", "DateTimeStamp": 11/22/2023 13:49:34, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 20" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 20</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Error", "MessageCategory": "None", "Summary": "An error occured initializing CFD-Post: Application error(s) occurred in CFD-Post.  Please see the messages view for further details.", "Details": None, "Association": "", "DateTimeStamp": 11/22/2023 13:49:34, "Visibility": "Error", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 21" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 21</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Error", "MessageCategory": "None", "Summary": "Update failed for the Solution component in CFX.  The solver failed with a non-zero exit code of : 2", "Details": None, "Association": "", "DateTimeStamp": 11/22/2023 20:06:38, "Visibility": "Error", "MessageSourceContainer": None, "MessageSourceEntity": $$e868d106-a78c-45ff-ad1c-5b03a01f9415, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 22" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 22</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Error", "MessageCategory": "None", "Summary": r"'GuiOperation Edit Run in Progress' threw exception during Invoke: Invalid DirectoryPath argument: could not locate directory C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\cfdrun_files\dp0\CFX\CFX\CFX_004.dir", "Details": """System.ApplicationException: Invalid DirectoryPath argument: could not locate directory C:\\Users\\xisto\\OneDrive - Chalmers\\MyFiles\\Chalmers\\Teaching\\Aerospace Propulsion\\Design Tasks\\solution\\DT3\\cfd\\cfdrun_files\\dp0\\CFX\\CFX\\CFX_004.dir
+   at Ansys.CFX.Foundation.Commands.EditRunInProgressCommand.Execute(IFullContext context)
+   at Ansys.Core.Commands.Concurrency.CommandWorkUnit.executeInContext(CommandContext subContext, IExecutionEngineCallback tracer)
+   at Ansys.Core.Commands.Concurrency.BaseWorkUnit.doExecute(IExecutionEngineCallback executionEngine, CommandContext subContext)
+   at Ansys.Core.Commands.Concurrency.BaseWorkUnit.Execute(IExecutionEngineCallback executionEngine, Boolean dontCatchExceptions)
+--- Ansys.Core.Commands.CommandFailedException: Invalid DirectoryPath argument: could not locate directory C:\\Users\\xisto\\OneDrive - Chalmers\\MyFiles\\Chalmers\\Teaching\\Aerospace Propulsion\\Design Tasks\\solution\\DT3\\cfd\\cfdrun_files\\dp0\\CFX\\CFX\\CFX_004.dir
+CommandName: CFX.EditRunInProgress(Container=\"Solution\", PerformBackup=False, DirectoryPath=\"C:/Users/xisto/OneDrive - Chalmers/MyFiles/Chalmers/Teaching/Aerospace Propulsion/Design Tasks/solution/DT3/cfd/cfdrun_files/dp0/CFX/CFX/CFX_004.dir\")
+   at Ansys.Core.Commands.CommandAsyncResult.RethrowFailureException(Exception e)
+   at Ansys.Core.Commands.CommandAsyncResult.WaitForSuspendOrComplete(Int32 milliSecondsTimeout, Boolean exitContext)
+   at Ansys.CFX.CFXCore.Commands.EditRunInProgressGui.Invoke(GuiOperationContext context, GuiOperationArgs args)
+--- System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+   at System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Ansys.UI.GuiOperationContext.Invoke(GuiOperationMetaData operationData, GuiOperationArgs args)
+   at Ansys.UI.UIManager.InvokeOperationCore(String pseudoname, OperationDelegate callback, Boolean allowOSMessages, Boolean coreTransaction, Boolean deferredRefreshOnly)
+""", "Association": "", "DateTimeStamp": 11/22/2023 20:06:38, "Visibility": "Error", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 23" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 23</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Error", "MessageCategory": "None", "Summary": r"'GuiOperation Edit Run in Progress' threw exception during Invoke: Invalid DirectoryPath argument: could not locate directory C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\cfdrun_files\dp0\CFX\CFX\CFX_004.dir", "Details": """System.ApplicationException: Invalid DirectoryPath argument: could not locate directory C:\\Users\\xisto\\OneDrive - Chalmers\\MyFiles\\Chalmers\\Teaching\\Aerospace Propulsion\\Design Tasks\\solution\\DT3\\cfd\\cfdrun_files\\dp0\\CFX\\CFX\\CFX_004.dir
+   at Ansys.CFX.Foundation.Commands.EditRunInProgressCommand.Execute(IFullContext context)
+   at Ansys.Core.Commands.Concurrency.CommandWorkUnit.executeInContext(CommandContext subContext, IExecutionEngineCallback tracer)
+   at Ansys.Core.Commands.Concurrency.BaseWorkUnit.doExecute(IExecutionEngineCallback executionEngine, CommandContext subContext)
+   at Ansys.Core.Commands.Concurrency.BaseWorkUnit.Execute(IExecutionEngineCallback executionEngine, Boolean dontCatchExceptions)
+--- Ansys.Core.Commands.CommandFailedException: Invalid DirectoryPath argument: could not locate directory C:\\Users\\xisto\\OneDrive - Chalmers\\MyFiles\\Chalmers\\Teaching\\Aerospace Propulsion\\Design Tasks\\solution\\DT3\\cfd\\cfdrun_files\\dp0\\CFX\\CFX\\CFX_004.dir
+CommandName: CFX.EditRunInProgress(Container=\"Solution\", PerformBackup=False, DirectoryPath=\"C:/Users/xisto/OneDrive - Chalmers/MyFiles/Chalmers/Teaching/Aerospace Propulsion/Design Tasks/solution/DT3/cfd/cfdrun_files/dp0/CFX/CFX/CFX_004.dir\")
+   at Ansys.Core.Commands.CommandAsyncResult.RethrowFailureException(Exception e)
+   at Ansys.Core.Commands.CommandAsyncResult.WaitForSuspendOrComplete(Int32 milliSecondsTimeout, Boolean exitContext)
+   at Ansys.CFX.CFXCore.Commands.EditRunInProgressGui.Invoke(GuiOperationContext context, GuiOperationArgs args)
+--- System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+   at System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Ansys.UI.GuiOperationContext.Invoke(GuiOperationMetaData operationData, GuiOperationArgs args)
+   at Ansys.UI.UIManager.InvokeOperationCore(String pseudoname, OperationDelegate callback, Boolean allowOSMessages, Boolean coreTransaction, Boolean deferredRefreshOnly)
+""", "Association": "", "DateTimeStamp": 11/22/2023 20:06:39, "Visibility": "Error", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 24" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 24</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Error", "MessageCategory": "None", "Summary": r"'GuiOperation Edit Run in Progress' threw exception during Invoke: Invalid DirectoryPath argument: could not locate directory C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\cfdrun_files\dp0\CFX\CFX\CFX_004.dir", "Details": """System.ApplicationException: Invalid DirectoryPath argument: could not locate directory C:\\Users\\xisto\\OneDrive - Chalmers\\MyFiles\\Chalmers\\Teaching\\Aerospace Propulsion\\Design Tasks\\solution\\DT3\\cfd\\cfdrun_files\\dp0\\CFX\\CFX\\CFX_004.dir
+   at Ansys.CFX.Foundation.Commands.EditRunInProgressCommand.Execute(IFullContext context)
+   at Ansys.Core.Commands.Concurrency.CommandWorkUnit.executeInContext(CommandContext subContext, IExecutionEngineCallback tracer)
+   at Ansys.Core.Commands.Concurrency.BaseWorkUnit.doExecute(IExecutionEngineCallback executionEngine, CommandContext subContext)
+   at Ansys.Core.Commands.Concurrency.BaseWorkUnit.Execute(IExecutionEngineCallback executionEngine, Boolean dontCatchExceptions)
+--- Ansys.Core.Commands.CommandFailedException: Invalid DirectoryPath argument: could not locate directory C:\\Users\\xisto\\OneDrive - Chalmers\\MyFiles\\Chalmers\\Teaching\\Aerospace Propulsion\\Design Tasks\\solution\\DT3\\cfd\\cfdrun_files\\dp0\\CFX\\CFX\\CFX_004.dir
+CommandName: CFX.EditRunInProgress(Container=\"Solution\", PerformBackup=False, DirectoryPath=\"C:/Users/xisto/OneDrive - Chalmers/MyFiles/Chalmers/Teaching/Aerospace Propulsion/Design Tasks/solution/DT3/cfd/cfdrun_files/dp0/CFX/CFX/CFX_004.dir\")
+   at Ansys.Core.Commands.CommandAsyncResult.RethrowFailureException(Exception e)
+   at Ansys.Core.Commands.CommandAsyncResult.WaitForSuspendOrComplete(Int32 milliSecondsTimeout, Boolean exitContext)
+   at Ansys.CFX.CFXCore.Commands.EditRunInProgressGui.Invoke(GuiOperationContext context, GuiOperationArgs args)
+--- System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+   at System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Ansys.UI.GuiOperationContext.Invoke(GuiOperationMetaData operationData, GuiOperationArgs args)
+   at Ansys.UI.UIManager.InvokeOperationCore(String pseudoname, OperationDelegate callback, Boolean allowOSMessages, Boolean coreTransaction, Boolean deferredRefreshOnly)
+""", "Association": "", "DateTimeStamp": 11/22/2023 20:06:39, "Visibility": "Error", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 25" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 25</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Error", "MessageCategory": "None", "Summary": r"'GuiOperation Edit Run in Progress' threw exception during Invoke: Invalid DirectoryPath argument: could not locate directory C:\Users\xisto\OneDrive - Chalmers\MyFiles\Chalmers\Teaching\Aerospace Propulsion\Design Tasks\solution\DT3\cfd\cfdrun_files\dp0\CFX\CFX\CFX_004.dir", "Details": """System.ApplicationException: Invalid DirectoryPath argument: could not locate directory C:\\Users\\xisto\\OneDrive - Chalmers\\MyFiles\\Chalmers\\Teaching\\Aerospace Propulsion\\Design Tasks\\solution\\DT3\\cfd\\cfdrun_files\\dp0\\CFX\\CFX\\CFX_004.dir
+   at Ansys.CFX.Foundation.Commands.EditRunInProgressCommand.Execute(IFullContext context)
+   at Ansys.Core.Commands.Concurrency.CommandWorkUnit.executeInContext(CommandContext subContext, IExecutionEngineCallback tracer)
+   at Ansys.Core.Commands.Concurrency.BaseWorkUnit.doExecute(IExecutionEngineCallback executionEngine, CommandContext subContext)
+   at Ansys.Core.Commands.Concurrency.BaseWorkUnit.Execute(IExecutionEngineCallback executionEngine, Boolean dontCatchExceptions)
+--- Ansys.Core.Commands.CommandFailedException: Invalid DirectoryPath argument: could not locate directory C:\\Users\\xisto\\OneDrive - Chalmers\\MyFiles\\Chalmers\\Teaching\\Aerospace Propulsion\\Design Tasks\\solution\\DT3\\cfd\\cfdrun_files\\dp0\\CFX\\CFX\\CFX_004.dir
+CommandName: CFX.EditRunInProgress(Container=\"Solution\", PerformBackup=True, DirectoryPath=\"C:/Users/xisto/OneDrive - Chalmers/MyFiles/Chalmers/Teaching/Aerospace Propulsion/Design Tasks/solution/DT3/cfd/cfdrun_files/dp0/CFX/CFX/CFX_004.dir\")
+   at Ansys.Core.Commands.CommandAsyncResult.RethrowFailureException(Exception e)
+   at Ansys.Core.Commands.CommandAsyncResult.WaitForSuspendOrComplete(Int32 milliSecondsTimeout, Boolean exitContext)
+   at Ansys.CFX.CFXCore.Commands.EditRunInProgressGui.Invoke(GuiOperationContext context, GuiOperationArgs args)
+--- System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+   at System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Ansys.UI.GuiOperationContext.Invoke(GuiOperationMetaData operationData, GuiOperationArgs args)
+   at Ansys.UI.UIManager.InvokeOperationCore(String pseudoname, OperationDelegate callback, Boolean allowOSMessages, Boolean coreTransaction, Boolean deferredRefreshOnly)
+""", "Association": "", "DateTimeStamp": 11/22/2023 20:06:39, "Visibility": "Error", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": None}</member-data>
+      </Object>
+      <Object Name="/Messages/StoredMessage:Message 26" Version="1.0">
+        <class-type valType="String">StoredMessage</class-type>
+        <object-name valType="String">Message 26</object-name>
+        <member-data valType="String">{"DisplayText": "Message", "MessageType": "Information", "MessageCategory": "None", "Summary": "Update interrupted", "Details": None, "Association": "", "DateTimeStamp": 11/22/2023 22:54:08, "Visibility": "Information", "MessageSourceContainer": None, "MessageSourceEntity": None, "AdditionalMessageData": None, "DesignPoint": "0"}</member-data>
+      </Object>
+    </Container>
+    <Container Name="Parameters" Version="1.0">
+      <container-type valType="String">Ansys.ParameterManager.ParameterManagerAddin:parameters</container-type>
+      <static-id valType="String">Parameters</static-id>
+      <storage-scheme-id valType="String">version-1-format</storage-scheme-id>
+      <maxUpdateOrder valType="Double">1</maxUpdateOrder>
+      <deleted-sources valType="String">[]</deleted-sources>
+      <last-updated valType="Int64">0</last-updated>
+      <last-modified-by-usage valType="String">{"Extrinsic": 7282, "Input": 2768, "Output": 1659}</last-modified-by-usage>
+      <outputs-generated-by-type valType="String">{}</outputs-generated-by-type>
+      <contains-significant-data valType="Boolean">true</contains-significant-data>
+      <Object Name="/Parameters/DesignPoint:0" Version="1.0">
+        <class-type valType="String">DesignPoint</class-type>
+        <object-name valType="String">0</object-name>
+        <member-data valType="String">{"DisplayText": "DP 0", "JustDuplicated": False, "PartiallyRetainedData": [], "ValidRetainedData": [], "ErrorsOnLastUpdate": {}, "LastUpdateInformation": {"DidUpdate": "True", "DidPreRsmUpdate": "False", "UpdatedComponents": "Turbo Mesh 2 in TS 2, Turbo Mesh 3 in TS 3, Turbo Mesh in TS, Setup in CFX"}, "Parameters": {}, "ParameterErrors": {}, "CurrentValues": {}, "ParameterStatus": {}, "Note": None, "IsUpToDate": False, "Exported": True, "Retained": True, "CurrentStateExported": False, "IsDataModelValid": True, "HasRetainedData": True, "HasBeenSolved": True, "UpdateOrder": 1}</member-data>
+        <properties-setByUserFlag-data valType="String">["IsDataModelValid"]</properties-setByUserFlag-data>
+      </Object>
+      <Object Name="/Parameters/DesignPointReportSetting:Design Points Report Setting 1" Version="1.0">
+        <class-type valType="String">DesignPointReportSetting</class-type>
+        <object-name valType="String">Design Points Report Setting 1</object-name>
+        <member-data valType="String">{"DisplayText": "Design Points Report Setting 1", "DesignPointReportImage": "None"}</member-data>
+      </Object>
+      <ParameterToPropertyMap />
+    </Container>
+    <Container Name="Schematic" Version="1.0">
+      <container-type valType="String">Ansys.ProjectSchematic.ProjectSchematicAddin:Default</container-type>
+      <static-id valType="String">Schematic</static-id>
+      <storage-scheme-id valType="String">version-1-format</storage-scheme-id>
+      <deleted-sources valType="String">[]</deleted-sources>
+      <last-updated valType="Int64">0</last-updated>
+      <last-modified-by-usage valType="String">{"Extrinsic": 7278, "Input": 7274, "Output": 1661}</last-modified-by-usage>
+      <outputs-generated-by-type valType="String">{}</outputs-generated-by-type>
+      <contains-significant-data valType="Boolean">true</contains-significant-data>
+      <Object Name="/Schematic/System:TS" Version="1.0">
+        <class-type valType="String">System</class-type>
+        <object-name valType="String">TS</object-name>
+        <member-data valType="String">{"DisplayText": "Stator", "Components": [$$c0fe9ae8-f191-4919-9272-03c7f5723504], "ComponentGroups": [], "SystemVisible": True, "RequiredComponents": [$$c0fe9ae8-f191-4919-9272-03c7f5723504], "ExcludedComponentTemplates": [], "Attributes": {"PhysicsType": "Fluids", "AnalysisType": None, "SolverType": None, "SystemName": "TurboGrid", "VOLATILE:SystemName": "TS 1"}, "SystemType": "TurboGrid", "HeaderText": "TurboGrid", "SystemTypeAbbreviation": "TS", "UniqueSystemDirectoryName": "TS-4", "Physics": [], "AnalysisType": None, "SystemHelpId": "wb2sb_turbogridapp", "AdditionalSystemHelpId": None, "IsParametric": False, "CreatedFromTemplate": $$beb55921-df82-4a19-b6e5-abb5ff6470f5, "Notes": None, "LayoutChildren": [$$fb1e306c-fc32-4246-bf9a-1faaf5bfc950], "LayoutIndex": 0.5555557}</member-data>
+        <properties-setByUserFlag-data valType="String">["DisplayText"]</properties-setByUserFlag-data>
+      </Object>
+      <Object Name="/Schematic/System:CFX" Version="1.0">
+        <class-type valType="String">System</class-type>
+        <object-name valType="String">CFX</object-name>
+        <member-data valType="String">{"DisplayText": "CFX", "Components": [$$7bd86156-5a55-44a9-a187-73fc45faab8b, $$e868d106-a78c-45ff-ad1c-5b03a01f9415, $$f48c5a0e-47e5-4829-8b62-04beeaef21c1], "ComponentGroups": [], "SystemVisible": True, "RequiredComponents": [], "ExcludedComponentTemplates": [], "Attributes": {"PhysicsType": "Fluids", "AnalysisType": None, "SolverType": "CFX", "SystemName": "CFX", "VOLATILE:SystemName": "CFX"}, "SystemType": "CFX", "HeaderText": "CFX", "SystemTypeAbbreviation": "CFX", "UniqueSystemDirectoryName": "CFX", "Physics": [], "AnalysisType": None, "SystemHelpId": "wb2sb_cfxapp", "AdditionalSystemHelpId": None, "IsParametric": False, "CreatedFromTemplate": $$719d81b8-74c2-4bc6-8121-e5e8e05e6f2d, "Notes": None, "LayoutChildren": [], "LayoutIndex": 0}</member-data>
+      </Object>
+      <Object Name="/Schematic/System:TS 2" Version="1.0">
+        <class-type valType="String">System</class-type>
+        <object-name valType="String">TS 2</object-name>
+        <member-data valType="String">{"DisplayText": "IGV", "Components": [$$c2513cf3-9b35-415b-ba66-cae863513156], "ComponentGroups": [], "SystemVisible": True, "RequiredComponents": [$$c2513cf3-9b35-415b-ba66-cae863513156], "ExcludedComponentTemplates": [], "Attributes": {"PhysicsType": "Fluids", "AnalysisType": None, "SolverType": None, "SystemName": "TurboGrid", "VOLATILE:SystemName": "TS 1"}, "SystemType": "TurboGrid", "HeaderText": "TurboGrid", "SystemTypeAbbreviation": "TS", "UniqueSystemDirectoryName": "TS-2", "Physics": [], "AnalysisType": None, "SystemHelpId": "wb2sb_turbogridapp", "AdditionalSystemHelpId": None, "IsParametric": False, "CreatedFromTemplate": $$beb55921-df82-4a19-b6e5-abb5ff6470f5, "Notes": None, "LayoutChildren": [$$9ed21fae-835f-4482-bf1e-dc80934661cf], "LayoutIndex": -0.555555463}</member-data>
+        <properties-setByUserFlag-data valType="String">["DisplayText"]</properties-setByUserFlag-data>
+      </Object>
+      <Object Name="/Schematic/System:TS 3" Version="1.0">
+        <class-type valType="String">System</class-type>
+        <object-name valType="String">TS 3</object-name>
+        <member-data valType="String">{"DisplayText": "Rotor", "Components": [$$0b53de64-3b85-4f67-8924-2335cc755c27], "ComponentGroups": [], "SystemVisible": True, "RequiredComponents": [$$0b53de64-3b85-4f67-8924-2335cc755c27], "ExcludedComponentTemplates": [], "Attributes": {"PhysicsType": "Fluids", "AnalysisType": None, "SolverType": None, "SystemName": "TurboGrid", "VOLATILE:SystemName": "TS"}, "SystemType": "TurboGrid", "HeaderText": "TurboGrid", "SystemTypeAbbreviation": "TS", "UniqueSystemDirectoryName": "TS-3", "Physics": [], "AnalysisType": None, "SystemHelpId": "wb2sb_turbogridapp", "AdditionalSystemHelpId": None, "IsParametric": False, "CreatedFromTemplate": $$beb55921-df82-4a19-b6e5-abb5ff6470f5, "Notes": None, "LayoutChildren": [$$996e64c9-db5f-44d8-a339-1f3fe23c5ff2], "LayoutIndex": 1.66666675}</member-data>
+        <properties-setByUserFlag-data valType="String">["DisplayText"]</properties-setByUserFlag-data>
+      </Object>
+      <Object Name="/Schematic/SchematicSettings:Schematic Settings" Version="1.0">
+        <class-type valType="String">SchematicSettings</class-type>
+        <object-name valType="String">Schematic Settings</object-name>
+        <member-data valType="String">{"DisplayText": "Schematic Settings", "WireBundling": False, "ShowSystemCoordinates": True, "Notes": None, "SuspendCollectingRSMResult": False}</member-data>
+      </Object>
+      <Object Name="/Schematic/DesignPointSolveSettings:Design Points Update Settings" Version="1.0">
+        <class-type valType="String">DesignPointSolveSettings</class-type>
+        <object-name valType="String">Design Points Update Settings</object-name>
+        <member-data valType="String">{"DisplayText": "Design Points Update Settings", "UpdateOption": "Foreground", "RsmUserString": None, "ConfiguredQueue": {"OptionIcons": None, "OptionLabels": "Local", "Options": "Local", "ReadOnlyOptions": None, "OptionFeatureFlags": None, "OptionFilterFlags": None, "OptionLicenseFlags": None, "Value": "Local"}, "RsmJobName": "Workbench", "UpdateMethod": "Foreground", "UpdateOrder": "UpdateFromCurrentDesignPoint", "PreRSMUpdate": "None", "PartialUpdate": "None", "RetainPartialUpdate": "None", "ComponentExecutionMode": "Serial", "NumberOfCoresPerJob": 2, "RetainFailedDesignPoints": False, "DesignPointRetainedOrExportedUpdate": "Parameters", "DesignPointUpdateTimeout": -1, "NumberOfJobsToBeCreated": 1, "NumberOfTasksToBeCreated": 1}</member-data>
+      </Object>
+      <Object Name="/Schematic/CustomProjectTemplate:FSI: Fluid Flow (CFX) -&gt; Static Structural" Version="1.0">
+        <class-type valType="String">CustomProjectTemplate</class-type>
+        <object-name valType="String">FSI: Fluid Flow (CFX) -&gt; Static Structural</object-name>
+        <member-data valType="String">{"DisplayText": "FSI: Fluid Flow (CFX) -&gt; Static Structural", "SystemTemplates": [$$55df70e5-d6d5-4ee9-8d47-86236df17d53, None], "SystemNames": ["Fluid Flow (CFX)", "Static Structural (ANSYS)"], "ToolboxGroup": "Custom Systems", "AdditionalSystemHelpId": None, "PostCreationSteps": [["Share", "Fluid Flow (CFX):Geometry", "Static Structural (ANSYS):Geometry"], ["Connect", "Fluid Flow (CFX):Solution:CFXTransferResultsTemplate", "Static Structural (ANSYS):Setup"]], "LayoutIndices": {"Fluid Flow (CFX)": 1, "Static Structural (ANSYS)": 0}, "LayoutChildren": {"Fluid Flow (CFX)": ["Static Structural (ANSYS)"]}}</member-data>
+      </Object>
+      <Object Name="/Schematic/CustomProjectTemplate:FSI: Fluid Flow (FLUENT) -&gt; Static Structural" Version="1.0">
+        <class-type valType="String">CustomProjectTemplate</class-type>
+        <object-name valType="String">FSI: Fluid Flow (FLUENT) -&gt; Static Structural</object-name>
+        <member-data valType="String">{"DisplayText": "FSI: Fluid Flow (FLUENT) -&gt; Static Structural", "SystemTemplates": [$$c41ae910-18a7-4f71-93b8-47b301b88dc4, None], "SystemNames": ["Fluid Flow (FLUENT)", "Static Structural (ANSYS)"], "ToolboxGroup": "Custom Systems", "AdditionalSystemHelpId": None, "PostCreationSteps": [["Share", "Fluid Flow (FLUENT):Geometry", "Static Structural (ANSYS):Geometry"], ["Connect", "Fluid Flow (FLUENT):Solution", "Static Structural (ANSYS):Setup"]], "LayoutIndices": {"Fluid Flow (FLUENT)": 1, "Static Structural (ANSYS)": 0}, "LayoutChildren": {"Fluid Flow (FLUENT)": ["Static Structural (ANSYS)"]}}</member-data>
+      </Object>
+      <Object Name="/Schematic/CustomProjectTemplate:Thermal-Stress" Version="1.0">
+        <class-type valType="String">CustomProjectTemplate</class-type>
+        <object-name valType="String">Thermal-Stress</object-name>
+        <member-data valType="String">{"DisplayText": "Thermal-Stress", "SystemTemplates": [None, None], "SystemNames": ["Steady-State Thermal (ANSYS)", "Static Structural (ANSYS)"], "ToolboxGroup": "Custom Systems", "AdditionalSystemHelpId": None, "PostCreationSteps": [["Share", "Steady-State Thermal (ANSYS):Engineering Data", "Static Structural (ANSYS):Engineering Data"], ["Share", "Steady-State Thermal (ANSYS):Geometry", "Static Structural (ANSYS):Geometry"], ["Share", "Steady-State Thermal (ANSYS):Model", "Static Structural (ANSYS):Model"], ["Connect", "Steady-State Thermal (ANSYS):Solution", "Static Structural (ANSYS):Setup"]], "LayoutIndices": {"Steady-State Thermal (ANSYS)": 1, "Static Structural (ANSYS)": 0}, "LayoutChildren": {"Steady-State Thermal (ANSYS)": ["Static Structural (ANSYS)"]}}</member-data>
+      </Object>
+      <Object Name="/Schematic/CustomProjectTemplate:Pre-Stress Modal" Version="1.0">
+        <class-type valType="String">CustomProjectTemplate</class-type>
+        <object-name valType="String">Pre-Stress Modal</object-name>
+        <member-data valType="String">{"DisplayText": "Pre-Stress Modal", "SystemTemplates": [None, None], "SystemNames": ["Static Structural (ANSYS)", "Modal (ANSYS)"], "ToolboxGroup": "Custom Systems", "AdditionalSystemHelpId": None, "PostCreationSteps": [["Share", "Static Structural (ANSYS):Engineering Data", "Modal (ANSYS):Engineering Data"], ["Share", "Static Structural (ANSYS):Geometry", "Modal (ANSYS):Geometry"], ["Share", "Static Structural (ANSYS):Model", "Modal (ANSYS):Model"], ["Connect", "Static Structural (ANSYS):Solution", "Modal (ANSYS):Setup"]], "LayoutIndices": {"Static Structural (ANSYS)": 1, "Modal (ANSYS)": 0}, "LayoutChildren": {"Static Structural (ANSYS)": ["Modal (ANSYS)"]}}</member-data>
+      </Object>
+      <Object Name="/Schematic/CustomProjectTemplate:Random Vibration" Version="1.0">
+        <class-type valType="String">CustomProjectTemplate</class-type>
+        <object-name valType="String">Random Vibration</object-name>
+        <member-data valType="String">{"DisplayText": "Random Vibration", "SystemTemplates": [None, None], "SystemNames": ["Modal (ANSYS)", "Random Vibration (ANSYS)"], "ToolboxGroup": "Custom Systems", "AdditionalSystemHelpId": None, "PostCreationSteps": [["Share", "Modal (ANSYS):Engineering Data", "Random Vibration (ANSYS):Engineering Data"], ["Share", "Modal (ANSYS):Geometry", "Random Vibration (ANSYS):Geometry"], ["Share", "Modal (ANSYS):Model", "Random Vibration (ANSYS):Model"], ["Connect", "Modal (ANSYS):Solution", "Random Vibration (ANSYS):Setup"]], "LayoutIndices": {"Modal (ANSYS)": 1, "Random Vibration (ANSYS)": 0}, "LayoutChildren": {"Modal (ANSYS)": ["Random Vibration (ANSYS)"]}}</member-data>
+      </Object>
+      <Object Name="/Schematic/CustomProjectTemplate:Response Spectrum" Version="1.0">
+        <class-type valType="String">CustomProjectTemplate</class-type>
+        <object-name valType="String">Response Spectrum</object-name>
+        <member-data valType="String">{"DisplayText": "Response Spectrum", "SystemTemplates": [None, None], "SystemNames": ["Modal (ANSYS)", "Response Spectrum (ANSYS)"], "ToolboxGroup": "Custom Systems", "AdditionalSystemHelpId": None, "PostCreationSteps": [["Share", "Modal (ANSYS):Engineering Data", "Response Spectrum (ANSYS):Engineering Data"], ["Share", "Modal (ANSYS):Geometry", "Response Spectrum (ANSYS):Geometry"], ["Share", "Modal (ANSYS):Model", "Response Spectrum (ANSYS):Model"], ["Connect", "Modal (ANSYS):Solution", "Response Spectrum (ANSYS):Setup"]], "LayoutIndices": {"Modal (ANSYS)": 1, "Response Spectrum (ANSYS)": 0}, "LayoutChildren": {"Modal (ANSYS)": ["Response Spectrum (ANSYS)"]}}</member-data>
+      </Object>
+      <Object Name="/Schematic/Component:Turbo Mesh" Version="1.0">
+        <class-type valType="String">Component</class-type>
+        <object-name valType="String">Turbo Mesh</object-name>
+        <member-data valType="String">{"DisplayText": "Stator Mesh", "ImageName": "CFXTG", "ComponentStateOnLastFailure": "UpToDate", "AlwaysBePartOfDpUpdate": False, "FullyUpToDateOnDps": None, "CoupledClients": [], "SubComponents": [], "DataSharedFrom": None, "DataSharing": "None", "DataContainer": "Turbo Mesh", "_overwrittenUpdatable": None, "Template": $$60db8174-1db8-4a26-98eb-cd731805c2fc, "InSystem": $$996e64c9-db5f-44d8-a339-1f3fe23c5ff2, "MasterSources": {"Sources": []}, "Notes": None, "UsedLicenses": {"cfd_base": 1, "cfd_preppost": 1}, "ActiveTransferComponents": [], "Solver": "", "IsFailedState": False, "UpdateConditionParameter": None}</member-data>
+      </Object>
+      <Object Name="/Schematic/Component:Setup" Version="1.0">
+        <class-type valType="String">Component</class-type>
+        <object-name valType="String">Setup</object-name>
+        <member-data valType="String">{"DisplayText": "Setup", "ImageName": "setup", "ComponentStateOnLastFailure": "UpToDate", "AlwaysBePartOfDpUpdate": False, "FullyUpToDateOnDps": None, "CoupledClients": [], "SubComponents": [], "DataSharedFrom": None, "DataSharing": "None", "DataContainer": "Setup", "_overwrittenUpdatable": None, "Template": $$30e6e1ac-6f2b-4f78-ac15-343918777e11, "InSystem": $$fb1e306c-fc32-4246-bf9a-1faaf5bfc950, "MasterSources": {"Sources": [[{"DataType": "CFXMesh", "Component": $$c2513cf3-9b35-415b-ba66-cae863513156, "Transfer": None}], [{"DataType": "CFXMesh", "Component": $$0b53de64-3b85-4f67-8924-2335cc755c27, "Transfer": None}], [{"DataType": "CFXMesh", "Component": $$c0fe9ae8-f191-4919-9272-03c7f5723504, "Transfer": None}], [{"DataType": "SimulationGeneratedMesh", "Component": $$7bd86156-5a55-44a9-a187-73fc45faab8b, "Transfer": None}], [{"DataType": "CFXMesh", "Component": $$7bd86156-5a55-44a9-a187-73fc45faab8b, "Transfer": None}], [{"DataType": "FluentTGridMesh", "Component": $$7bd86156-5a55-44a9-a187-73fc45faab8b, "Transfer": None}], [{"DataType": "MechanicalSetup", "Component": $$7bd86156-5a55-44a9-a187-73fc45faab8b, "Transfer": None}]]}, "Notes": None, "UsedLicenses": {"acfx_pre": 1}, "ActiveTransferComponents": [], "Solver": "", "IsFailedState": False, "UpdateConditionParameter": None}</member-data>
+      </Object>
+      <Object Name="/Schematic/Component:Solution" Version="1.0">
+        <class-type valType="String">Component</class-type>
+        <object-name valType="String">Solution</object-name>
+        <member-data valType="String">{"DisplayText": "Solution", "ImageName": "solution", "ComponentStateOnLastFailure": "Modified", "AlwaysBePartOfDpUpdate": False, "FullyUpToDateOnDps": None, "CoupledClients": [], "SubComponents": [], "DataSharedFrom": None, "DataSharing": "None", "DataContainer": "Solution", "_overwrittenUpdatable": None, "Template": $$958748d2-547d-4eaa-bc8c-ca8588f9f8ea, "InSystem": $$fb1e306c-fc32-4246-bf9a-1faaf5bfc950, "MasterSources": {"Sources": [[{"DataType": "CFXSetup", "Component": $$7bd86156-5a55-44a9-a187-73fc45faab8b, "Transfer": None}]]}, "Notes": None, "UsedLicenses": {"anshpc": 12, "cfd_base": 2, "cfd_solve_level1": 2, "cfd_solve_level2": 2}, "ActiveTransferComponents": [], "Solver": "CFX", "IsFailedState": False, "UpdateConditionParameter": None}</member-data>
+      </Object>
+      <Object Name="/Schematic/Component:Results" Version="1.0">
+        <class-type valType="String">Component</class-type>
+        <object-name valType="String">Results</object-name>
+        <member-data valType="String">{"DisplayText": "Results", "ImageName": "results", "ComponentStateOnLastFailure": "UpToDate", "AlwaysBePartOfDpUpdate": False, "FullyUpToDateOnDps": None, "CoupledClients": [], "SubComponents": [], "DataSharedFrom": None, "DataSharing": "None", "DataContainer": "Results", "_overwrittenUpdatable": None, "Template": $$77426b19-36c0-4242-9032-4b09c4011257, "InSystem": $$fb1e306c-fc32-4246-bf9a-1faaf5bfc950, "MasterSources": {"Sources": [[{"DataType": "CFXSolution", "Component": $$e868d106-a78c-45ff-ad1c-5b03a01f9415, "Transfer": None}]]}, "Notes": None, "UsedLicenses": None, "ActiveTransferComponents": [], "Solver": "", "IsFailedState": False, "UpdateConditionParameter": None}</member-data>
+      </Object>
+      <Object Name="/Schematic/Component:Turbo Mesh 2" Version="1.0">
+        <class-type valType="String">Component</class-type>
+        <object-name valType="String">Turbo Mesh 2</object-name>
+        <member-data valType="String">{"DisplayText": "IGV Mesh", "ImageName": "CFXTG", "ComponentStateOnLastFailure": "UpToDate", "AlwaysBePartOfDpUpdate": False, "FullyUpToDateOnDps": None, "CoupledClients": [], "SubComponents": [], "DataSharedFrom": None, "DataSharing": "None", "DataContainer": "Turbo Mesh 2", "_overwrittenUpdatable": None, "Template": $$60db8174-1db8-4a26-98eb-cd731805c2fc, "InSystem": $$a5ad4585-0e64-469b-8ce2-cd2ca354ca51, "MasterSources": {"Sources": []}, "Notes": None, "UsedLicenses": {"cfd_base": 1, "cfd_preppost": 1}, "ActiveTransferComponents": [], "Solver": "", "IsFailedState": False, "UpdateConditionParameter": None}</member-data>
+        <properties-setByUserFlag-data valType="String">["DisplayText"]</properties-setByUserFlag-data>
+      </Object>
+      <Object Name="/Schematic/Component:Turbo Mesh 3" Version="1.0">
+        <class-type valType="String">Component</class-type>
+        <object-name valType="String">Turbo Mesh 3</object-name>
+        <member-data valType="String">{"DisplayText": "Rotor Mesh", "ImageName": "CFXTG", "ComponentStateOnLastFailure": "UpToDate", "AlwaysBePartOfDpUpdate": False, "FullyUpToDateOnDps": None, "CoupledClients": [], "SubComponents": [], "DataSharedFrom": None, "DataSharing": "None", "DataContainer": "Turbo Mesh 3", "_overwrittenUpdatable": None, "Template": $$60db8174-1db8-4a26-98eb-cd731805c2fc, "InSystem": $$9ed21fae-835f-4482-bf1e-dc80934661cf, "MasterSources": {"Sources": []}, "Notes": None, "UsedLicenses": {"cfd_base": 1, "cfd_preppost": 1}, "ActiveTransferComponents": [], "Solver": "", "IsFailedState": False, "UpdateConditionParameter": None}</member-data>
+      </Object>
+      <Object Name="/Schematic/Bookkeeper:Schematic bookkeeper" Version="1.0">
+        <class-type valType="String">Bookkeeper</class-type>
+        <object-name valType="String">Schematic bookkeeper</object-name>
+        <member-data valType="String">{"DisplayText": "Schematic bookkeeper", "UpfrontLicenseCheckoutSelection": []}</member-data>
+      </Object>
+    </Container>
+    <Container Name="ReportDataContainer" Version="1.0">
+      <container-type valType="String">Ansys.ProjectReporting.Addin:ReportDataContainer</container-type>
+      <static-id valType="String">ReportDataContainer</static-id>
+      <storage-scheme-id valType="String">version-1-format</storage-scheme-id>
+      <deleted-sources valType="String">[]</deleted-sources>
+      <last-updated valType="Int64">0</last-updated>
+      <last-modified-by-usage valType="String">{"Extrinsic": 2248, "Input": 2324, "Output": 1895}</last-modified-by-usage>
+      <outputs-generated-by-type valType="String">{}</outputs-generated-by-type>
+      <contains-significant-data valType="Boolean">false</contains-significant-data>
+    </Container>
+    <Container Name="Graphics" Version="1.0">
+      <container-type valType="String">Ansys.Graphics.GraphicsAddin:graphics</container-type>
+      <static-id valType="String">Graphics</static-id>
+      <storage-scheme-id valType="String">version-1-format</storage-scheme-id>
+      <deleted-sources valType="String">[]</deleted-sources>
+      <last-updated valType="Int64">0</last-updated>
+      <last-modified-by-usage valType="String">{"Extrinsic": 1905, "Input": 1905, "Output": 1905}</last-modified-by-usage>
+      <outputs-generated-by-type valType="String">{}</outputs-generated-by-type>
+      <contains-significant-data valType="Boolean">false</contains-significant-data>
+    </Container>
+    <Container Name="Units" Version="1.0">
+      <container-type valType="String">Ansys.Units.Commands.Addin:Units</container-type>
+      <static-id valType="String">Units</static-id>
+      <storage-scheme-id valType="String">version-1-format</storage-scheme-id>
+      <deleted-sources valType="String">[]</deleted-sources>
+      <last-updated valType="Int64">0</last-updated>
+      <last-modified-by-usage valType="String">{"Extrinsic": 1906, "Input": 2087, "Output": 1906}</last-modified-by-usage>
+      <outputs-generated-by-type valType="String">{}</outputs-generated-by-type>
+      <contains-significant-data valType="Boolean">false</contains-significant-data>
+      <Object Name="/Units/UnitSystemProjectSettings:UnitSystemProjectSettings" Version="1.0">
+        <class-type valType="String">UnitSystemProjectSettings</class-type>
+        <object-name valType="String">UnitSystemProjectSettings</object-name>
+        <member-data valType="String">{"DisplayText": "UnitSystemProjectSettings", "DataContainerUnitSystemRegistry": {}}</member-data>
+      </Object>
+      <Object Name="/Units/UnitSystem:UnitSys" Version="1.0">
+        <class-type valType="String">UnitSystem</class-type>
+        <object-name valType="String">UnitSys</object-name>
+        <member-data valType="String">{"DisplayText": "Metric (kg,m,s,°C,A,N,V)", "ChangedQuantityUnits": {}, "UnitSystemName": "MKS_STANDARD", "BaseUnitSystemName": "SI", "IsProjectUnitSystem": True, "IsDefault": False}</member-data>
+      </Object>
+    </Container>
+    <Container Name="DpdbContainer" Version="1.0">
+      <container-type valType="String">Ansys.Dpdb.DpdbAddin:DpdbContainer</container-type>
+      <static-id valType="String">DpdbContainer</static-id>
+      <storage-scheme-id valType="String">version-1-format</storage-scheme-id>
+      <deleted-sources valType="String">[]</deleted-sources>
+      <last-updated valType="Int64">0</last-updated>
+      <last-modified-by-usage valType="String">{}</last-modified-by-usage>
+      <outputs-generated-by-type valType="String">{}</outputs-generated-by-type>
+      <contains-significant-data valType="Boolean">true</contains-significant-data>
+      <Object Name="/DpdbContainer/DpdbSettings:Dpdb Settings Entity" Version="1.0">
+        <class-type valType="String">DpdbSettings</class-type>
+        <object-name valType="String">Dpdb Settings Entity</object-name>
+        <member-data valType="String">{"DisplayText": "Dpdb Settings Entity", "ServerUrl": "https://localhost/dcs", "ServerUserName": "dcadmin", "ServerPassword": "dcadmin", "DatabaseName": None, "StartLocalEvaluatorOnUpdate": True, "ExecutionTime": 300, "UpdateDesignPointInSteps": False}</member-data>
+      </Object>
+    </Container>
+  </Containers>
+</Storage>
